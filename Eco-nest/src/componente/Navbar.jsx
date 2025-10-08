@@ -32,7 +32,7 @@ export function Navbar() {
           <a className="nav-link" href="#">Contato</a>
         </li>
         <li classNameName="na-item">
-            <button className={tema == 'dark' ? "btn btn-outline-light border border-0":"btn btn-outline-dark border border-0"} onClick={toggleTheme}>{tema == 'dark' ? <i className="bi bi-brightness-high-fill"></i> : <i className="bi bi-moon"></i>}</button>
+            <button className={tema == 'dark' ? "btn btn-outline-warning border border-0":"btn btn-outline-dark border border-0"} onClick={toggleTheme}>{tema == 'dark' ? <i className="bi bi-brightness-high-fill"></i> : <i class="bi bi-moon"></i>}</button>
         </li>
       </ul>
       <form className="d-flex" role="search">

@@ -4,9 +4,31 @@
  background-color: var(--bs-success-input)!important; 
 }
 
+.eco-border{
+  border-color: var(--eco-verde);
+}
+
+.input-border{
+  border: 1px 1px 1px 0px;
+}
+.span-border{
+  border: 1px 0px 1px 1px;
+}
+
+.btn-eco{
+  background-color: var(--eco-verde)!important;
+  color: whitesmoke;
+  animation: 0.1s ease-in-out;
+}
+.btn-eco:hover{
+  background-color: #113b18!important;
+    color: whitesmoke;
+
+}
 
 :root,
 [data-bs-theme=light] {
+  --eco-verde:#2f5e36;
   --bs-success-input:#dbe4d1;
   --bs-blue: #0d6efd;
   --bs-indigo: #6610f2;

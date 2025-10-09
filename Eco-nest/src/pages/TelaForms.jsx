@@ -1,6 +1,6 @@
     import { useState } from "react";
-    import { FormCadastro } from "../componente/FormCadastro"
-    import { FormLogin } from "../componente/FormLogin"
+    import { FormCadastro } from "../componente/bodyPages/FormCadastro"
+    import { FormLogin } from "../componente/bodyPages/FormLogin"
 
     export function TelaForms() {
 

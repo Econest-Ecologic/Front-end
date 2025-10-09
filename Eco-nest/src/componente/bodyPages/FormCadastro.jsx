@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { BotaoTrocaLogin } from "./BotaoTrocaLogin";
-import InputOutline from "./InputOutline";
+import { BotaoTrocaLogin } from "../BotaoTrocaLogin";
+import InputOutline from "../InputOutline";
 
 export function FormCadastro({ trocaLogin }) {
     

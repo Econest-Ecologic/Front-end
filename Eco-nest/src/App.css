@@ -1,6 +1,6 @@
 
 .active{
-    color: var(--bs-success)!important;
+    color: var( --nav-item-active)!important;
 }
 .active:hover{
     color: #14b66a!important;

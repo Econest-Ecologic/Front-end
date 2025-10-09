@@ -27,7 +27,7 @@ export function Navbar() {
         <li className="nav-item me-3">
           <form className="d-flex input-group" role="search">
             <input className="form-control" type="search" placeholder="Search" aria-label="Search"/>
-            <button className="btn btn-outline-success input-group-text" type="submit">Search</button>
+            <button className="btn btn-eco input-group-text" type="submit"><i className="bi bi-search"></i></button>
           </form>
         </li>
 
@@ -47,7 +47,7 @@ export function Navbar() {
           </button>
         </li>
         <li className="nav-item">
-          <button className="btn btn-outline-eco bg-transparent border-0 position-relative"><i class="bi bi-cart"></i>
+          <button className="btn btn-outline-eco bg-transparent border-0 position-relative"><i className="bi bi-cart"></i>
           <span className={tema == 'dark' ? "badge  text-light position-absolute top-0 start-50": "badge  text-dark position-absolute top-0 start-50"}>{numeroCarrinho}</span>
           </button>
         </li>

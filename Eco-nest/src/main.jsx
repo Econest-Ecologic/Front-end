@@ -1,16 +1,18 @@
-import { StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
+import { StrictMode } from "react";
+import { createRoot } from "react-dom/client";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import HomeUsuario from './componente/bodyPages/HomeUsuario';
-import App from "./App"
+import HomeUsuario from "./componente/bodyPages/HomeUsuario";
+import App from "./App";
+import SobreNos from "./componente/bodyPages/SobreNos";
 
-createRoot(document.getElementById('root')).render(
+createRoot(document.getElementById("root")).render(
   <StrictMode>
-   <BrowserRouter>
-   <Routes>
-    <Route path='/' element={<App/>}/>
-    <Route path='/user' element={<HomeUsuario/>}/>
-   </Routes>
-   </BrowserRouter>
-  </StrictMode>,
-)
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<App />} />
+        <Route path="/home" element={<HomeUsuario />} />
+        <Route path="/sobre" element={<SobreNos />} />
+      </Routes>
+    </BrowserRouter>
+  </StrictMode>
+);

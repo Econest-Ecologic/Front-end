@@ -4,6 +4,10 @@
   background-color: var(--bs-success-input) !important;
 }
 
+.eco-text {
+  color: var(--eco-verde-text)
+}
+
 .eco-border {
   border-color: var(--eco-verde);
 }
@@ -27,10 +31,12 @@
   color: whitesmoke;
 
 }
+
 :root,
 [data-bs-theme=light] {
-  --nav-item-active:#13ac64;
+  --nav-item-active: #13ac64;
   --eco-verde: #2f5e36;
+  --eco-verde-text: #2f5e36;
   --bs-success-input: #dbe4d1;
   --bs-blue: #0d6efd;
   --bs-indigo: #6610f2;
@@ -153,7 +159,8 @@
 
 [data-bs-theme=dark] {
   color-scheme: dark;
-    --nav-item-active:#18df82;
+  --eco-verde-text: #499154;
+  --nav-item-active: #18df82;
   --bs-success-input: none;
   --bs-body-color: #dee2e6;
   --bs-body-color-rgb: 222, 226, 230;

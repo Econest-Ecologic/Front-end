@@ -1,8 +1,11 @@
-export default function InputOutline({placeholder,icon}) {
+import { useId } from "react"
+
+export default function InputOutline({type="text",placeholder,icon,inputValue="",inputFunction}) {
+    const id= useId()
     return <>
         <div className="mb-3 input-group">
             <span className="input-group-text eco-border">{icon}</span>
-            <input type="text" placeholder={placeholder} className="form-control eco-border"  id="nome" />
+            <input type={type} placeholder={placeholder} className="form-control eco-border" value={inputValue} onChange={(e)=> inputFunction(e.target.value)}/>
         </div>
     </>
 }

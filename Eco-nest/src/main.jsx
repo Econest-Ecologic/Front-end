@@ -1,8 +1,18 @@
-import { StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
-import App from './App'
-createRoot(document.getElementById('root')).render(
+import { StrictMode } from "react";
+import { createRoot } from "react-dom/client";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import HomeUsuario from "./componente/bodyPages/HomeUsuario";
+import App from "./App";
+import SobreNos from "./componente/bodyPages/SobreNos";
+
+createRoot(document.getElementById("root")).render(
   <StrictMode>
-    <App />
-  </StrictMode>,
-)
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<App />} />
+        <Route path="/home" element={<HomeUsuario />} />
+        <Route path="/sobre" element={<SobreNos />} />
+      </Routes>
+    </BrowserRouter>
+  </StrictMode>
+);

@@ -1,11 +1,11 @@
-
-.active{
-    color: var(--bs-success)!important;
-}
-.active:hover{
-    color: #14b66a!important;
+.active {
+  color: var(--nav-item-active) !important;
 }
 
-#container-home{
-  min-height: 90vh!important;
+.active:hover {
+  color: #14b66a !important;
+}
+
+#container-home {
+  min-height: 90vh !important;
 }

@@ -10,7 +10,7 @@ export default function SobreNos() {
       <main className="container-xxl gap-2 my-5">
         <div className="d-flex gap-2 flex-column">
           <h3 className="text-success">Nossa equipe</h3>
-          <p>
+          <p className="fs-5">
             A Eco Nest nasceu com o propósito de oferecer produtos sustentáveis
             e acessíveis, incentivando escolhas conscientes no dia a dia. Nosso
             objetivo é tornar a sustentabilidade prática, simples e ao alcance

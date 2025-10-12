@@ -9,8 +9,9 @@
 }
 
 .eco-border {
-  border-color: var(--eco-verde);
+  border-color: var(--eco-verde) !important;
 }
+
 
 .input-border {
   border: 1px 1px 1px 0px;
@@ -18,6 +19,10 @@
 
 .span-border {
   border: 1px 0px 1px 1px;
+}
+
+.bg-eco {
+  background-color: var(--eco-verde);
 }
 
 .btn-eco {

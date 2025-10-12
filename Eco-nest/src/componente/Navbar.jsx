@@ -68,9 +68,9 @@ export function Navbar() {
               </NavLink>
             </li>
             <li className="nav-item">
-              <a className="nav-link" href="#">
+              <NavLink className="nav-link" to={"/contato"}>
                 Contato
-              </a>
+              </NavLink>
             </li>
             <li className="nav-item">
               <button

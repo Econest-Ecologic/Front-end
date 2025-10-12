@@ -1,5 +1,15 @@
 @import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css");
 
+.btn-check:checked+.btn {
+  background-color: transparent !important;
+  border: 1px solid var(--eco-verde) !important;
+}
+
+.btn-check+.btn {
+  background-color: var(--eco-verde) !important;
+  color: var(--bs-light)
+}
+
 .input-success {
   background-color: var(--bs-success-input) !important;
 }

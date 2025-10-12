@@ -16,17 +16,17 @@ export default function Footer() {
         <p>© 2025 Eco Nest. Todos os direitos reservados</p>
         <div className="d-flex flex-row">
           <p>
-            <i class="bi bi-instagram mx-2"></i> Instagram |
+            <i className="bi bi-instagram mx-2"></i> Instagram |
           </p>
           <p>
-            <i class="bi bi-facebook mx-2"></i> Facebook |
+            <i className="bi bi-facebook mx-2"></i> Facebook |
           </p>
           <p>
-            <i class="bi bi-tiktok mx-2"></i>
+            <i className="bi bi-tiktok mx-2"></i>
             TikTok |
           </p>
           <p>
-            <i class="bi bi-pinterest mx-2"></i> Pinterest
+            <i className="bi bi-pinterest mx-2"></i> Pinterest
           </p>
         </div>
       </div>

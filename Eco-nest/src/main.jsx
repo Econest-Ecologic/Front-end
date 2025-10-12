@@ -5,6 +5,7 @@ import HomeUsuario from "./componente/bodyPages/HomeUsuario";
 import App from "./App";
 import SobreNos from "./componente/bodyPages/SobreNos";
 import Contato from "./componente/bodyPages/Contato";
+import Produtos from "./componente/bodyPages/Produtos";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
@@ -14,6 +15,7 @@ createRoot(document.getElementById("root")).render(
         <Route path="/home" element={<HomeUsuario />} />
         <Route path="/sobre" element={<SobreNos />} />
         <Route path="/contato" element={<Contato />} />
+        <Route path="/produtos" element={<Produtos />} />
       </Routes>
     </BrowserRouter>
   </StrictMode>

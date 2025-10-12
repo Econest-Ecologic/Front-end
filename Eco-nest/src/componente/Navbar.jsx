@@ -47,23 +47,12 @@ export function Navbar() {
             </li>
 
             <li className="nav-item">
-              <NavLink
-                className={({ isActive }) =>
-                  isActive ? "nav-link active" : "nav-link"
-                }
-                aria-current="page"
-                to={"/home"}
-              >
+              <NavLink className={"nav-link"} aria-current="page" to={"/home"}>
                 Home
               </NavLink>
             </li>
             <li className="nav-item">
-              <NavLink
-                className={({ isActive }) =>
-                  isActive ? "nav-link active" : "nav-link"
-                }
-                to={"/sobre"}
-              >
+              <NavLink className="nav-link " to={"/sobre"}>
                 Sobre Nós
               </NavLink>
             </li>

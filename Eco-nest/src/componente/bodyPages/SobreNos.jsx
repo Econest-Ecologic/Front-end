@@ -22,32 +22,34 @@ export default function SobreNos() {
           </p>
         </div>
         <div className="container-md">
-          <div className="row gap-2 justify-content-center">
-            <div className="col-4">
+          <div className="row gap-2 justify-content-center ">
+            <div className="col-lg-4 ">
+              <PerfilImg
+                img={"../public/Sinara.JPG"}
+                nome={"Sinara Santinoni"}
+                heightImg={"170px"}
+              />
+            </div>
+
+            <div className="col-lg-4 ">
               <PerfilImg
                 img={"../public/marcos.jpeg"}
                 nome={"Marcos Paulo Bittencourt de Medeiros"}
               />
             </div>
 
-            <div className="col-4">
+            <div className="col-lg-4 ">
               <PerfilImg
-                img={"../public/marcos.jpeg"}
-                nome={"Marcos Paulo Bittencourt de Medeiros"}
+                img={"../public/elessandro.jpeg"}
+                nome={"Elessandro de Abreu"}
               />
             </div>
 
-            <div className="col-4">
+            <div className="col-lg-4">
               <PerfilImg
-                img={"../public/marcos.jpeg"}
-                nome={"Marcos Paulo Bittencourt de Medeiros"}
-              />
-            </div>
-
-            <div className="col-4">
-              <PerfilImg
-                img={"../public/marcos.jpeg"}
-                nome={"Marcos Paulo Bittencourt de Medeiros"}
+                img={"../public/Victor.jpeg"}
+                nome={"Victor Hugo de Pieri Justino"}
+                heightImg="170px"
               />
             </div>
           </div>

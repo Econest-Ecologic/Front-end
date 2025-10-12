@@ -1,6 +1,6 @@
 export default function Footer() {
   return (
-    <footer className="container-fluid d-flex flex-row justify-content-evenly bg-success-subtle p-0 py-3 m-0">
+    <footer className="container-fluid d-flex flex-column flex-sm-row justify-content-evenly bg-success-subtle p-0 py-3 m-0">
       <div className="flex-row">
         <ul>
           <li className="list-unstyled mt-2">
@@ -12,7 +12,7 @@ export default function Footer() {
           </li>
         </ul>
       </div>
-      <div className="d-flex flex-column gap-2">
+      <div className="d-flex flex-column  gap-2">
         <p>© 2025 Eco Nest. Todos os direitos reservados</p>
         <div className="d-flex flex-row">
           <p>

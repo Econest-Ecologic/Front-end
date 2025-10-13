@@ -18,6 +18,10 @@
   color: var(--eco-verde-text)
 }
 
+.eco-card-text {
+  color: var(--eco-verde-card-text)
+}
+
 .eco-border {
   border-color: var(--eco-verde) !important;
 }
@@ -51,6 +55,7 @@
 [data-bs-theme=light] {
   --bg-eco: #dce6d5;
   --nav-item-active: #13ac64;
+  --eco-verde-card-text: #2f5531;
   --eco-verde: #2f5531;
   --eco-verde-text: #2f5531;
   --bs-success-input: #dbe4d1;
@@ -175,6 +180,7 @@
 
 [data-bs-theme=dark] {
   color-scheme: dark;
+  --eco-verde-card-text: #18df82;
   --bg-eco: #2f3a2e;
   --eco-verde-text: #499154;
   --nav-item-active: #18df82;

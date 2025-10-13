@@ -1,14 +1,15 @@
 import { Navbar } from "../Navbar";
 import Footer from "../Footer";
 import RadioBtn from "../RadioBtn";
+import Card from "../Card";
 export default function Produtos() {
   return (
     <>
       <header>
         <Navbar></Navbar>
       </header>
-      <main className="container-xxl d-flex min-vh-100 mt-5 w-100 justify-content-evenly align-items-start">
-        <nav className="d-flex gap-3">
+      <main className="container-xxl d-flex flex-column min-vh-100 mt-5 w-100 gap-4 ">
+        <nav className="container d-flex gap-3 h-100 justify-content-center ">
           <RadioBtn name={"filtro"} id={"btn-check-todos"} txt={"Todos"} />
           <RadioBtn
             name={"filtro"}
@@ -26,6 +27,19 @@ export default function Produtos() {
             txt={"Higiene e Cuidados pessoais"}
           />
         </nav>
+        <div className="container-xxl">
+          <h1>Todos</h1>
+          <div className="row row-gap-5">
+            <Card />
+            <Card />
+            <Card />
+            <Card />
+            <Card />
+            <Card />
+            <Card />
+            <Card />
+          </div>
+        </div>
       </main>
       <Footer></Footer>
     </>

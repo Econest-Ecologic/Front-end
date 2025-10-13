@@ -1,6 +1,6 @@
 export default function Footer() {
   return (
-    <footer className="container-fluid d-flex flex-column flex-sm-row justify-content-evenly bg-success-subtle p-0 py-3 m-0">
+    <footer className="container-fluid d-flex flex-column flex-sm-row justify-content-evenly bg-success-subtle p-0 py-3 m-0 mt-3">
       <div className="flex-row">
         <ul>
           <li className="list-unstyled mt-2">

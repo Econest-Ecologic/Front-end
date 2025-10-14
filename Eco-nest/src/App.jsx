@@ -7,7 +7,7 @@ import './App.css'
     return (
         <>
         <Navbar></Navbar>
-        <TelaAdm></TelaAdm>
+        <TelaForms/>
         </>
     )
 }

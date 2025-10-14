@@ -16,7 +16,7 @@ export default function Card() {
             <p className="card-text eco-card-text">descrição produto</p>
             <h5 className="card-text fw-bolder eco-card-text">R$ 16,90</h5>
             <button className="btn btn-eco px-3">
-              <i class="bi bi-cart-plus-fill"></i>
+              <i className="bi bi-cart-plus-fill"></i>
             </button>
           </div>
         </div>

@@ -59,7 +59,7 @@ export default function Contato() {
         </div>
         <Toast
           msg={"Mensagem enviada com sucesso"}
-          icon={<i class="bi bi-check-lg"></i>}
+          icon={<i className="bi bi-check-lg"></i>}
         />
       </main>
 

@@ -48,11 +48,15 @@
 .btn-eco:hover {
   background-color: #113b18 !important;
   color: whitesmoke;
+}
 
+.bg-navbar{
+  background: var(--bg-navbar);
 }
 
 :root,
 [data-bs-theme=light] {
+  --bg-navbar: #dbe4d1;
   --bg-eco: #dce6d5;
   --nav-item-active: #13ac64;
   --eco-verde-card-text: #2f5531;
@@ -180,6 +184,7 @@
 
 [data-bs-theme=dark] {
   color-scheme: dark;
+  --bg-navbar: #212529;
   --eco-verde-card-text: #18df82;
   --bg-eco: #2f3a2e;
   --eco-verde-text: #499154;

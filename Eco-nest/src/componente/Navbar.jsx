@@ -20,7 +20,7 @@ export function Navbar() {
   }
 
   return (
-    <nav className="navbar navbar-expand-lg bg-success-subtle">
+    <nav className="navbar navbar-expand-lg bg-navbar border-bottom eco-border">
       <div className="container-fluid">
         <a className="navbar-brand" href="#">
           Navbar

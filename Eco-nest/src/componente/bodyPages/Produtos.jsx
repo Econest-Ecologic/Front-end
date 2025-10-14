@@ -29,7 +29,7 @@ export default function Produtos() {
         </nav>
         <div className="container-xxl">
           <h1>Todos</h1>
-          <div className="row row-gap-5">
+          <div className="row row-gap-4">
             <Card />
             <Card />
             <Card />

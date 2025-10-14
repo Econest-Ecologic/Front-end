@@ -1,14 +1,22 @@
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import { NavLink } from "react-router-dom";
 
-//Fazer os loguin e os 3 dos usuarios ficarem na tela usuario
-
 export function Navbar() {
+
+  //quando a pagina atualiza ele pega no local storag qual o ultimo tema salvo
+  useEffect(() => {
+  const temaSalvo = localStorage.getItem("tema") || "dark";
+  setTema(temaSalvo);
+  document.documentElement.setAttribute("data-bs-theme", temaSalvo);
+}, []);
+
+
   const [tema, setTema] = useState("dark");
   function toggleTheme() {
     const newTheme = tema === "light" ? "dark" : "light";
     setTema(newTheme);
     document.documentElement.setAttribute("data-bs-theme", newTheme);
+    localStorage.setItem("tema",newTheme)
   }
 
   return (

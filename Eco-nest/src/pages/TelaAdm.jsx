@@ -1,4 +1,5 @@
 import { Navbar } from "../componente/Navbar";
+import { Link } from "react-router-dom";
 
 export function TelaAdm() {
   return (
@@ -16,7 +17,7 @@ export function TelaAdm() {
   
       `}</style>
 
-        <Navbar/>
+      <Navbar />
       <div className="admin-container bg-eco border-top border-2 eco-border  d-flex justify-content-center align-items-center vh-100">
         <div className="card-admin text-center position-relative p-5 bg-body">
           <img
@@ -28,13 +29,17 @@ export function TelaAdm() {
           <h2 className="fw-bold mb-5 eco-text">Administrador</h2>
 
           <div className="d-flex justify-content-center gap-4 mb-4">
-            <button className="btn btn-eco px-5 py-2 fw-bold">PRODUTOS</button>
+            <Link to={"/cadastroProduto"}>
+              <button className="btn btn-eco px-5 py-2 fw-bold">PRODUTOS</button>
+            </Link>
             <button className="btn btn-eco px-5 py-2 fw-bold">CRIAR ADM</button>
           </div>
-
-          <button className="btn btn-eco px-5 py-2 fw-bold">
-            EDITAR PERFIL
-          </button>
+          <div className="d-flex justify-content-center gap-4 mb-4">
+            <button className="btn btn-eco px-5 py-2 fw-bold">
+              EDITAR PERFIL
+            </button>
+            <button className="btn btn-eco px-5 py-2 fw-bold"> FEEDBACK</button>
+          </div>
         </div>
       </div>
     </>

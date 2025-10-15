@@ -53,9 +53,14 @@
 .bg-navbar{
   background: var(--bg-navbar);
 }
+.btn-voltar{
+  color: var(--bg-voltar)!important;
+
+}
 
 :root,
 [data-bs-theme=light] {
+  --bg-voltar:rgb(211, 160, 83);
   --bg-navbar: #dbe4d1;
   --bg-eco: #dce6d5;
   --nav-item-active: #13ac64;

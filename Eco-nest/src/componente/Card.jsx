@@ -13,10 +13,10 @@ export default function Card({img,title,desc,price,badge,color="bg-success",bord
             alt="img"
             style={{borderRadius:"30px"}}
           />
-          <div className="card-body">
-            <h5 className="card-title eco-card-text">{title}</h5>
-            <p className="card-text eco-card-text">{desc}</p>
-            <h5 className="card-text fw-bolder eco-card-text">{price}</h5>
+          <div className="card-body px-4">
+            <h5 className="card-title eco-card-text text-center">{title}</h5>
+            <p className="card-text eco-card-text text-center">{desc}</p>
+            <h5 className="card-text fw-bolder eco-card-text">{price}R$</h5>
             <button className="btn btn-eco px-3">
               <i className="bi bi-cart-plus-fill"></i>
             </button>

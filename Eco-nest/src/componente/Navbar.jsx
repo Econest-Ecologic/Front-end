@@ -1,5 +1,5 @@
 import { useState,useEffect } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink,Link } from "react-router-dom";
 
 export function Navbar() {
 
@@ -20,7 +20,7 @@ export function Navbar() {
   }
 
   return (
-    <nav className="navbar navbar-expand-lg bg-navbar border-bottom eco-border">
+    <nav className="navbar navbar-expand-lg bg-navbar border-bottom eco-border py-2">
       <div className="container-fluid">
         <a className="navbar-brand" href="#">
           Navbar
@@ -43,9 +43,9 @@ export function Navbar() {
             <li className="nav-item me-3">
               <form className="d-flex input-group" role="search">
                 <input
-                  className="form-control"
+                  className="form-control border eco-border"
                   type="search"
-                  placeholder="Search"
+                  placeholder="Pesquise o produto desejado"
                   aria-label="Search"
                 />
                 <button className="btn btn-eco input-group-text" type="submit">
@@ -106,9 +106,9 @@ export function Navbar() {
             </li>
 
             <li className="nav-item">
-              <NavLink to={"/"} className="nav-link btn btn btn-eco">
+              <Link to={"/"} className="nav-link btn btn btn-eco">
                 Entrar
-              </NavLink>
+              </Link>
             </li>
           </ul>
         </div>

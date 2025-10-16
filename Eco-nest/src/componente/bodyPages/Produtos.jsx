@@ -8,7 +8,7 @@ export default function Produtos() {
       <header>
         <Navbar></Navbar>
       </header>
-      <main className="container-xxl d-flex flex-column min-vh-100 mt-5 w-100 gap-4 ">
+      <div className="container-xxl d-flex flex-column min-vh-100 mt-5 w-100 gap-4 ">
         <nav className="container d-flex gap-3 h-100 justify-content-center ">
           <RadioBtn name={"filtro"} id={"btn-check-todos"} txt={"Todos"} />
           <RadioBtn
@@ -40,7 +40,7 @@ export default function Produtos() {
             <Card />
           </div>
         </div>
-      </main>
+      </div>
       <Footer></Footer>
     </>
   );

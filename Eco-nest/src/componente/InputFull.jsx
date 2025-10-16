@@ -1,8 +1,11 @@
-export default function InputFull({placeholder,icon}) {
+export default function InputFull({type, placeholder }) {
     return <>
         <div className="mb-3 input-group">
-            <span className="input-group-text input-success eco-border  ">{icon}</span>
-                <input type="text" placeholder={placeholder} className="form-control input-success eco-border "  id="nome" />
-        </div>
+            <input
+                type={type}
+                placeholder={placeholder}
+                className="form-control eco-border"
+                onChange={(e) => inputFunction(e.target.value)}
+            />        </div>
     </>
 }

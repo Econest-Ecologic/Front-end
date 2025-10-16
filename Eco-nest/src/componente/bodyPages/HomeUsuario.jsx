@@ -1,5 +1,8 @@
 import { Navbar } from "../Navbar";
 import CardBadge from "../CardBadge";
+import Footer from "../Footer";
+import CardPropaganda from "../CardPropaganda";
+
 
 export default function HomeUsuario() {
   return (
@@ -7,8 +10,8 @@ export default function HomeUsuario() {
       <header>
         <Navbar num={1} />
       </header>
-      <main className="overflow-hidden">
-        <div className="container-fluid d-flex w-100 m-0 p-0 bg-white ">
+      <main className="overflow-x-hidden">
+        <div className="container-fluid d-flex w-100 m-0 p-0 bg-white">
           <img
             src="..\public\Banner1.png"
             className="w-100 m-0 p-0 object-fit-cover"
@@ -31,7 +34,23 @@ export default function HomeUsuario() {
             text={"Conheça nossos produtos e faça parte desse movimento"}
           />
         </div>
+        <div className="container-fluid d-flex w-100 m-0 p-0 bg-white position-relative mt-5">
+          <img
+            src="..\public\Banner2.png"
+            className="w-100 m-0 p-0 object-fit-cover"
+            style={{ height: "50vh" }}
+            alt="Banner"
+          />
+        </div>
+        <div className="container-fluid d-flex justify-content-center">
+          <div className="row mt-3 d-flex flex-wrap align-items-end justify-content-center w-100">
+            <CardPropaganda text={"Higiene & Cuidados Pessoais"} img={"/Bucha.jpeg"} />
+            <CardPropaganda text={"Casa Sustentáveis"} img={"/CasaSustentaveis.png"} />
+            <CardPropaganda text={"Utensilios & Acessórios  Reutilizáveis "} img={"/Utensilios.png"} />
+          </div>
+        </div>
       </main>
+      <Footer />
     </>
   );
 }

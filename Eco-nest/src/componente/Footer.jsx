@@ -4,11 +4,11 @@ export default function Footer() {
       <div className="flex-row">
         <ul>
           <li className="list-unstyled mt-2">
-            <i class="bi bi-envelope"></i> E-mail: contato@econest.com.br
+            <i className="bi bi-envelope"></i> E-mail: contato@econest.com.br
           </li>
-          <li className="list-unstyled mt-2"><i class="bi bi-telephone"></i> WhatsApp: (49) 3622-8492</li>
+          <li className="list-unstyled mt-2"><i className="bi bi-telephone"></i> WhatsApp: (49) 3622-8492</li>
           <li className="list-unstyled mt-2">
-            <i class="bi bi-pin-map-fill"></i>Endereço: Rua Laguna, 123 – Sua Jaguaruna – SC
+            <i className="bi bi-pin-map-fill"></i>Endereço: Rua Laguna, 123 – Sua Jaguaruna – SC
           </li>
         </ul>
       </div>

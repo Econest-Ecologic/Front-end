@@ -5,6 +5,10 @@
   border: 1px solid var(--eco-verde) !important;
 }
 
+.bg-promo{
+  background-color: var(--bs-orange);
+}
+
 .btn-check+.btn {
   background-color: var(--eco-verde) !important;
   color: var(--bs-light)

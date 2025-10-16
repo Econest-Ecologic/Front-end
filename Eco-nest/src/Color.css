@@ -58,6 +58,10 @@
 
 }
 
+.btn-voltar:hover{
+  color: rgb(145, 96, 24)!important;
+}
+
 :root,
 [data-bs-theme=light] {
   --bg-voltar:rgb(211, 160, 83);

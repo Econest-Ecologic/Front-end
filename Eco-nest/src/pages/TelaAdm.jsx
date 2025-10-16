@@ -1,9 +1,10 @@
 import { Navbar } from "../componente/Navbar";
-import { Link } from "react-router-dom";
+import { Link} from "react-router-dom";
 
 export function TelaAdm() {
   return (
     <>
+
       <style>{`
         
   

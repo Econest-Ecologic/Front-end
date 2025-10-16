@@ -2,7 +2,8 @@ import { Navbar } from "../Navbar";
 import CardBadge from "../CardBadge";
 import Footer from "../Footer";
 import CardPropaganda from "../CardPropaganda";
-
+import Banner from "../Banner";
+import Card from "../Card";
 
 export default function HomeUsuario() {
   return (
@@ -11,14 +12,7 @@ export default function HomeUsuario() {
         <Navbar num={1} />
       </header>
       <main className="overflow-x-hidden">
-        <div className="container-fluid d-flex w-100 m-0 p-0 bg-white">
-          <img
-            src="..\public\Banner1.png"
-            className="w-100 m-0 p-0 object-fit-cover"
-            style={{ height: "50vh" }}
-            alt="Banner"
-          />
-        </div>
+        <Banner link={"/Banner1.png"} />
         <div className="d-flex flex-column bg-body gap-3 mt-4 ms-3">
           <h1>Bem-vindo à Eco Nest 🌱</h1>
           <p className="text-wrap">
@@ -34,20 +28,18 @@ export default function HomeUsuario() {
             text={"Conheça nossos produtos e faça parte desse movimento"}
           />
         </div>
-        <div className="container-fluid d-flex w-100 m-0 p-0 bg-white position-relative mt-5">
-          <img
-            src="..\public\Banner2.png"
-            className="w-100 m-0 p-0 object-fit-cover"
-            style={{ height: "50vh" }}
-            alt="Banner"
-          />
+        <Banner link={"/ProdutosEcologicos.png"} />
+        <div className="row mt-3 d-flex mx-3 flex-wrap align-items-end justify-content-center">
+          <CardPropaganda text={"Higiene & Cuidados Pessoais"} img={"/Bucha.jpeg"} />
+          <CardPropaganda text={"Casa Sustentáveis"} img={"/CasaSustentaveis.png"} />
+          <CardPropaganda text={"Utensilios & Acessórios  Reutilizáveis "} img={"/Utensilios.png"} />
         </div>
-        <div className="container-fluid d-flex justify-content-center">
-          <div className="row mt-3 d-flex flex-wrap align-items-end justify-content-center w-100">
-            <CardPropaganda text={"Higiene & Cuidados Pessoais"} img={"/Bucha.jpeg"} />
-            <CardPropaganda text={"Casa Sustentáveis"} img={"/CasaSustentaveis.png"} />
-            <CardPropaganda text={"Utensilios & Acessórios  Reutilizáveis "} img={"/Utensilios.png"} />
-          </div>
+        <Banner link={"../Banner3.png"} />
+        <div className="row row-gap-4 mt-5 mx-3">
+        <Card img={"../exProd.png"} title={"Titulo"} badge={"NOVO"} desc={"descrição de um produto"} price={22.50} border={"border-0"}/>
+        <Card img={"../exProd.png"} title={"Titulo"} badge={"NOVO"} desc={"descrição de um produto"} price={22.50} border={"border-0"}/>
+        <Card img={"../exProd.png"} title={"Titulo"} badge={"PROMOÇÃO"} desc={"descrição de um produto"} price={22.50} color="bg-promo" border={"border-0"}/>
+        <Card img={"../exProd.png"} title={"Titulo"} badge={"PROMOÇÃO"} desc={"descrição de um produto"} price={22.50} color="bg-promo" border={"border-0"}/>
         </div>
       </main>
       <Footer />

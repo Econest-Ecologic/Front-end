@@ -35,7 +35,9 @@ export function TelaAdm() {
             <Link to={"/cadastroProduto"}>
               <button className="btn btn-eco px-5 py-2 fw-bold">PRODUTOS</button>
             </Link>
+            <Link to={"/criarCadastro"}>
             <button className="btn btn-eco px-5 py-2 fw-bold">CRIAR ADM</button>
+            </Link>
           </div>
           <div className="d-flex justify-content-center gap-4 mb-4">
             <button className="btn btn-eco px-5 py-2 fw-bold">

@@ -22,7 +22,7 @@ export function TelaAdm() {
       <div className="admin-container bg-eco border-top border-2 eco-border  d-flex justify-content-center align-items-center vh-100">
         <div className="card-admin text-center position-relative p-5 bg-body">
           <img
-            src="/logoSemFundo.png"
+            src="..\public\logoSemFundo.png"
             alt="EcoNest Logo"
             className="logo position-absolute"
             style={{ top: "30px", left: "30px", width: "120px" }}

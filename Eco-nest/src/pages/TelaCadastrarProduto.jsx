@@ -15,29 +15,46 @@ export function TelaCadastrarProduto() {
                     />
 
                     <form>
-                         <fieldset>
-                              <legend>Cadastrar Produto</legend>
-                              <InputFull placeholder={"Escreva o nome do produto"} />
-                              <InputFull placeholder={"Descrição"}></InputFull>
-                              <InputFull type="number" placeholder={"Valor do Produto"}></InputFull>
+                         <fieldset className="row g-3">
+                              <legend className="col-12">Cadastrar Produto</legend>
 
-                              <div class="mb-3">
-                                   <select class="form-select eco-border">
+                              <div className="col-12">
+                                   <InputFull placeholder={"Escreva o nome do produto"} />
+                              </div>
+
+                              <div className="col-12 col-md-6">
+                                   <InputFull placeholder={"Descrição"} />
+                              </div>
+
+                              <div className="col-12 col-md-6">
+                                   <InputFull type="number" placeholder={"Quantidade em estoque"} />
+                              </div>
+
+                              <div className="col-12 col-md-6">
+                                   <InputFull type="number" placeholder={"Valor do Produto"} />
+                              </div>
+
+                              <div className="col-12 col-md-6">
+                                   <div className="mb-3">
+                                        <label htmlFor="formFile" className="form-label">Upload do Produto</label>
+                                        <input className="form-control" type="file" id="formFile" accept="image/*" />
+                                   </div>
+                              </div>
+
+                              <div className="col-12 col-md-6">
+                                   <select className="form-select eco-border">
+                                        <option selected disabled>Categoria</option>
                                         <option>Higiene & Cuidados Pessoais</option>
                                         <option>Casa Sustentável</option>
-                                        <option>Utensilios & Acessórios  Reutilizáveis </option>
+                                        <option>Utensilios & Acessórios Reutilizáveis </option>
                                    </select>
                               </div>
-                              <InputFull type="number" placeholder={"Quantidade de produtos"}></InputFull>
-
-                              <div class="mb-3 eco-border">
-                                   <label for="formFile" class="form-label">Imagem do Produto</label>
-                                   <input class="form-control" type="file" id="formFile" />
+                              <div className="col-12 col-md-6 d-flex align-items-end">
+                                   <button type="submit" className="btn btn-eco px-5 py-2 fw-bold w-100">
+                                        SALVAR PRODUTO
+                                   </button>
                               </div>
-                              <button className="btn btn-eco px-5 py-2 fw-bold"> SALVAR PRODUTO </button>
                          </fieldset>
-
-
                     </form>
                </div>
 

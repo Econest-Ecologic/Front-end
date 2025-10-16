@@ -1,7 +1,8 @@
-export default function InputFull({type, placeholder }) {
+export default function InputFull({type="text", placeholder }) {
     return <>
         <div className="mb-3 input-group">
             <input
+
                 type={type}
                 placeholder={placeholder}
                 className="form-control eco-border"

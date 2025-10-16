@@ -21,7 +21,7 @@ export default function HomeUsuario() {
             diferença no dia a dia e ajudam a construir um futuro mais verde.
           </p>
         </div>
-        <div className="row gap-2 align-items-center justify-content-center mt-3">
+        <div className="row flex-wrap gap-2 align-items-center justify-content-center my-5">
           <CardBadge text={"Gestos simples transformam grandes realidades."} />
           <CardBadge text={"Pequenas mudanças geram grandes imapctos."} />
           <CardBadge
@@ -29,7 +29,7 @@ export default function HomeUsuario() {
           />
         </div>
         <Banner link={"/ProdutosEcologicos.png"} />
-        <div className="row mt-3 d-flex mx-3 flex-wrap align-items-end justify-content-center">
+        <div className="row row-gap-4 my-5 flex-wrap align-items-center justify-content-center">
           <CardPropaganda text={"Higiene & Cuidados Pessoais"} img={"/Bucha.jpeg"} />
           <CardPropaganda text={"Casa Sustentáveis"} img={"/CasaSustentaveis.png"} />
           <CardPropaganda text={"Utensilios & Acessórios  Reutilizáveis "} img={"/Utensilios.png"} />

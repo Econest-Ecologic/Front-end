@@ -1,7 +1,7 @@
 export default function Card({img,title,desc,price,badge,color="bg-success",border="border-5 eco-border"}) {
   return (
     <>
-      <div className="col col-12 col-md-6 col-lg-4 col-xl-3" id="card">
+      <div className="col col-12 col-md-6 col-lg-4 col-xl-3 d-flex justify-content-center" id="card">
         <div
           className={`card border ${border} bg-eco position-relative`}
           style={{ width: "18rem" }}

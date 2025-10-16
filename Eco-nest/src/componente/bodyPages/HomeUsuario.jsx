@@ -35,7 +35,7 @@ export default function HomeUsuario() {
           <CardPropaganda text={"Utensilios & Acessórios  Reutilizáveis "} img={"/Utensilios.png"} />
         </div>
         <Banner link={"../Banner3.png"} />
-        <div className="row row-gap-4 mt-5 mx-3">
+        <div className="row row-gap-4 mt-5 mx-3 justify-content-center">
         <Card img={"../exProd.png"} title={"Titulo"} badge={"NOVO"} desc={"descrição de um produto"} price={22.50} border={"border-0"}/>
         <Card img={"../exProd.png"} title={"Titulo"} badge={"NOVO"} desc={"descrição de um produto"} price={22.50} border={"border-0"}/>
         <Card img={"../exProd.png"} title={"Titulo"} badge={"PROMOÇÃO"} desc={"descrição de um produto"} price={22.50} color="bg-promo" border={"border-0"}/>

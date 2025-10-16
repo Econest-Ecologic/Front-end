@@ -4,9 +4,11 @@ import InputFull from "../componente/InputFull";
 export function TelaCadastrarProduto() {
      const navigate = useNavigate();
      return <>
+
           <Navbar></Navbar>
+      
           <main className="container-fluid bg-eco border-top border-2 eco-border  d-flex justify-content-start align-items-center vh-100 " >
-               <div className="container bg-body rounded rounded-5 flex-column d-flex">
+               <div className="container bg-body rounded rounded-5 flex-column d-flex py-5">
                     <button className="btn btn-voltar border-0 fs-2 rounded-2 align-self-start" onClick={() => { navigate(-1) }}> <i className="bi bi-arrow-left-short"></i></button>
                     <img src="..\public\logoSemFundo.png"
                          alt="logo econest"
@@ -16,7 +18,7 @@ export function TelaCadastrarProduto() {
 
                     <form>
                          <fieldset className="row g-3">
-                              <legend className="col-12">Cadastrar Produto</legend>
+                              <legend className="col-12 text-success">Cadastrar Produto</legend>
 
                               <div className="col-12">
                                    <InputFull placeholder={"Escreva o nome do produto"} />

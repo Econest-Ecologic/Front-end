@@ -13,14 +13,16 @@ export function TelaAdm() {
           background-color: #fff;
           border-radius: 20px;
           box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
-          min-width: 700px;
-        }
+          max-whidth: 600px;
+          width:90%;
+
+          }
   
       `}</style>
 
       <Navbar />
       <div className="admin-container bg-eco border-top border-2 eco-border  d-flex justify-content-center align-items-center vh-100">
-        <div className="card-admin text-center position-relative p-5 bg-body">
+        <div className="card-admin text-center position-relative p-5 bg-body w-auto">
           <img
             src="..\public\logoSemFundo.png"
             alt="EcoNest Logo"

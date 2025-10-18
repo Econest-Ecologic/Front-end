@@ -11,7 +11,7 @@ export default function HomeUsuario() {
       <header>
         <Navbar num={1} />
       </header>
-      <main className="overflow-x-hidden">
+      <main className="container-fluid p-0 d-flex flex-column justify-content-center overflow-x-hidden">
         <Banner link={"/Banner1.png"} />
         <div className="d-flex flex-column bg-body gap-3 mt-4 ms-3">
           <h1>Bem-vindo à Eco Nest 🌱</h1>
@@ -30,16 +30,58 @@ export default function HomeUsuario() {
         </div>
         <Banner link={"/ProdutosEcologicos.png"} />
         <div className="row row-gap-4 my-5 flex-wrap align-items-center justify-content-center">
-          <CardPropaganda text={"Higiene & Cuidados Pessoais"} img={"/Bucha.jpeg"} />
-          <CardPropaganda text={"Casa Sustentáveis"} img={"/CasaSustentaveis.png"} />
-          <CardPropaganda text={"Utensilios & Acessórios  Reutilizáveis "} img={"/Utensilios.png"} />
+          <CardPropaganda
+            text={"Higiene & Cuidados Pessoais"}
+            img={"/Bucha.jpeg"}
+          />
+          <CardPropaganda
+            text={"Casa Sustentáveis"}
+            img={"/CasaSustentaveis.png"}
+          />
+          <CardPropaganda
+            text={"Utensilios & Acessórios  Reutilizáveis "}
+            img={"/Utensilios.png"}
+          />
         </div>
         <Banner link={"../Banner3.png"} />
         <div className="row row-gap-4 mt-5 mx-3 justify-content-center">
-        <Card img={"../exProd.png"} title={"Titulo"} badge={"NOVO"} desc={"descrição de um produto"} price={22.50} border={"border-0"}/>
-        <Card img={"../exProd.png"} title={"Titulo"} badge={"NOVO"} desc={"descrição de um produto"} price={22.50} border={"border-0"}/>
-        <Card img={"../exProd.png"} title={"Titulo"} badge={"PROMOÇÃO"} desc={"descrição de um produto"} price={22.50} color="bg-promo" border={"border-0"}/>
-        <Card img={"../exProd.png"} title={"Titulo"} badge={"PROMOÇÃO"} desc={"descrição de um produto"} price={22.50} color="bg-promo" border={"border-0"}/>
+          <Card
+            img={"../exProd.png"}
+            title={"Titulo"}
+            badge={"NOVO"}
+            desc={"descrição de um produto"}
+            price={22.5}
+            border={"border-0"}
+          />
+          <Card
+            img={"../exProd.png"}
+            title={"Titulo"}
+            badge={"NOVO"}
+            desc={"descrição de um produto"}
+            price={22.5}
+            border={"border-0"}
+          />
+          <Card
+            img={"../exProd.png"}
+            title={"Titulo"}
+            badge={"PROMOÇÃO"}
+            desc={"descrição de um produto"}
+            price={22.5}
+            color="bg-promo"
+            border={"border-0"}
+          />
+          <Card
+            img={"../exProd.png"}
+            title={"Titulo"}
+            badge={"PROMOÇÃO"}
+            desc={"descrição de um produto"}
+            price={22.5}
+            color="bg-promo"
+            border={"border-0"}
+          />
+          <button className="btn btn-success w-25 justify-content-center align-items-center py-3 fw-semibold fs-4">
+            Conheça todos os nossos Produtos
+          </button>
         </div>
       </main>
       <Footer />

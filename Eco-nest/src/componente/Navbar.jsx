@@ -1,29 +1,32 @@
-import { useState,useEffect } from "react";
-import { NavLink,Link } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { NavLink, Link } from "react-router-dom";
 
 export function Navbar() {
-
   //quando a pagina atualiza ele pega no local storag qual o ultimo tema salvo
   useEffect(() => {
-  const temaSalvo = localStorage.getItem("tema") || "dark";
-  setTema(temaSalvo);
-  document.documentElement.setAttribute("data-bs-theme", temaSalvo);
-}, []);
-
+    const temaSalvo = localStorage.getItem("tema") || "dark";
+    setTema(temaSalvo);
+    document.documentElement.setAttribute("data-bs-theme", temaSalvo);
+  }, []);
 
   const [tema, setTema] = useState("dark");
   function toggleTheme() {
     const newTheme = tema === "light" ? "dark" : "light";
     setTema(newTheme);
     document.documentElement.setAttribute("data-bs-theme", newTheme);
-    localStorage.setItem("tema",newTheme)
+    localStorage.setItem("tema", newTheme);
   }
 
   return (
     <nav className="navbar navbar-expand-lg bg-navbar border-bottom eco-border py-2">
       <div className="container-fluid">
-        <a className="navbar-brand" href="#">
-          Navbar
+        <a class="navbar-brand border-0" href="#">
+          <img
+            src="\public\LogoMaior.png"
+            alt="Bootstrap"
+            width="70"
+            height="70"
+          />
         </a>
 
         <button
@@ -38,9 +41,12 @@ export function Navbar() {
           <span className="navbar-toggler-icon"></span>
         </button>
 
-        <div className="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul className="navbar-nav ms-auto mb-2 mb-lg-0 d-flex align-items-center gap-2">
-            <li className="nav-item me-3">
+        <div
+          className="collapse navbar-collapse w-100"
+          id="navbarSupportedContent"
+        >
+          <ul className="navbar-nav ms-auto mb-2 mb-lg-0 d-flex align-items-center gap-2 w-100 justify-content-end">
+            <li className="nav-item me-3 w-25">
               <form className="d-flex input-group" role="search">
                 <input
                   className="form-control border eco-border"

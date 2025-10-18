@@ -27,7 +27,7 @@ export default function Produtos() {
             txt={"Higiene e Cuidados pessoais"}
           />
         </nav>
-        <div className="container-xxl">
+        <div className="container-xxl d-flex justify-content-center">
           <h1>Todos</h1>
           <div className="row row-gap-4">
             <Card />

@@ -1,8 +1,8 @@
-export default function Toast({ msg, icon }) {
+export default function Toast({ msg, icon, color = "bg-success" }) {
   return (
     <>
       <div
-        className="toast align-items-center bg-success text-white bottom-0 end-0 position-fixed mb-3 me-3"
+        className={`toast align-items-center ${color} text-white bottom-0 end-0 position-fixed mb-3 me-3`}
         role="alert"
         aria-live="assertive"
         aria-atomic="true"

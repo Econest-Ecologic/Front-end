@@ -3,10 +3,12 @@ import { Navbar } from "../componente/Navbar"
 import InputFull from "../componente/InputFull"
 import InputOutline from "../componente/InputOutline"
 import { useState } from "react"
+import { useNavigate } from "react-router-dom"
+
 
 
 export function CriarAdministrador() {
-
+    const navigate = useNavigate();
     const [nome, setnome] = useState();
     const [email, setemail] = useState();
     const [senha, setsenha] = useState();
@@ -15,10 +17,12 @@ export function CriarAdministrador() {
     const [telefone, settelefone] = useState();
 
     return <>
-        <Navbar></Navbar>
+        
 
-        <div className="d-flex justify-content-center align-items-center min-vh-100">
-            <div className="p-5 custom-card-container">
+        <div className="d-flex justify-content-center align-items-center min-vh-100 bg-eco d-flex vh-100 ">
+            <div className="p-5 custom-card-container bg-body rounded rounded-5 d-flex justify-content-center align-items-center">
+             <button className="btn btn-voltar border-0 fs-2 rounded-2 align-self-start" onClick={() => { navigate(-1) }}> <i className="bi bi-arrow-left-short"></i></button>
+                
                 <div className="row">
 
                     <div className="col-md-5 d-flex flex-column align-items-center justify-content-center text-center eco-text">
@@ -32,8 +36,8 @@ export function CriarAdministrador() {
                         />
                     </div>
 
-                    <div className="col-md-7">
-                        <form>
+                    <div className="col-md-7 d-flex justify-content-center align-items-center">
+                        <form className="w-100">
 
                             <InputOutline type="text" placeholder={"nome"} icon={<i className="bi bi-person"></i>} inputValue={nome} inputFunction={setnome} />
 
@@ -50,7 +54,7 @@ export function CriarAdministrador() {
                             <InputOutline type="text" placeholder="CNPJ" icon={<i className="bi bi-file-text"></i>} inputValue={cnpj} inputFunction={setcnpj} />
 
                             
-                                    <InputOutline type="tel"  placeholder="Telefone" icon={<i className="bi bi-telephone"></i>} inputValue={telefone} inputFunction={settelefone} />
+                            <InputOutline type="tel"  placeholder="Telefone" icon={<i className="bi bi-telephone"></i>} inputValue={telefone} inputFunction={settelefone} />
                            
 
                             <button

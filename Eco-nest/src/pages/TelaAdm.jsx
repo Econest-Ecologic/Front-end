@@ -20,7 +20,7 @@ export function TelaAdm() {
   
       `}</style>
 
-      <Navbar />
+      
       <div className="admin-container bg-eco border-top border-2 eco-border  d-flex justify-content-center align-items-center vh-100">
         <div className="card-admin text-center position-relative p-5 bg-body w-auto">
           <img

@@ -5,7 +5,7 @@ export function TelaCadastrarProduto() {
      const navigate = useNavigate();
      return <>
 
-          <Navbar></Navbar>
+         
       
           <main className="container-fluid bg-eco border-top border-2 eco-border  d-flex justify-content-start align-items-center vh-100 " >
                <div className="container bg-body rounded rounded-5 flex-column d-flex py-5">

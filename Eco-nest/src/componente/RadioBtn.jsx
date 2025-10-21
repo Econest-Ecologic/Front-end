@@ -1,4 +1,10 @@
 export default function RadioBtn({ name, id, txt, checked }) {
+  
+  // const mostrarToast = () => {
+  //   const toast = document.getElementById("toast");
+  //   const bsToast = new bootstrap.Toast(toast);
+  //   bsToast.show();
+  // };
   return (
     <>
       <input

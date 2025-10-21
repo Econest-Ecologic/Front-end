@@ -4,8 +4,47 @@ import Footer from "../Footer";
 import CardPropaganda from "../CardPropaganda";
 import Banner from "../Banner";
 import Card from "../Card";
+import { useEffect, useState } from "react";
+import Toast from "../Toast"
 
 export default function HomeUsuario() {
+  
+  const mostrarToast = (msg) => {
+    const toast = document.getElementById("toast");
+    const bsToast = new bootstrap.Toast(toast);
+    setToastMessage(msg)
+    bsToast.show();
+  };
+
+  const[toastMessage,setToastMessage] = useState()
+
+  const apiUrl = "http://localhost:8084/api/v1/produtos"
+  const [listaProd,setListaProd] = useState();
+  useEffect(()=>{
+    try{
+
+      fetch(apiUrl).then(response => {
+        if(!response.ok){
+          mostrarToast("Lista de produtos não encontrada")
+        }else{
+          return response.json();
+        }
+      }).then(
+        data => {
+          setListaProd(JSON.stringify(data))
+          if(data.length == 0){
+            mostrarToast("Lista de produtos vazia")
+          }
+        }
+      ).catch(erro => {
+       mostrarToast("Erro ao buscar produtos : "+erro.messasge)
+      })
+    }catch{
+      mostrarToast("Erro ao carregar os produtos")
+    }
+    },
+    [])
+
   return (
     <>
       <header>
@@ -43,6 +82,9 @@ export default function HomeUsuario() {
             img={"/Utensilios.png"}
           />
         </div>
+        <div className="row justify-content-center">
+          <button className="btn btn-eco p-4 w-25 row-gap-4 mb-5"> Comprar agora</button>
+        </div>
         <Banner link={"../Banner3.png"} />
         <div className="row row-gap-4 mt-5 mx-3 justify-content-center">
           <Card
@@ -79,11 +121,12 @@ export default function HomeUsuario() {
             color="bg-promo"
             border={"border-0"}
           />
-          <button className="btn btn-success w-25 justify-content-center align-items-center py-3 fw-semibold fs-4">
+          <button className="btn btn-eco w-25 justify-content-center align-items-center py-3 fw-semibold fs-4">
             Conheça todos os nossos Produtos
           </button>
         </div>
       </main>
+      <Toast msg={toastMessage}/>
       <Footer />
     </>
   );

@@ -6,9 +6,20 @@ import Banner from "../Banner";
 import Card from "../Card";
 import { useEffect, useState } from "react";
 import Toast from "../Toast"
+import { useNavigate } from "react-router-dom";
 
 export default function HomeUsuario() {
-  
+
+  const navigate = useNavigate()
+
+  function paginaProd(title, categoria) {
+    const query = new URLSearchParams();
+    query.set("title", title)
+    // const listaFiltrada = listaProd.filter(prod => prod.categoria == categoria)
+    // query.set("listaProd", listaFiltrada)
+    navigate(`/pagProduto?${query.toString()}`)
+  }
+
   const mostrarToast = (msg) => {
     const toast = document.getElementById("toast");
     const bsToast = new bootstrap.Toast(toast);
@@ -16,33 +27,33 @@ export default function HomeUsuario() {
     bsToast.show();
   };
 
-  const[toastMessage,setToastMessage] = useState()
+  const [toastMessage, setToastMessage] = useState()
 
   const apiUrl = "http://localhost:8084/api/v1/produtos"
-  const [listaProd,setListaProd] = useState();
-  useEffect(()=>{
-    try{
+  const [listaProd, setListaProd] = useState();
+  useEffect(() => {
+    try {
 
       fetch(apiUrl).then(response => {
-        if(!response.ok){
+        if (!response.ok) {
           mostrarToast("Lista de produtos não encontrada")
-        }else{
+        } else {
           return response.json();
         }
       }).then(
         data => {
           setListaProd(JSON.stringify(data))
-          if(data.length == 0){
+          if (data.length == 0) {
             mostrarToast("Lista de produtos vazia")
           }
         }
       ).catch(erro => {
-       mostrarToast("Erro ao buscar produtos : "+erro.messasge)
+        mostrarToast("Erro ao buscar produtos : " + erro.messasge)
       })
-    }catch{
+    } catch {
       mostrarToast("Erro ao carregar os produtos")
     }
-    },
+  },
     [])
 
   return (
@@ -69,21 +80,35 @@ export default function HomeUsuario() {
         </div>
         <Banner link={"/ProdutosEcologicos.png"} />
         <div className="row row-gap-4 my-5 flex-wrap align-items-center justify-content-center">
-          <CardPropaganda
-            text={"Higiene & Cuidados Pessoais"}
-            img={"/Bucha.jpeg"}
-          />
-          <CardPropaganda
-            text={"Casa Sustentáveis"}
-            img={"/CasaSustentaveis.png"}
-          />
-          <CardPropaganda
-            text={"Utensilios & Acessórios  Reutilizáveis "}
-            img={"/Utensilios.png"}
-          />
+          <div onClick={() => paginaProd("Higiene & Cuidados Pessoais", "higiene")}
+          >
+
+
+            <CardPropaganda
+              text={"Higiene & Cuidados Pessoais"}
+              img={"/Bucha.jpeg"}
+            />
+          </div>
+
+          <div onClick={() => paginaProd("Casa Sustentáveis", "casa")}>
+
+            <CardPropaganda
+              text={"Casa Sustentáveis"}
+              img={"/CasaSustentaveis.png"}
+            />
+          </div>
+          <div onClick={() => paginaProd("Utensilios", "utensilios")}
+          >
+
+            <CardPropaganda
+              text={"Utensilios & Acessórios  Reutilizáveis "}
+              img={"/Utensilios.png"}
+            />
+          </div>
+
         </div>
         <div className="row justify-content-center">
-          <button className="btn btn-eco p-4 w-25 row-gap-4 mb-5"> Comprar agora</button>
+          <button className="btn btn-eco p-4 w-25 row-gap-4 mb-5" onClick={() => navigate("/")} > Comprar agora</button>
         </div>
         <Banner link={"../Banner3.png"} />
         <div className="row row-gap-4 mt-5 mx-3 justify-content-center">
@@ -126,7 +151,7 @@ export default function HomeUsuario() {
           </button>
         </div>
       </main>
-      <Toast msg={toastMessage}/>
+      <Toast msg={toastMessage} />
       <Footer />
     </>
   );

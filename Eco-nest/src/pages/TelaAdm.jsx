@@ -17,12 +17,33 @@ export function TelaAdm() {
           width:90%;
 
           }
+          .btn-logout-icon {
+                    color: #004d40; /* Cor Verde */
+                    cursor: pointer;
+                    transition: color 0.2s;
+                    font-size: 2rem; 
+                    position: absolute; 
+                    top: 30px;
+                    right: 30px; /* Posição na direita */
+                    background: none;
+                    border: none;
+                    padding: 0;
+                }
+                .btn-logout-icon:hover {
+                    color: #388e3c; 
+                }
   
       `}</style>
 
 
       <div className="admin-container bg-eco border-top border-2 eco-border  d-flex justify-content-center align-items-center vh-100">
         <div className="card-admin text-center position-relative p-5 bg-body w-auto">
+          <button 
+                        className="btn-logout-icon" 
+                        onClick={handleLogout}
+                        title="Sair (Logout)"      >
+                        <i className="bi bi-box-arrow-left"></i>
+                    </button>
           <img
             src="..\public\logoSemFundo.png"
             alt="EcoNest Logo"

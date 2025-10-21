@@ -10,6 +10,7 @@ import { TelaAdm } from "./pages/TelaAdm";
 import { TelaCadastrarProduto } from "./pages/TelaCadastrarProduto";
 import { CriarAdministrador } from "./pages/CriarAdministrador";
 import PagProduto from "./componente/bodyPages/PagProduto";
+import TelaEditarPerfil from "./pages/TelaEditarPerfil";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
@@ -24,6 +25,8 @@ createRoot(document.getElementById("root")).render(
         <Route path="/cadastroProduto" element={<TelaCadastrarProduto />} />
         <Route path="/criarCadastro" element={<CriarAdministrador />} />
         <Route path="/pagProduto" element={<PagProduto />} />
+        <Route path="/editarperfil" element={<TelaEditarPerfil />} />
+        
         
       </Routes>
     </BrowserRouter>

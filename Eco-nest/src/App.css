@@ -20,6 +20,10 @@ box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.658) ;
     margin-bottom: 0 !important; 
     margin-top: -20px; 
 }
+
+#logo:hover{
+cursor: pointer;
+}
 .bg-eco-admin {
     background-color: #e0f2e0; /* Fundo suave */
 }

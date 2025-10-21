@@ -1,14 +1,10 @@
-
 import InputOutline from "../componente/InputOutline"
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
 import '../app.css';
 
-
-
-
-export function CriarAdministrador() {
-    const navigate = useNavigate();
+export default function TelaEditarPerfil(){
+   const navigate = useNavigate();
     const [nome, setnome] = useState();
     const [email, setemail] = useState();
     const [senha, setsenha] = useState();
@@ -26,7 +22,7 @@ export function CriarAdministrador() {
 
                     <div className="col-md-5 d-flex flex-column align-items-center justify-content-center text-center eco-text" id="logo-container">
                         <h2 className="fw-bold" id="titulo-admin">
-                            CRIAR <br /> ADMINISTRADOR
+                            EDITAR <br /> PERFIL
                         </h2>
                         <img
                             src="..\public\logoSemFundo.png"
@@ -59,7 +55,7 @@ export function CriarAdministrador() {
                             <button
                                 type="submit"
                                 className="btn w-100 mt-4 btn-lg btn-eco">
-                                CRIAR
+                                EDITAR
                             </button>
                         </form>
                     </div>

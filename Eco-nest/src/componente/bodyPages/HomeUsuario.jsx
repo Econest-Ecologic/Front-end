@@ -15,8 +15,8 @@ export default function HomeUsuario() {
   function paginaProd(title, categoria) {
     const query = new URLSearchParams();
     query.set("title", title)
-    // const listaFiltrada = listaProd.filter(prod => prod.categoria == categoria)
-    // query.set("listaProd", listaFiltrada)
+    const listaFiltrada = listaProd.filter(prod => prod.categoria == categoria)
+    query.set("listaProd", encodeURIComponent(JSON.stringify(listaFiltrada)));//codifica o json, passar em json para passar apenas 1 "string"
     navigate(`/pagProduto?${query.toString()}`)
   }
 
@@ -53,6 +53,54 @@ export default function HomeUsuario() {
     } catch {
       mostrarToast("Erro ao carregar os produtos")
     }
+
+    setListaProd([
+      {
+        nome: "Bucha Vegetal Natural",
+        preco: 8.90,
+        categoria: "higiene"
+      },
+      {
+        nome: "Sabonete Orgânico de Lavanda",
+        preco: 14.50,
+        categoria: "higiene"
+      },
+      {
+        nome: "Escova de Dente de Bambu",
+        preco: 9.99,
+        categoria: "higiene"
+      },
+      {
+        nome: "Pano de Limpeza Reutilizável",
+        preco: 6.75,
+        categoria: "casa"
+      },
+      {
+        nome: "Sabão Ecológico Multiuso",
+        preco: 12.80,
+        categoria: "casa"
+      },
+      {
+        nome: "Composteira Doméstica Pequena",
+        preco: 189.90,
+        categoria: "casa"
+      },
+      {
+        nome: "Garrafa Reutilizável de Inox",
+        preco: 59.90,
+        categoria: "utensilios"
+      },
+      {
+        nome: "Canudo de Aço Inoxidável",
+        preco: 4.99,
+        categoria: "utensilios"
+      },
+      {
+        nome: "Copo Retrátil de Silicone",
+        preco: 19.90,
+        categoria: "utensilios"
+      }]
+    )
   },
     [])
 
@@ -80,31 +128,23 @@ export default function HomeUsuario() {
         </div>
         <Banner link={"/ProdutosEcologicos.png"} />
         <div className="row row-gap-4 my-5 flex-wrap align-items-center justify-content-center">
-          <div onClick={() => paginaProd("Higiene & Cuidados Pessoais", "higiene")}
-          >
+          <CardPropaganda
+            text={"Higiene & Cuidados Pessoais"}
+            img={"/Bucha.jpeg"}
+            onClick={() => paginaProd("Higiene & Cuidados Pessoais", "higiene")}
+          />
 
+          <CardPropaganda
+            text={"Casa Sustentáveis"}
+            img={"/CasaSustentaveis.png"}
+            onClick={() => paginaProd("Casa Sustentáveis", "casa")}
+          />
 
-            <CardPropaganda
-              text={"Higiene & Cuidados Pessoais"}
-              img={"/Bucha.jpeg"}
-            />
-          </div>
-
-          <div onClick={() => paginaProd("Casa Sustentáveis", "casa")}>
-
-            <CardPropaganda
-              text={"Casa Sustentáveis"}
-              img={"/CasaSustentaveis.png"}
-            />
-          </div>
-          <div onClick={() => paginaProd("Utensilios", "utensilios")}
-          >
-
-            <CardPropaganda
-              text={"Utensilios & Acessórios  Reutilizáveis "}
-              img={"/Utensilios.png"}
-            />
-          </div>
+          <CardPropaganda
+            text={"Utensilios & Acessórios  Reutilizáveis "}
+            img={"/Utensilios.png"}
+            onClick={() => paginaProd("Utensilios", "utensilios")}
+          />
 
         </div>
         <div className="row justify-content-center">

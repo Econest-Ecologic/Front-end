@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react";
-import { NavLink, Link } from "react-router-dom";
+import { NavLink, Link, useNavigate } from "react-router-dom";
 
 export function Navbar() {
+  const navigate = useNavigate();
   //quando a pagina atualiza ele pega no local storag qual o ultimo tema salvo
   useEffect(() => {
     const temaSalvo = localStorage.getItem("tema") || "dark";
@@ -20,7 +21,7 @@ export function Navbar() {
   return (
     <nav className="navbar navbar-expand-lg bg-navbar border-bottom eco-border py-2">
       <div className="container-fluid">
-        <a class="navbar-brand border-0" href="#">
+        <a class="navbar-brand border-0" onClick={()=> navigate("/home") } id="logo">
           <img
             src="\public\LogoMaior.png"
             alt="Bootstrap"

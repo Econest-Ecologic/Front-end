@@ -23,7 +23,7 @@ createRoot(document.getElementById("root")).render(
         <Route path="/adm" element={<TelaAdm />} />
         <Route path="/cadastroProduto" element={<TelaCadastrarProduto />} />
         <Route path="/criarCadastro" element={<CriarAdministrador />} />
-        <Route path="/pagProduto" element={<PagProduto />} />
+        <Route path="/pagProduto" element={<PagProduto />} />  
         
       </Routes>
     </BrowserRouter>

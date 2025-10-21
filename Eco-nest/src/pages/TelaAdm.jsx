@@ -46,7 +46,9 @@ export function TelaAdm() {
                 EDITAR PERFIL
               </button>
             </Link>
+            <Link to={"/feedback"}>
             <button className="btn btn-eco px-5 py-2 fw-bold"> FEEDBACK</button>
+            </Link>
           </div>
         </div>
       </div>

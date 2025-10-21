@@ -20,3 +20,67 @@ box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.658) ;
     margin-bottom: 0 !important; 
     margin-top: -20px; 
 }
+.bg-eco-admin {
+    background-color: #e0f2e0; /* Fundo suave */
+}
+
+.w-75 { /* Garante que o card ocupe 75% da largura da tela */
+    width: 75% !important;
+    max-width: 1200px;
+}
+
+.logo-pequena-feedback {
+    width: 50px; 
+    height: auto;
+}
+
+.titulo-feedback-tela {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #388e3c; 
+}
+
+.btn-voltar-feedback {
+    background: none;
+    border: none;
+    color: #388e3c;
+    cursor: pointer;
+}
+
+
+.card-produto-item {
+    background-color: #f9f9f9;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+}
+
+.produto-nome-feedback {
+    font-size: 1.4rem;
+    color: #004d40; 
+    font-weight: 600;
+}
+
+
+.lista-feedbacks-aninhada {
+    list-style: none;
+    padding-left: 0;
+}
+
+.feedback-item-detalhe {
+    margin-bottom: 15px;
+    padding-left: 10px;
+    border-left: 4px solid #b2dfdb; 
+}
+
+.feedback-cliente-header {
+    color: #333;
+    font-weight: bold;
+}
+
+.feedback-texto-citacao {
+    display: block;
+    margin-top: 5px;
+    font-style: italic;
+    color: #555;
+    font-size: 0.95rem;
+}

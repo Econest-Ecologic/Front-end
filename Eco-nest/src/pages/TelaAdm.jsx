@@ -1,7 +1,9 @@
 import { Navbar } from "../componente/Navbar";
-import { Link } from "react-router-dom";
-
+import { Link, useNavigate } from "react-router-dom";
 export function TelaAdm() {
+
+  const navigate = useNavigate();
+
   return (
     <>
 
@@ -40,8 +42,8 @@ export function TelaAdm() {
         <div className="card-admin text-center position-relative p-5 bg-body w-auto">
           <button 
                         className="btn-logout-icon" 
-                        onClick={handleLogout}
-                        title="Sair (Logout)"      >
+                        title="Sair (Logout)"
+                        onClick={()=>navigate("/")}>
                         <i className="bi bi-box-arrow-left"></i>
                     </button>
           <img

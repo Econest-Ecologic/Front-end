@@ -1,4 +1,4 @@
-export default function RadioBtn({ name, id, txt, checked }) {
+export default function RadioBtn({ name, id, txt, defaultChecked }) {
   
   // const mostrarToast = () => {
   //   const toast = document.getElementById("toast");
@@ -7,16 +7,18 @@ export default function RadioBtn({ name, id, txt, checked }) {
   // };
   return (
     <>
+
       <input
         type="radio"
         className="btn-check"
         id={id}
         name={name}
-        checked={checked}
+        defaultChecked={defaultChecked}
       />
       <label className="btn" htmlFor={id}>
         {txt}
       </label>
+
     </>
   );
 }

@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { NavLink, Link, useNavigate } from "react-router-dom";
 
-export function Navbar() {
+export function NavbarLogado() {
   const navigate = useNavigate();
   //quando a pagina atualiza ele pega no local storag qual o ultimo tema salvo
   useEffect(() => {
@@ -21,7 +21,7 @@ export function Navbar() {
   return (
     <nav className="navbar navbar-expand-lg bg-navbar border-bottom eco-border py-2">
       <div className="container-fluid">
-        <a class="navbar-brand border-0" onClick={()=> navigate("/home") } id="logo">
+        <a class="navbar-brand border-0" id="logo">
           <img
             src="\public\LogoMaior.png"
             alt="Bootstrap"
@@ -61,21 +61,7 @@ export function Navbar() {
               </form>
             </li>
 
-            <li className="nav-item">
-              <NavLink className={"nav-link"} aria-current="page" to={"/home"}>
-                Home
-              </NavLink>
-            </li>
-            <li className="nav-item">
-              <NavLink className="nav-link " to={"/sobre"}>
-                Sobre Nós
-              </NavLink>
-            </li>
-            <li className="nav-item">
-              <NavLink className="nav-link" to={"/contato"}>
-                Contato
-              </NavLink>
-            </li>
+
             <li className="nav-item">
               <button
                 className={
@@ -108,9 +94,18 @@ export function Navbar() {
             </li>
 
             <li className="nav-item">
-              <Link to={"/"} className="nav-link btn btn btn-eco">
-                Entrar
-              </Link>
+              <div className="dropdown">
+                <button className="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  <img src="\elessandro.jpeg"
+                    alt="Bootstrap"
+                    width="80"
+                    height="80"
+                    className="rounded-circle btn btn-sm img-fluid " />
+                </button>
+                <ul class="dropdown-menu dropdown-menu-end">
+                  <li><button onClick={()=> navigate("/")} className="btn btn-outline-danger rounded-0 m-0 w-100"><i class="bi bi-box-arrow-in-left"></i></button></li>
+                </ul>
+              </div>
             </li>
           </ul>
         </div>

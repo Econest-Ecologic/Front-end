@@ -65,10 +65,17 @@
 .btn-voltar:hover{
   color: rgb(145, 96, 24)!important;
 }
+.btn-navbar{
+    background-color: var(--bg-btn-navbar);
+}
+.btn-navbar:hover{
+    background-color:var(--bs-success-border-subtle);
+}
 
 
 :root,
 [data-bs-theme=light] {
+  --bg-btn-navbar:#fff;
   --bg-voltar:rgb(211, 160, 83);
   --bg-navbar: #dbe4d1;
   --bg-eco: #dce6d5;
@@ -134,7 +141,7 @@
   --bs-dark-bg-subtle: #ced4da;
   --bs-primary-border-subtle: #9ec5fe;
   --bs-secondary-border-subtle: #c4c8cb;
-  --bs-success-border-subtle: #dbe4d1;
+  --bs-success-border-subtle: #a3cfbb;
   --bs-info-border-subtle: #9eeaf9;
   --bs-warning-border-subtle: #ffe69c;
   --bs-danger-border-subtle: #f1aeb5;
@@ -198,6 +205,7 @@
 
 [data-bs-theme=dark] {
   color-scheme: dark;
+    --bg-btn-navbar:#212529;
   --bg-navbar: #212529;
   --eco-verde-card-text: #18df82;
   --bg-eco: #2f3a2e;

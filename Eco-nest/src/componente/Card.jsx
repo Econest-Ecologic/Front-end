@@ -1,12 +1,12 @@
 export default function Card({ img, title, desc, price, badge, color = "bg-success", border = "border-5 eco-border" }) {
   return (
     <>
-      <div className="col col-12 col-md-6 col-lg-4 col-xl-3 justify-content-center" id="card">
         <div
           className={`card border ${border} bg-eco position-relative`}
           style={{
             width: "18rem",
             minHeight:"26rem",
+            maxHeight:"30rem"
           }}
         >
           <div className={badge ? `badge ${color} position-absolute p-2` : "none"} style={{ top: "-3%", right: "-10%" }}> {badge}</div>
@@ -14,7 +14,9 @@ export default function Card({ img, title, desc, price, badge, color = "bg-succe
             src={img}
             className="card-img-top object-fit-cover p-4"
             alt="img"
-            style={{ borderRadius: "30px" }}
+            style={{ borderRadius: "30px",
+              maxHeight:"200px"
+             }}
           />
           <div className="card-body px-4">
             <h5 className="card-title eco-card-text text-center">{title}</h5>
@@ -25,7 +27,6 @@ export default function Card({ img, title, desc, price, badge, color = "bg-succe
             </button>
           </div>
         </div>
-      </div>
     </>
   );
 }

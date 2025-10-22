@@ -10,6 +10,7 @@
   min-height: 90vh !important;
 }
 
+
 .card:hover{
 cursor: pointer!important;
 transform: translatey(-10px);

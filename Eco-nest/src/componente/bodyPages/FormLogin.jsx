@@ -21,7 +21,9 @@ export function FormLogin({ trocaLogin }) {
   function adm() {
     if (email == "adm" && senha == "adm") {
       navigate("/adm");
-    } else {
+    } else if(email=="user" && senha == "123"){
+        navigate("/homeLogado")
+    }else{
       mostrarToast();
     }
   }

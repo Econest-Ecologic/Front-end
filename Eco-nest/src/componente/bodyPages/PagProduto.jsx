@@ -12,7 +12,7 @@ return<>
     <div className="container my-4">
       <h1 className="text-center mb-4">{title}</h1>
 
-      <div className="row g-4">
+      <div className="row flex-wrap g-4">
         {listaProd.map((p, i) => (
           <div className="col-md-3" key={i}>
             <Card

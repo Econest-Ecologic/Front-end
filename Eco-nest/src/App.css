@@ -89,3 +89,13 @@ cursor: pointer;
     color: #555;
     font-size: 0.95rem;
 }
+
+#resultado-pesquisa{
+    display: none!important;
+}
+
+#input-navbar:focus ~ #resultado-pesquisa{
+    display:flex !important;
+    justify-content: center;
+    flex-direction: row;
+}

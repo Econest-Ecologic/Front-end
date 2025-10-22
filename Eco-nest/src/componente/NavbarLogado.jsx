@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { NavLink, Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export function NavbarLogado() {
   const navigate = useNavigate();
@@ -48,16 +48,24 @@ export function NavbarLogado() {
         >
           <ul className="navbar-nav ms-auto mb-2 mb-lg-0 d-flex align-items-center gap-2 w-100 justify-content-end">
             <li className="nav-item me-3 w-25">
-              <form className="d-flex input-group" role="search">
+              <form className="d-flex input-group position-relative" role="search">
                 <input
                   className="form-control border eco-border border-end-0 rounded-start-0 rounded-start-5"
                   type="search"
                   placeholder="Pesquise o produto desejado"
                   aria-label="Search"
+                  id="input-navbar"
                 />
                 <button className="btn btn-navbar border eco-border border-start-0 input-group-text rounded-end-5" type="submit">
                   <i className="bi bi-search"></i>
                 </button>
+                  <ul className="position-absolute d-flex flex-column bg-primary p-0 bg-body" id="resultado-pesquisa" style={{top:"37px", left:"10px",width:"90%"}}>
+                    <button className="bg-body border-1">1</button>
+                    <button className="bg-body border-1">2</button>
+                    <button className="bg-body border-1">3</button>
+                    <button className="bg-body border-1">4</button>
+                    <button className="bg-body border-1">5</button>
+                  </ul>
               </form>
             </li>
 
@@ -103,7 +111,7 @@ export function NavbarLogado() {
                     className="rounded-circle btn btn-sm img-fluid " />
                 </button>
                 <ul class="dropdown-menu dropdown-menu-end">
-                  <li><button onClick={()=> navigate("/")} className="btn btn-outline-danger rounded-0 m-0 w-100"><i class="bi bi-box-arrow-in-left"></i></button></li>
+                  <li><button onClick={() => navigate("/")} className="btn btn-outline-danger rounded-0 m-0 w-100"><i class="bi bi-box-arrow-in-left"></i></button></li>
                 </ul>
               </div>
             </li>

@@ -30,6 +30,7 @@ export function TelaAdm() {
                     background: none;
                     border: none;
                     padding: 0;
+                    font-size: 1.5rem;
                 }
                 .btn-logout-icon:hover {
                     color: #388e3c; 

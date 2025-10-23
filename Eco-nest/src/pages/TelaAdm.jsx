@@ -57,21 +57,21 @@ export function TelaAdm() {
 
           <div className="d-flex justify-content-center gap-4 mb-4">
             <Link to={"/cadastroProduto"}>
-              <button className="btn btn-eco px-5 py-2 fw-bold">PRODUTOS</button>
+              <button className="btn btn-eco px-5 py-2 fw-bold text-white">PRODUTOS</button>
             </Link>
             <Link to={"/criarCadastro"}>
-              <button className="btn btn-eco px-5 py-2 fw-bold">CRIAR ADM</button>
+              <button className="btn btn-eco px-5 py-2 fw-bold text-white">CRIAR ADM</button>
             </Link>
           </div>
 
-          <div className="d-flex justify-content-center gap-4 mb-4">
+          <div className="d-flex justify-content-center gap-4 mb-4 text-white">
             <Link to={"/editarperfil"}>
-              <button className="btn btn-eco px-5 py-2 fw-bold">
+              <button className="btn btn-eco px-5 py-2 fw-bold text-white">
                 EDITAR PERFIL
               </button>
             </Link>
             <Link to={"/feedback"}>
-            <button className="btn btn-eco px-5 py-2 fw-bold"> FEEDBACK</button>
+            <button className="btn btn-eco px-5 py-2 fw-bold text-white"> FEEDBACK</button>
             </Link>
           </div>
         </div>

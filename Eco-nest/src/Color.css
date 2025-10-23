@@ -72,9 +72,33 @@
     background-color:var(--bs-success-border-subtle);
 }
 
+#resultado-pesquisa{
+    display: none!important;
+}
+
+#input-navbar:focus ~ #resultado-pesquisa{
+    display:flex !important;
+    justify-content: center;
+    flex-direction: row;
+    z-index: 999;
+    border: 1px solid var(--bg-body-invert);
+    max-height: 200px;
+    overflow-y: auto;
+}
+
+.resp-result{
+background-color: var(--bs-body-bg)!important;
+border: none;
+}
+.resp-result:hover{
+border: 1px solid var(--bg-body-invert)!important;
+object-fit: cover;
+}
+
 
 :root,
 [data-bs-theme=light] {
+  --bg-body-invert:#212529;
   --bg-btn-navbar:#fff;
   --bg-voltar:rgb(211, 160, 83);
   --bg-navbar: #dbe4d1;
@@ -205,6 +229,7 @@
 
 [data-bs-theme=dark] {
   color-scheme: dark;
+    --bg-body-invert:#fff;
     --bg-btn-navbar:#212529;
   --bg-navbar: #212529;
   --eco-verde-card-text: #18df82;

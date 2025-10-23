@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { BotaoTrocaLogin } from "../BotaoTrocaLogin";
 import InputOutline from "../InputOutline";
 import { authService } from "../../services/authService";
@@ -14,10 +14,40 @@ export function FormCadastro({ trocaLogin }) {
   const [telefone, setTelefone] = useState("");
   const [estado, setEstado] = useState("SC");
   const [loading, setLoading] = useState(false);
+  const estadosBrasil = [
+    { nome: "Acre", sigla: "AC" },
+    { nome: "Alagoas", sigla: "AL" },
+    { nome: "Amapá", sigla: "AP" },
+    { nome: "Amazonas", sigla: "AM" },
+    { nome: "Bahia", sigla: "BA" },
+    { nome: "Ceará", sigla: "CE" },
+    { nome: "Distrito Federal", sigla: "DF" },
+    { nome: "Espírito Santo", sigla: "ES" },
+    { nome: "Goiás", sigla: "GO" },
+    { nome: "Maranhão", sigla: "MA" },
+    { nome: "Mato Grosso", sigla: "MT" },
+    { nome: "Mato Grosso do Sul", sigla: "MS" },
+    { nome: "Minas Gerais", sigla: "MG" },
+    { nome: "Pará", sigla: "PA" },
+    { nome: "Paraíba", sigla: "PB" },
+    { nome: "Paraná", sigla: "PR" },
+    { nome: "Pernambuco", sigla: "PE" },
+    { nome: "Piauí", sigla: "PI" },
+    { nome: "Rio de Janeiro", sigla: "RJ" },
+    { nome: "Rio Grande do Norte", sigla: "RN" },
+    { nome: "Rio Grande do Sul", sigla: "RS" },
+    { nome: "Rondônia", sigla: "RO" },
+    { nome: "Roraima", sigla: "RR" },
+    { nome: "Santa Catarina", sigla: "SC" },
+    { nome: "São Paulo", sigla: "SP" },
+    { nome: "Sergipe", sigla: "SE" },
+    { nome: "Tocantins", sigla: "TO" }
+  ];
 
   const handleCadastro = async (e) => {
     e.preventDefault();
     setLoading(true);
+
 
     try {
       const response = await authService.register({
@@ -111,10 +141,10 @@ export function FormCadastro({ trocaLogin }) {
                 value={estado}
                 onChange={(e) => setEstado(e.target.value)}
               >
-                <option value="AC">Acre</option>
-                <option value="AL">Alagoas</option>
-                <option value="SC">Santa Catarina</option>
-                {/* ... outros estados */}
+                <option value="0">Selecione uma opção</option>
+                {estadosBrasil.map(est => (
+                  <option value={est.sigla}>{est.nome}</option>
+                ))}
               </select>
             </div>
 

@@ -14,6 +14,8 @@ import { Feedback } from "./pages/Feedback";
 import HomeLogado from "./componente/HomeLogado";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
+import { GerenciarProdutos } from "./pages/GerenciarProduto";
+
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
@@ -30,7 +32,9 @@ createRoot(document.getElementById("root")).render(
         <Route path="/editarperfil" element={<TelaEditarPerfil />} />
         <Route path="/feedback" element={<Feedback />} />
         <Route path="/homeLogado" element={<HomeLogado />} />
+        <Route path="/GerenciarProdutos" element={<GerenciarProdutos/>} />
       </Routes>
+
     </BrowserRouter>
   </StrictMode>
 );

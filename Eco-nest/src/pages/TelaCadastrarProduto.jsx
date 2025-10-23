@@ -1,6 +1,6 @@
-import { Navbar } from "../componente/Navbar"
 import { useNavigate } from "react-router-dom";
 import InputFull from "../componente/InputFull";
+import { Link } from "react-router-dom";
 export function TelaCadastrarProduto() {
      const navigate = useNavigate();
      return <>
@@ -15,16 +15,18 @@ export function TelaCadastrarProduto() {
                          className="rounded my-3 align-self-start"
                          style={{ width: '70px' }}
                     />
+                    <div className="d-flex justify-content-end w-100 mb-3 px-3">
+                         <button className="btn btn-eco" style={{ width: '220px' }} >
+                              <i className="bi bi-list-task me-2"></i> Gerenciar Produtos
+                         </button>
+                    </div>
 
                     <form>
                          <fieldset className="row g-3">
                               <div className="col-12 d-flex justify-content-between align-items-center mb-3">
                                    <legend className="text-success mb-0">Cadastrar Produto</legend>
-
-                                   <Link to="/gerenciar-produtos" className="btn btn-success eco-btn-manage">
-                                        <i className="fas fa-list me-2"></i> Gerenciar Produtos
-                                   </Link>
                               </div>
+
                               <div className="col-12">
                                    <InputFull placeholder={"Escreva o nome do produto"} />
                               </div>

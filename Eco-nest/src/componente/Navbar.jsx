@@ -47,10 +47,7 @@ export function Navbar() {
           className="collapse navbar-collapse w-100"
           id="navbarSupportedContent"
         >
-          <ul className="navbar-nav ms-auto mb-2 mb-lg-0 d-flex align-items-center gap-2 w-100 justify-content-end">
-            <li className="nav-item me-3 w-50">
-             <InputSearch/>
-            </li>
+          <ul className="navbar-nav ms-auto mb-2 mb-lg-0 d-flex w-50 align-items-center gap-2 justify-content-start">
 
             <li className="nav-item">
               <NavLink className={"nav-link"} aria-current="page" to={"/home"}>
@@ -66,6 +63,12 @@ export function Navbar() {
               <NavLink className="nav-link" to={"/contato"}>
                 Contato
               </NavLink>
+            </li>
+           
+            </ul>
+          <ul className="navbar-nav ms-auto mb-2 mb-lg-0 d-flex align-items-center gap-2 w-100 justify-content-end">
+               <li className="nav-item me-3 w-100">
+             <InputSearch/>
             </li>
             <li className="nav-item">
               <button
@@ -83,6 +86,7 @@ export function Navbar() {
                 )}
               </button>
             </li>
+            
             <li className="nav-item">
               <button className="btn btn-outline-eco bg-transparent border-0 position-relative">
                 <i className="bi bi-cart"></i>

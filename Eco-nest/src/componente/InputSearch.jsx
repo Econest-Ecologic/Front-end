@@ -60,7 +60,7 @@ const listaInicial = [
     return <>
         <form className="d-flex input-group position-relative" role="search">
             <input
-                className="form-control border eco-border border-end-0 rounded-start-0 rounded-start-5"
+                className="form-control border-1 eco-border border-end-0 rounded-start-0 rounded-start-5"
                 type="search"
                 placeholder="Pesquise o produto desejado"
                 aria-label="Search"
@@ -74,12 +74,12 @@ const listaInicial = [
                     setFiltro(listaInicial.filter(prod => prod.nome.toLowerCase().includes(valor.toLowerCase())).sort().splice(0,4));
                 }}
             />
-            <button className="btn btn-navbar border eco-border border-start-0 input-group-text rounded-end-5" type="submit">
+            <button className="btn btn-navbar border-1 eco-border border-start-0 input-group-text rounded-end-5" type="submit">
                 <i className="bi bi-search"></i>
             </button>
             <ul className="position-absolute d-flex flex-column bg-primary p-0 bg-body rounded-2" id="resultado-pesquisa" style={{ top: "40px", left: "10px", width: "90%" }}>
              {filtro.map((prod,key)=>(
-                 <button key={key} className="bg-body rounded-2 p-2 resp-result">{prod.nome}</button>
+                 <button key={key} className="bg-body border-bottom rounded-2 p-2 resp-result">{prod.nome}</button>
              ))}
             </ul>
         </form>

@@ -141,7 +141,6 @@ export function FormCadastro({ trocaLogin }) {
                 value={estado}
                 onChange={(e) => setEstado(e.target.value)}
               >
-                <option value="0">Selecione uma opção</option>
                 {estadosBrasil.map(est => (
                   <option value={est.sigla}>{est.nome}</option>
                 ))}

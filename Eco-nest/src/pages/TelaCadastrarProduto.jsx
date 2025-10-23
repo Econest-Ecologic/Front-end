@@ -16,9 +16,11 @@ export function TelaCadastrarProduto() {
                          style={{ width: '70px' }}
                     />
                     <div className="d-flex justify-content-end w-100 mb-3 px-3">
+                         <Link to={"/GerenciarProduto"}>
                          <button className="btn btn-eco" style={{ width: '220px' }} >
                               <i className="bi bi-list-task me-2"></i> Gerenciar Produtos
                          </button>
+                         </Link>
                     </div>
 
                     <form>

@@ -54,7 +54,7 @@ export default function TelaEditarPerfil(){
 
                             <button
                                 type="submit"
-                                className="btn w-100 mt-4 btn-lg btn-eco">
+                                className="btn w-100 mt-4 btn-lg btn-eco text-white">
                                 EDITAR
                             </button>
                         </form>

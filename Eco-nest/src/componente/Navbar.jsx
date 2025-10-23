@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { NavLink, Link, useNavigate } from "react-router-dom";
+import InputSearch from "./InputSearch";
 
 export function Navbar() {
   const navigate = useNavigate();
@@ -21,7 +22,7 @@ export function Navbar() {
   return (
     <nav className="navbar navbar-expand-lg bg-navbar border-bottom eco-border py-2">
       <div className="container-fluid">
-        <a class="navbar-brand border-0" onClick={()=> navigate("/home") } id="logo">
+        <a className="navbar-brand border-0" onClick={()=> navigate("/home") } id="logo">
           <img
             src="\public\LogoMaior.png"
             alt="Bootstrap"
@@ -47,18 +48,8 @@ export function Navbar() {
           id="navbarSupportedContent"
         >
           <ul className="navbar-nav ms-auto mb-2 mb-lg-0 d-flex align-items-center gap-2 w-100 justify-content-end">
-            <li className="nav-item me-3 w-25">
-              <form className="d-flex input-group" role="search">
-                <input
-                  className="form-control border eco-border border-end-0 rounded-start-0 rounded-start-5"
-                  type="search"
-                  placeholder="Pesquise o produto desejado"
-                  aria-label="Search"
-                />
-                <button className="btn btn-navbar border eco-border border-start-0 input-group-text rounded-end-5" type="submit">
-                  <i className="bi bi-search"></i>
-                </button>
-              </form>
+            <li className="nav-item me-3 w-50">
+             <InputSearch/>
             </li>
 
             <li className="nav-item">

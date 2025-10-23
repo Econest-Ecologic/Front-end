@@ -29,7 +29,7 @@ export default function HomeUsuario() {
 
   const [toastMessage, setToastMessage] = useState()
 
-  const apiUrl = "http://localhost:8084/api/v1/produtos"
+  // const apiUrl = "http://localhost:8084/api/v1/produtos"
   const [listaProd, setListaProd] = useState([]);
   useEffect(() => {
     try {
@@ -162,7 +162,7 @@ export default function HomeUsuario() {
         <div className="row justify-content-center">
           <button className="btn btn-eco p-4 w-25 row-gap-4 mb-5 w-100" onClick={() => navigate("/")} > Comprar agora</button>
         </div>
-        <Banner link={"../Banner3.png"} />
+        <Banner link={"/Banner3.png"} />
 
         <div className="d-flex flex-column bg-body gap-3 mt-4 ms-3">
           <h1>Conheça a Eco-nest</h1>

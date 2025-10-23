@@ -12,7 +12,8 @@ import PagProduto from "./componente/bodyPages/PagProduto";
 import TelaEditarPerfil from "./pages/TelaEditarPerfil";
 import { Feedback } from "./pages/Feedback";
 import HomeLogado from "./componente/HomeLogado";
-
+import "bootstrap/dist/css/bootstrap.min.css";
+import "bootstrap/dist/js/bootstrap.bundle.min.js";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
@@ -27,10 +28,8 @@ createRoot(document.getElementById("root")).render(
         <Route path="/criarCadastro" element={<CriarAdministrador />} />
         <Route path="/pagProduto" element={<PagProduto />} />
         <Route path="/editarperfil" element={<TelaEditarPerfil />} />
-        <Route path="/feedback" element={<Feedback/>} />
-        <Route path="/homeLogado" element={<HomeLogado/>} />
-        
-        
+        <Route path="/feedback" element={<Feedback />} />
+        <Route path="/homeLogado" element={<HomeLogado />} />
       </Routes>
     </BrowserRouter>
   </StrictMode>

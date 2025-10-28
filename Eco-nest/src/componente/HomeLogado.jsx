@@ -69,7 +69,16 @@ export default function HomeLogado() {
   }, [listaProd]);
 
   if (loading) {
-    return <div>Carregando...</div>;
+    return (
+      <>
+        <NavbarLogado />
+        <div className="container min-vh-100 d-flex justify-content-center align-items-center">
+          <div className="spinner-border text-success" role="status">
+            <span className="visually-hidden">Carregando...</span>
+          </div>
+        </div>
+      </>
+    );
   }
 
   return (
@@ -79,7 +88,8 @@ export default function HomeLogado() {
         <h5 className="text-end w-100 mt-2">
           Bem vindo, {usuario?.nome || "Usuário"}
         </h5>
-        <nav className="mt-3 d-flex gap-3 h-100 justify-content-center">
+
+        <nav className="mt-3 d-flex gap-3 h-100 justify-content-center flex-wrap">
           <div onClick={() => setFiltrado(listaProd)}>
             <RadioBtn
               name="filtro"
@@ -122,7 +132,9 @@ export default function HomeLogado() {
             />
           </div>
         </nav>
+
         <div className="row row-gap-3 justify-content-start w-75 mt-4">
+<<<<<<< HEAD
           {listaFiltrado.map((prod) => (
             <div
               key={prod.cdProduto}
@@ -137,8 +149,28 @@ export default function HomeLogado() {
                 desc={prod.categoria}
                 img={prod.img}
               />
+=======
+          {listaFiltrado.length === 0 ? (
+            <div className="col-12 text-center py-5">
+              <p className="fs-5 text-muted">Nenhum produto encontrado</p>
+>>>>>>> 926b3b3fb31aaf973ba738408462d697e3be1b3a
             </div>
-          ))}
+          ) : (
+            listaFiltrado.map((prod) => (
+              <div
+                key={prod.cdProduto}
+                className="col-12 col-sm-6 col-md-4 d-flex justify-content-center"
+              >
+                <Card
+                  cdProduto={prod.cdProduto}
+                  title={prod.nome}
+                  price={prod.preco}
+                  desc={prod.categoria}
+                  img={prod.img}
+                />
+              </div>
+            ))
+          )}
         </div>
       </main >
     </>

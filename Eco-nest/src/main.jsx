@@ -15,12 +15,9 @@ import HomeLogado from "./componente/HomeLogado";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import { GerenciarProduto } from "./pages/GerenciarProduto";
-<<<<<<< HEAD
 import Carrinho from "./componente/bodyPages/Carrinho";
 
-=======
 import DetalhesProduto from "./componente/bodyPages/DetalhesProduto";
->>>>>>> 926b3b3fb31aaf973ba738408462d697e3be1b3a
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
@@ -37,13 +34,10 @@ createRoot(document.getElementById("root")).render(
         <Route path="/editarperfil" element={<TelaEditarPerfil />} />
         <Route path="/feedback" element={<Feedback />} />
         <Route path="/homeLogado" element={<HomeLogado />} />
-<<<<<<< HEAD
-        <Route path="/GerenciarProduto" element={<GerenciarProduto/>} />
-        <Route path="/carrinho" element={<Carrinho/>}/>
-=======
+        <Route path="/GerenciarProduto" element={<GerenciarProduto />} />
+        <Route path="/carrinho" element={<Carrinho />} />
         <Route path="/GerenciarProduto" element={<GerenciarProduto />} />
         <Route path="/produto/:id" element={<DetalhesProduto />} />
->>>>>>> 926b3b3fb31aaf973ba738408462d697e3be1b3a
       </Routes>
     </BrowserRouter>
   </StrictMode>

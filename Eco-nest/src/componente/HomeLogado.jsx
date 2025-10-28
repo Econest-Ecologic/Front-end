@@ -10,7 +10,6 @@ export default function HomeLogado() {
   const [loading, setLoading] = useState(true);
   const [usuario, setUsuario] = useState(null);
 
-
   // 1. Cart state initialization
   const [carrinho, setCarrinho] = useState([]);
 
@@ -27,7 +26,6 @@ export default function HomeLogado() {
   useEffect(() => {
     localStorage.setItem("carrinho", JSON.stringify(carrinho));
   }, [carrinho]);
-
 
   useEffect(() => {
     // Pegar dados do usuário
@@ -100,7 +98,12 @@ export default function HomeLogado() {
           </div>
           <div
             onClick={() =>
-              setFiltrado(listaProd.filter((p) => p.categoria.toLowerCase() === "utensilios".toLowerCase()))
+              setFiltrado(
+                listaProd.filter(
+                  (p) =>
+                    p.categoria.toLowerCase() === "utensilios".toLowerCase()
+                )
+              )
             }
           >
             <RadioBtn
@@ -111,7 +114,11 @@ export default function HomeLogado() {
           </div>
           <div
             onClick={() =>
-              setFiltrado(listaProd.filter((p) => p.categoria.toLowerCase() === "casa".toLowerCase()))
+              setFiltrado(
+                listaProd.filter(
+                  (p) => p.categoria.toLowerCase() === "casa".toLowerCase()
+                )
+              )
             }
           >
             <RadioBtn
@@ -122,7 +129,11 @@ export default function HomeLogado() {
           </div>
           <div
             onClick={() =>
-              setFiltrado(listaProd.filter((p) => p.categoria.toLowerCase() === "higiene".toLowerCase()))
+              setFiltrado(
+                listaProd.filter(
+                  (p) => p.categoria.toLowerCase() === "higiene".toLowerCase()
+                )
+              )
             }
           >
             <RadioBtn
@@ -134,26 +145,9 @@ export default function HomeLogado() {
         </nav>
 
         <div className="row row-gap-3 justify-content-start w-75 mt-4">
-<<<<<<< HEAD
-          {listaFiltrado.map((prod) => (
-            <div
-              key={prod.cdProduto}
-              className="col-12 col-sm-6 col-md-4 d-flex justify-content-center"
-              onClick={() => {
-                setCarrinho([...carrinho, prod])
-              }}
-            >
-              <Card
-                title={prod.nome}
-                price={prod.preco}
-                desc={prod.categoria}
-                img={prod.img}
-              />
-=======
           {listaFiltrado.length === 0 ? (
             <div className="col-12 text-center py-5">
               <p className="fs-5 text-muted">Nenhum produto encontrado</p>
->>>>>>> 926b3b3fb31aaf973ba738408462d697e3be1b3a
             </div>
           ) : (
             listaFiltrado.map((prod) => (
@@ -172,7 +166,7 @@ export default function HomeLogado() {
             ))
           )}
         </div>
-      </main >
+      </main>
     </>
   );
 }

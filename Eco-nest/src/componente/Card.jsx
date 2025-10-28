@@ -1,5 +1,4 @@
 import { useNavigate } from "react-router-dom";
-
 export default function Card({
   img,
   title,
@@ -16,12 +15,6 @@ export default function Card({
     if (cdProduto) {
       navigate(`/produto/${cdProduto}`);
     }
-  };
-
-  const handleAddToCart = (e) => {
-    e.stopPropagation(); // Evita que o clique no botão dispare o clique do card
-    // Lógica para adicionar ao carrinho
-    console.log("Produto adicionado ao carrinho:", cdProduto);
   };
 
   return (
@@ -60,7 +53,7 @@ export default function Card({
           </p>
           <h5 className="card-text fw-bolder eco-card-text">R$ {price}</h5>
 
-          <button className="btn btn-eco px-3" onClick={handleAddToCart}>
+          <button className="btn btn-eco px-3">
             <i className="bi bi-cart-plus-fill"></i>
           </button>
         </div>

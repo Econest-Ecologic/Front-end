@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { BotaoTrocaLogin } from "../BotaoTrocaLogin";
 import InputOutline from "../InputOutline";
 import { authService } from "../../services/authService";
@@ -41,13 +41,12 @@ export function FormCadastro({ trocaLogin }) {
     { nome: "Santa Catarina", sigla: "SC" },
     { nome: "São Paulo", sigla: "SP" },
     { nome: "Sergipe", sigla: "SE" },
-    { nome: "Tocantins", sigla: "TO" }
+    { nome: "Tocantins", sigla: "TO" },
   ];
 
   const handleCadastro = async (e) => {
     e.preventDefault();
     setLoading(true);
-
 
     try {
       const response = await authService.register({
@@ -141,7 +140,7 @@ export function FormCadastro({ trocaLogin }) {
                 value={estado}
                 onChange={(e) => setEstado(e.target.value)}
               >
-                {estadosBrasil.map(est => (
+                {estadosBrasil.map((est) => (
                   <option value={est.sigla}>{est.nome}</option>
                 ))}
               </select>

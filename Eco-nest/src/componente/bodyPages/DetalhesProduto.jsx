@@ -67,8 +67,40 @@ export default function DetalhesProduto() {
       return;
     }
 
-    // Aqui você implementaria a lógica do carrinho
-    // Por enquanto, apenas mostra mensagem de sucesso
+    // Recuperar carrinho atual do localStorage
+    const carrinhoAtual = JSON.parse(localStorage.getItem("carrinho")) || [];
+
+    // Verificar se o produto já existe no carrinho
+    const itemExistenteIndex = carrinhoAtual.findIndex(
+      (item) => item.cdProduto === produto.cdProduto
+    );
+
+    if (itemExistenteIndex >= 0) {
+      // Atualizar quantidade do produto já existente
+      const itemExistente = carrinhoAtual[itemExistenteIndex];
+      const novaQuantidade = itemExistente.quantidade + quantidade;
+
+      // Verifica estoque
+      if (novaQuantidade > produto.qtdEstoque) {
+        mostrarToast("Quantidade máxima em estoque atingida");
+        return;
+      }
+
+      carrinhoAtual[itemExistenteIndex].quantidade = novaQuantidade;
+    } else {
+      // Adicionar novo produto ao carrinho
+      carrinhoAtual.push({
+        cdProduto: produto.cdProduto,
+        nome: produto.nome,
+        preco: produto.preco,
+        quantidade: quantidade,
+        img: produto.img,
+      });
+    }
+
+    // Salvar carrinho atualizado
+    localStorage.setItem("carrinho", JSON.stringify(carrinhoAtual));
+
     mostrarToast(
       `${quantidade} ${
         quantidade > 1 ? "unidades adicionadas" : "unidade adicionada"

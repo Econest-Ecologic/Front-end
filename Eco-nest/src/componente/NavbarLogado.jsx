@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import InputSearch from "./InputSearch";
 
-export function NavbarLogado() {
+export function NavbarLogado({carrinho=[]}) {
   const navigate = useNavigate();
   //quando a pagina atualiza ele pega no local storag qual o ultimo tema salvo
   useEffect(() => {
@@ -22,7 +22,7 @@ export function NavbarLogado() {
   return (
     <nav className="navbar navbar-expand-lg bg-navbar border-bottom eco-border py-2">
       <div className="container-fluid">
-        <a class="navbar-brand border-0" id="logo">
+        <a class="navbar-brand border-0" id="logo" href="/homelogado">
           <img
             src="\public\LogoMaior.png"
             alt="Bootstrap"
@@ -70,7 +70,7 @@ export function NavbarLogado() {
               </button>
             </li>
             <li className="nav-item">
-              <button className="btn btn-outline-eco bg-transparent border-0 position-relative">
+              <button className="btn btn-outline-eco bg-transparent border-0 position-relative" onClick={()=> navigate("/carrinho")}>
                 <i className="bi bi-cart"></i>
                 <span
                   className={
@@ -79,7 +79,7 @@ export function NavbarLogado() {
                       : "badge  text-dark position-absolute top-0 start-50"
                   }
                 >
-                  {0}
+                  {carrinho.length}
                 </span>
               </button>
             </li>

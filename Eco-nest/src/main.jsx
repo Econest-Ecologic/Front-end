@@ -15,6 +15,7 @@ import HomeLogado from "./componente/HomeLogado";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import { GerenciarProduto } from "./pages/GerenciarProduto";
+import Carrinho from "./componente/bodyPages/Carrinho";
 
 
 createRoot(document.getElementById("root")).render(
@@ -33,6 +34,7 @@ createRoot(document.getElementById("root")).render(
         <Route path="/feedback" element={<Feedback />} />
         <Route path="/homeLogado" element={<HomeLogado />} />
         <Route path="/GerenciarProduto" element={<GerenciarProduto/>} />
+        <Route path="/carrinho" element={<Carrinho/>}/>
       </Routes>
 
     </BrowserRouter>

@@ -1,4 +1,3 @@
-import { Navbar } from "../componente/Navbar";
 import { Link, useNavigate } from "react-router-dom";
 export function TelaAdm() {
 

@@ -10,6 +10,25 @@ export default function HomeLogado() {
   const [loading, setLoading] = useState(true);
   const [usuario, setUsuario] = useState(null);
 
+
+  // 1. Cart state initialization
+  const [carrinho, setCarrinho] = useState([]);
+
+  // 2. Load cart from localStorage
+  useEffect(() => {
+    const savedCart = localStorage.getItem("carrinho");
+    if (savedCart) {
+      const parsedCart = JSON.parse(savedCart);
+      setCarrinho(parsedCart);
+    }
+  }, []);
+
+  // 3. Save cart to localStorage
+  useEffect(() => {
+    localStorage.setItem("carrinho", JSON.stringify(carrinho));
+  }, [carrinho]);
+
+
   useEffect(() => {
     // Pegar dados do usuário
     const usuarioData = JSON.parse(localStorage.getItem("usuario"));
@@ -55,7 +74,7 @@ export default function HomeLogado() {
 
   return (
     <>
-      <NavbarLogado />
+      <NavbarLogado carrinho={carrinho} />
       <main className="container-xxl d-flex flex-column align-items-center w-100 min-vh-100">
         <h5 className="text-end w-100 mt-2">
           Bem vindo, {usuario?.nome || "Usuário"}
@@ -71,7 +90,7 @@ export default function HomeLogado() {
           </div>
           <div
             onClick={() =>
-              setFiltrado(listaProd.filter((p) => p.categoria === "utensilios"))
+              setFiltrado(listaProd.filter((p) => p.categoria.toLowerCase() === "utensilios".toLowerCase()))
             }
           >
             <RadioBtn
@@ -82,7 +101,7 @@ export default function HomeLogado() {
           </div>
           <div
             onClick={() =>
-              setFiltrado(listaProd.filter((p) => p.categoria === "casa"))
+              setFiltrado(listaProd.filter((p) => p.categoria.toLowerCase() === "casa".toLowerCase()))
             }
           >
             <RadioBtn
@@ -93,7 +112,7 @@ export default function HomeLogado() {
           </div>
           <div
             onClick={() =>
-              setFiltrado(listaProd.filter((p) => p.categoria === "higiene"))
+              setFiltrado(listaProd.filter((p) => p.categoria.toLowerCase() === "higiene".toLowerCase()))
             }
           >
             <RadioBtn
@@ -108,6 +127,9 @@ export default function HomeLogado() {
             <div
               key={prod.cdProduto}
               className="col-12 col-sm-6 col-md-4 d-flex justify-content-center"
+              onClick={() => {
+                setCarrinho([...carrinho, prod])
+              }}
             >
               <Card
                 title={prod.nome}
@@ -118,7 +140,7 @@ export default function HomeLogado() {
             </div>
           ))}
         </div>
-      </main>
+      </main >
     </>
   );
 }

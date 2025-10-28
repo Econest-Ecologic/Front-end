@@ -12,6 +12,33 @@ export default function HomeUsuario() {
 
   const navigate = useNavigate()
 
+// 1. Cart state initialization
+const [carrinho, setCarrinho] = useState([]);
+
+// 2. Load cart from localStorage
+useEffect(() => {
+  try {
+    const savedCart = localStorage.getItem("carrinho");
+    if (savedCart) {
+      const parsedCart = JSON.parse(savedCart);
+      setCarrinho(Array.isArray(parsedCart) ? parsedCart : []);
+    }
+  } catch (error) {
+    console.error("Error loading cart:", error);
+    setCarrinho([]);
+  }
+}, []);
+
+// 3. Save cart to localStorage
+useEffect(() => {
+  console.log(carrinho);
+  try {
+    localStorage.setItem("carrinho", JSON.stringify(carrinho));
+  } catch (error) {
+    console.error("Error saving cart:", error);
+  }
+}, [carrinho]);
+
   function paginaProd(title, categoria) {
     const query = new URLSearchParams();
     query.set("title", title)
@@ -55,60 +82,61 @@ export default function HomeUsuario() {
     }
 
     setListaProd([
-  {
-    nome: "Bucha Vegetal Natural",
-    preco: 8.90,
-    categoria: "higiene",
-    img: "https://www.gosupps.com/custom/related/childImage/2219021" 
-  },
-  {
-    nome: "Sabonete Orgânico de Lavanda",
-    preco: 14.50,
-    categoria: "higiene",
-    img: "https://images.pexels.com/photos/322207/pexels-photo-322207.jpeg" },
-  {
-    nome: "Escova de Dente de Bambu",
-    preco: 9.99,
-    categoria: "higiene",
-    img: "https://images.pexels.com/photos/601365/pexels-photo-601365.jpeg" 
-  },
-  {
-    nome: "Pano de Limpeza Reutilizável",
-    preco: 6.75,
-    categoria: "casa",
-    img: "https://images.pexels.com/photos/416520/pexels-photo-416520.jpeg"
-  },
-  {
-    nome: "Sabão Ecológico Multiuso",
-    preco: 12.80,
-    categoria: "casa",
-    img: "https://images.pexels.com/photos/342648/pexels-photo-342648.jpeg" 
-  },
-  {
-    nome: "Composteira Doméstica Pequena",
-    preco: 189.90,
-    categoria: "casa",
-    img: "https://images.pexels.com/photos/1181675/pexels-photo-1181675.jpeg" 
-  },
-  {
-    nome: "Garrafa Reutilizável de Inox",
-    preco: 59.90,
-    categoria: "utensilios",
-    img: "https://images.pexels.com/photos/416528/pexels-photo-416528.jpeg" 
-  },
-  {
-    nome: "Canudo de Aço Inoxidável",
-    preco: 4.99,
-    categoria: "utensilios",
-    img: "https://images.pexels.com/photos/406154/pexels-photo-406154.jpeg" 
-  },
-  {
-    nome: "Copo Retrátil de Silicone",
-    preco: 19.90,
-    categoria: "utensilios",
-    img: "https://images.pexels.com/photos/405771/pexels-photo-405771.jpeg" 
-  }
-]
+      {
+        nome: "Bucha Vegetal Natural",
+        preco: 8.90,
+        categoria: "higiene",
+        img: "https://www.gosupps.com/custom/related/childImage/2219021"
+      },
+      {
+        nome: "Sabonete Orgânico de Lavanda",
+        preco: 14.50,
+        categoria: "higiene",
+        img: "https://images.pexels.com/photos/322207/pexels-photo-322207.jpeg"
+      },
+      {
+        nome: "Escova de Dente de Bambu",
+        preco: 9.99,
+        categoria: "higiene",
+        img: "https://images.pexels.com/photos/601365/pexels-photo-601365.jpeg"
+      },
+      {
+        nome: "Pano de Limpeza Reutilizável",
+        preco: 6.75,
+        categoria: "casa",
+        img: "https://images.pexels.com/photos/416520/pexels-photo-416520.jpeg"
+      },
+      {
+        nome: "Sabão Ecológico Multiuso",
+        preco: 12.80,
+        categoria: "casa",
+        img: "https://images.pexels.com/photos/342648/pexels-photo-342648.jpeg"
+      },
+      {
+        nome: "Composteira Doméstica Pequena",
+        preco: 189.90,
+        categoria: "casa",
+        img: "https://images.pexels.com/photos/1181675/pexels-photo-1181675.jpeg"
+      },
+      {
+        nome: "Garrafa Reutilizável de Inox",
+        preco: 59.90,
+        categoria: "utensilios",
+        img: "https://images.pexels.com/photos/416528/pexels-photo-416528.jpeg"
+      },
+      {
+        nome: "Canudo de Aço Inoxidável",
+        preco: 4.99,
+        categoria: "utensilios",
+        img: "https://images.pexels.com/photos/406154/pexels-photo-406154.jpeg"
+      },
+      {
+        nome: "Copo Retrátil de Silicone",
+        preco: 19.90,
+        categoria: "utensilios",
+        img: "https://images.pexels.com/photos/405771/pexels-photo-405771.jpeg"
+      }
+    ]
 
     )
   },
@@ -125,16 +153,19 @@ export default function HomeUsuario() {
         <Banner link={"/Banner1.png"} />
         <div className="row d-flex flex-wrap row-gap-4 my-5 mx-3">
           {destaque.map((prod, key) => (
-            <div className="col-12 col-sm-12 col-md-6 col-lg-3" key={key}>
-            <Card
-              img={prod.img}
-              title={prod.nome}
-              badge={"PROMOÇÃO"}
-              desc={prod.categoria}
-              price={prod.preco}
-              border={"border-0"}
+            <div className="col-12 col-sm-12 col-md-6 col-lg-3" key={key} >
+              <Card
+                img={prod.img}
+                title={prod.nome}
+                badge={"PROMOÇÃO"}
+                desc={prod.categoria} 
+                price={prod.preco}
+                border={"border-0"}
+                onClick={() => {
+      setCarrinho([...carrinho, prod]);
+    }}
               />
-              </div>
+            </div>
           ))}
         </div>
 

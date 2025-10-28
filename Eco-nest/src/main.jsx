@@ -15,7 +15,7 @@ import HomeLogado from "./componente/HomeLogado";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import { GerenciarProduto } from "./pages/GerenciarProduto";
-
+import DetalhesProduto from "./componente/bodyPages/DetalhesProduto";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
@@ -32,9 +32,9 @@ createRoot(document.getElementById("root")).render(
         <Route path="/editarperfil" element={<TelaEditarPerfil />} />
         <Route path="/feedback" element={<Feedback />} />
         <Route path="/homeLogado" element={<HomeLogado />} />
-        <Route path="/GerenciarProduto" element={<GerenciarProduto/>} />
+        <Route path="/GerenciarProduto" element={<GerenciarProduto />} />
+        <Route path="/produto/:id" element={<DetalhesProduto />} />
       </Routes>
-
     </BrowserRouter>
   </StrictMode>
 );

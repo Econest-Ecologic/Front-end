@@ -1,32 +1,70 @@
-export default function Card({ img, title, desc, price, badge, color = "bg-success", border = "border-5 eco-border" }) {
+import { useNavigate } from "react-router-dom";
+
+export default function Card({
+  img,
+  title,
+  desc,
+  price,
+  badge,
+  color = "bg-success",
+  border = "border-5 eco-border",
+  cdProduto,
+}) {
+  const navigate = useNavigate();
+
+  const handleCardClick = () => {
+    if (cdProduto) {
+      navigate(`/produto/${cdProduto}`);
+    }
+  };
+
+  const handleAddToCart = (e) => {
+    e.stopPropagation(); // Evita que o clique no botão dispare o clique do card
+    // Lógica para adicionar ao carrinho
+    console.log("Produto adicionado ao carrinho:", cdProduto);
+  };
+
   return (
     <>
+      <div
+        className={`card border ${border} bg-eco position-relative`}
+        style={{
+          width: "18rem",
+          minHeight: "26rem",
+          maxHeight: "30rem",
+          cursor: "pointer",
+        }}
+        onClick={handleCardClick}
+      >
         <div
-          className={`card border ${border} bg-eco position-relative`}
-          style={{
-            width: "18rem",
-            minHeight:"26rem",
-            maxHeight:"30rem"
-          }}
+          className={badge ? `badge ${color} position-absolute p-2` : "d-none"}
+          style={{ top: "-3%", right: "-10%" }}
         >
-          <div className={badge ? `badge ${color} position-absolute p-2` : "none"} style={{ top: "-3%", right: "-10%" }}> {badge}</div>
-          <img
-            src={img}
-            className="card-img-top object-fit-cover p-4"
-            alt="img"
-            style={{ borderRadius: "30px",
-              maxHeight:"200px"
-             }}
-          />
-          <div className="card-body px-4">
-            <h5 className="card-title eco-card-text text-center">{title}</h5>
-            <p className="card-text eco-card-text text-center">{desc}</p>
-            <h5 className="card-text fw-bolder eco-card-text">{price}R$</h5>
-            <button className="btn btn-eco px-3">
-              <i className="bi bi-cart-plus-fill"></i>
-            </button>
-          </div>
+          {badge}
         </div>
+
+        <img
+          src={img}
+          className="card-img-top object-fit-cover p-4"
+          alt={title}
+          style={{
+            borderRadius: "30px",
+            maxHeight: "200px",
+          }}
+        />
+
+        <div className="card-body px-4 d-flex flex-column">
+          <h5 className="card-title eco-card-text text-center">{title}</h5>
+          <p className="card-text eco-card-text text-center flex-grow-1">
+            {desc}
+          </p>
+          <h5 className="card-text fw-bolder eco-card-text">R$ {price}</h5>
+
+          <button className="btn btn-eco px-3" onClick={handleAddToCart}>
+            <i className="bi bi-cart-plus-fill"></i>
+          </button>
+        </div>
+      </div>
     </>
   );
 }

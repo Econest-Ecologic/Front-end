@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import { NavLink, Link, useNavigate } from "react-router-dom";
 import InputSearch from "./InputSearch";
+import Toast from "./Toast";
+
 
 export function Navbar() {
   const navigate = useNavigate();
@@ -18,6 +20,11 @@ export function Navbar() {
     document.documentElement.setAttribute("data-bs-theme", newTheme);
     localStorage.setItem("tema", newTheme);
   }
+   const mostrarToast = () => {
+    const toast = document.getElementById("toast");
+    const bsToast = new bootstrap.Toast(toast);
+    bsToast.show();
+  };
 
   return (
     <nav className="navbar navbar-expand-lg bg-navbar border-bottom eco-border py-2">
@@ -88,7 +95,7 @@ export function Navbar() {
             </li>
             
             <li className="nav-item">
-              <button className="btn btn-outline-eco bg-transparent border-0 position-relative">
+              <button className="btn btn-outline-eco bg-transparent border-0 position-relative" onClick={mostrarToast}>
                 <i className="bi bi-cart"></i>
                 <span
                   className={
@@ -110,6 +117,10 @@ export function Navbar() {
           </ul>
         </div>
       </div>
+      <Toast
+          msg={"Para adicionar ao carrinho voce precisa criar um cadastro"}
+          icon={<i className="bi bi-check-lg"></i>}
+        />
     </nav>
   );
 }

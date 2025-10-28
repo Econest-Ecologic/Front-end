@@ -1,8 +1,23 @@
+
+/*global bootstrap*/
 import { useNavigate } from "react-router-dom";
 import InputFull from "../componente/InputFull";
 import { Link } from "react-router-dom";
+import Toast from "../componente/Toast";
+
+
+
+
 export function TelaCadastrarProduto() {
-     const navigate = useNavigate();
+     
+  const navigate = useNavigate();
+
+     const mostrarToast = () => {
+          const toast = document.getElementById("toast");
+          const bsToast = new bootstrap.Toast(toast);
+          bsToast.show();
+     };
+   
      return <>
 
 
@@ -17,13 +32,13 @@ export function TelaCadastrarProduto() {
                     />
                     <div className="d-flex justify-content-end w-100 mb-3 px-3">
                          <Link to={"/GerenciarProduto"}>
-                         <button className="btn btn-eco" style={{ width: '220px' }} >
-                              <i className="bi bi-list-task me-2"></i> Gerenciar Produtos
-                         </button>
+                              <button className="btn btn-eco" style={{ width: '220px' }} >
+                                   <i className="bi bi-list-task me-2"></i> Gerenciar Produtos
+                              </button>
                          </Link>
                     </div>
 
-                    <form>
+                    <div>
                          <fieldset className="row g-3">
                               <div className="col-12 d-flex justify-content-between align-items-center mb-3">
                                    <legend className="text-success mb-0">Cadastrar Produto</legend>
@@ -61,16 +76,19 @@ export function TelaCadastrarProduto() {
                                    </select>
                               </div>
                               <div className="col-12 col-md-6 d-flex align-items-end">
-                                   <button type="submit" className="btn btn-eco px-5 py-2 fw-bold w-100">
+                                   <button  className="btn btn-eco px-5 py-2 fw-bold w-100" onClick={()=>mostrarToast()}>
                                         SALVAR PRODUTO
                                    </button>
                               </div>
                          </fieldset>
-                    </form>
+                    </div>
                </div>
 
           </main>
-
+          <Toast
+               msg={"Produto Cadastrado com sucesso"}
+               icon={<i className="bi bi-check-lg"></i>}
+          />
 
      </>
 

@@ -3,8 +3,14 @@ import InputOutline from "../componente/InputOutline"
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
 import '../app.css';
+import Toast from "../componente/Toast";
 
 
+const mostrarToast = () => {
+    const toast = document.getElementById("toast");
+    const bsToast = new bootstrap.Toast(toast);
+    bsToast.show();
+  };
 
 
 export function CriarAdministrador() {
@@ -58,7 +64,7 @@ export function CriarAdministrador() {
 
                             <button
                                 type="submit"
-                                className="btn w-100 mt-4 btn-lg btn-eco text-white">
+                                className="btn w-100 mt-4 btn-lg btn-eco text-white" onClick={mostrarToast}>
                                 CRIAR
                             </button>
                         </form>
@@ -67,5 +73,11 @@ export function CriarAdministrador() {
                 </div>
             </div>
         </div>
+         <Toast
+                  msg={"Cadastro Realizado com sucesso"}
+                  icon={<i className="bi bi-check-lg"></i>}
+                />
     </>
+    
+    
 }

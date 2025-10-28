@@ -1,16 +1,30 @@
+/*global bootstrap*/
+
 import InputOutline from "../componente/InputOutline"
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
 import '../app.css';
+import Toast from "../componente/Toast";
+
+
+
+   
 
 export default function TelaEditarPerfil(){
-   const navigate = useNavigate();
+
     const [nome, setnome] = useState();
     const [email, setemail] = useState();
     const [senha, setsenha] = useState();
     const [endereco, setendereco] = useState();
     const [cnpj, setcnpj] = useState();
     const [telefone, settelefone] = useState();
+      const navigate = useNavigate();
+
+     const mostrarToast = () => {
+          const toast = document.getElementById("toast");
+          const bsToast = new bootstrap.Toast(toast);
+          bsToast.show();
+     };
 
     return <>
 
@@ -53,8 +67,7 @@ export default function TelaEditarPerfil(){
 
 
                             <button
-                                type="submit"
-                                className="btn w-100 mt-4 btn-lg btn-eco text-white">
+                                className="btn w-100 mt-4 btn-lg btn-eco text-white" onClick={()=>mostrarToast ()}>
                                 EDITAR
                             </button>
                         </form>
@@ -63,5 +76,9 @@ export default function TelaEditarPerfil(){
                 </div>
             </div>
         </div>
+         <Toast
+                       msg={"Cadastro Editado com sucesso!!!!"}
+                       icon={<i className="bi bi-check-lg"></i>}
+                  />
     </>
 }

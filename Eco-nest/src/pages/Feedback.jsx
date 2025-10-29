@@ -1,121 +1,140 @@
-
-import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import App from '../App';
-
+import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 export function Feedback() {
-    const navigate = useNavigate();
-    const [produtosComFeedback, setProdutosComFeedback] = useState([]);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
+  const navigate = useNavigate();
+  const [produtosComFeedback, setProdutosComFeedback] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-    const mockProdutosComFeedback = [
+  // Mock temporário - substituir por chamada API quando o endpoint estiver pronto
+  const mockProdutosComFeedback = [
+    {
+      id: 101,
+      nome: "Produto Exemplo 1",
+      feedbacks: [
         {
-            id: 101,
-            nome: "EcoNest Smart Plug (Tomada Inteligente)",
-
-            feedbacks: [
-                { id: 1, cliente: "Lucas M.", data: "05/04/2024", texto: "Produto excelente. Redução de energia é real." },
-                { id: 2, cliente: "Márcia F.", data: "01/04/2024", texto: "Fácil de configurar e usar. Recomendo para quem busca eficiência." }
-            ]
+          id: 1,
+          cliente: "Cliente A",
+          data: "05/04/2024",
+          texto: "Ótimo produto!",
         },
-        {
-            id: 102,
-            nome: "EcoNest Sensor de Consumo",
-            feedbacks: [
-                { id: 3, cliente: "Patrícia R.", data: "28/03/2024", texto: "A interface de monitoramento é incrível! Consigo visualizar exatamente o quanto estou preservando." }
-            ]
-        },
-        {
-            id: 103,
-            nome: "Kit Eco de Reutilizáveis",
-            feedbacks: []
-        }
-    ];
-    useEffect(() => {
+      ],
+    },
+  ];
 
-        const fetchFeedbacks = async () => {
-            try {
+  useEffect(() => {
+    carregarFeedbacks();
+  }, []);
 
-                setTimeout(() => {
-                    setProdutosComFeedback(mockProdutosComFeedback);
-                    setLoading(false);
-                }, 1000);
+  const carregarFeedbacks = async () => {
+    try {
+      setLoading(true);
 
-            } catch (err) {
-                setError('Não foi possível carregar os dados. Verifique a API.');
-                setLoading(false);
-            }
-        };
+      // TODO: Quando o endpoint de avaliações estiver pronto, substituir por:
+      // const response = await api.get('/avaliacao');
+      // const avaliacoes = response.data;
 
-        fetchFeedbacks();
-    }, []);
-
-    if (loading) {
-        return <div className="loading-screen text-center p-5">Carregando dados...</div>;
+      // Por enquanto, usar mock
+      setTimeout(() => {
+        setProdutosComFeedback(mockProdutosComFeedback);
+        setLoading(false);
+      }, 1000);
+      // eslint-disable-next-line no-unused-vars
+    } catch (err) {
+      setError("Não foi possível carregar os feedbacks.");
+      setLoading(false);
     }
-    return <>
-        <div className="d-flex justify-content-center align-items-center min-vh-100 bg-eco-admin">
-            <div className="p-5 custom-card-container bg-white rounded-5 shadow-lg w-75">
+  };
 
-
-                <div className="d-flex justify-content-between align-items-center mb-5">
-                    <div className="d-flex align-items-center">
-                        <img src="..\public\logoSemFundo.png" alt="EcoNest Logo" className="logo-pequena-feedback" />
-                        <h1 className="ms-3 titulo-feedback-tela">Feedbacks</h1>
-                    </div>
-
-                    <button className="btn btn-voltar-feedback" onClick={() => navigate(-1)}>
-                        <i className="bi bi-arrow-left-short fs-1"></i>
-                    </button>
-                </div>
-
-
-                {produtosComFeedback.length === 0 ? (
-                    <p className="text-center text-muted">Nenhum produto com feedback para ser exibido.</p>
-                ) : (
-                    <div className="lista-produtos-feedback">
-
-                        {produtosComFeedback.map(produto => (
-                            <div key={produto.id} className="card-produto-item mb-4 p-4">
-
-
-                                <h2 className="produto-nome-feedback">
-                                    {produto.nome}
-                                    <span className="badge bg-success ms-3">{produto.feedbacks.length} avaliações</span>
-                                </h2>
-
-                                <hr />
-
-
-                                <div className="feedbacks-container">
-                                    {produto.feedbacks.length === 0 ? (
-                                        <p className="text-info-feedback">Ainda não há avaliações de clientes para este item.</p>
-                                    ) : (
-                                        <ul className="lista-feedbacks-aninhada">
-                                            {produto.feedbacks.map((feedback, index) => (
-                                                <li key={feedback.id} className="feedback-item-detalhe">
-                                                    <p>
-                                                        <span className="feedback-cliente-header">
-                                                            {index + 1}. **{feedback.cliente}** - {feedback.data}
-                                                        </span>
-                                                        <br />
-                                                        <span className="feedback-texto-citacao">
-                                                            "{feedback.texto}"
-                                                        </span>
-                                                    </p>
-                                                </li>
-                                            ))}
-                                        </ul>
-                                    )}
-                                </div>
-                            </div>
-                        ))}
-                    </div>
-                )}
-            </div>
+  if (loading) {
+    return (
+      <div className="loading-screen text-center p-5 min-vh-100 d-flex justify-content-center align-items-center">
+        <div className="spinner-border text-success" role="status">
+          <span className="visually-hidden">Carregando...</span>
         </div>
+      </div>
+    );
+  }
 
+  return (
+    <>
+      <div className="d-flex justify-content-center align-items-center min-vh-100 bg-eco-admin">
+        <div className="p-5 custom-card-container bg-white rounded-5 shadow-lg w-75">
+          <div className="d-flex justify-content-between align-items-center mb-5">
+            <div className="d-flex align-items-center">
+              <img
+                src="../public/logoSemFundo.png"
+                alt="EcoNest Logo"
+                className="logo-pequena-feedback"
+              />
+              <h1 className="ms-3 titulo-feedback-tela">Feedbacks</h1>
+            </div>
+
+            <button
+              className="btn btn-voltar-feedback"
+              onClick={() => navigate(-1)}
+            >
+              <i className="bi bi-arrow-left-short fs-1"></i>
+            </button>
+          </div>
+
+          {error && (
+            <div className="alert alert-danger" role="alert">
+              {error}
+            </div>
+          )}
+
+          {produtosComFeedback.length === 0 ? (
+            <p className="text-center text-muted">
+              Nenhum produto com feedback para ser exibido.
+            </p>
+          ) : (
+            <div className="lista-produtos-feedback">
+              {produtosComFeedback.map((produto) => (
+                <div key={produto.id} className="card-produto-item mb-4 p-4">
+                  <h2 className="produto-nome-feedback">
+                    {produto.nome}
+                    <span className="badge bg-success ms-3">
+                      {produto.feedbacks.length} avaliações
+                    </span>
+                  </h2>
+
+                  <hr />
+
+                  <div className="feedbacks-container">
+                    {produto.feedbacks.length === 0 ? (
+                      <p className="text-info-feedback">
+                        Ainda não há avaliações de clientes para este item.
+                      </p>
+                    ) : (
+                      <ul className="lista-feedbacks-aninhada">
+                        {produto.feedbacks.map((feedback, index) => (
+                          <li
+                            key={feedback.id}
+                            className="feedback-item-detalhe"
+                          >
+                            <p>
+                              <span className="feedback-cliente-header">
+                                {index + 1}. **{feedback.cliente}** -{" "}
+                                {feedback.data}
+                              </span>
+                              <br />
+                              <span className="feedback-texto-citacao">
+                                "{feedback.texto}"
+                              </span>
+                            </p>
+                          </li>
+                        ))}
+                      </ul>
+                    )}
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+      </div>
     </>
+  );
 }

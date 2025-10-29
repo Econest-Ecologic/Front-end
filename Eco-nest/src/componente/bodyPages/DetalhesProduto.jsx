@@ -69,7 +69,8 @@ export default function DetalhesProduto() {
 
     // Recuperar carrinho atual do localStorage
     const carrinhoAtual = JSON.parse(localStorage.getItem("carrinho")) || [];
-
+      console.log("Carrinho inicio :"+ carrinhoAtual)
+      
     // Verificar se o produto já existe no carrinho
     const itemExistenteIndex = carrinhoAtual.findIndex(
       (item) => item.cdProduto === produto.cdProduto
@@ -100,6 +101,8 @@ export default function DetalhesProduto() {
 
     // Salvar carrinho atualizado
     localStorage.setItem("carrinho", JSON.stringify(carrinhoAtual));
+
+      console.log(carrinhoAtual)
 
     mostrarToast(
       `${quantidade} ${

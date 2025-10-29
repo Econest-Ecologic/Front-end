@@ -13,19 +13,35 @@ export default function HomeLogado() {
   // 1. Cart state initialization
   const [carrinho, setCarrinho] = useState([]);
 
-  // 2. Load cart from localStorage
-  useEffect(() => {
-    const savedCart = localStorage.getItem("carrinho");
-    if (savedCart) {
-      const parsedCart = JSON.parse(savedCart);
-      setCarrinho(parsedCart);
-    }
-  }, []);
 
-  // 3. Save cart to localStorage
+  // Load cart from localStorage on mount
   useEffect(() => {
-    localStorage.setItem("carrinho", JSON.stringify(carrinho));
-  }, [carrinho]);
+    try {
+      const savedCart = localStorage.getItem("carrinho");
+      console.log("Carrinho recebido:", savedCart);
+      
+      if (savedCart && savedCart !== "undefined" && savedCart !== "null") {
+        const parsedCart = JSON.parse(savedCart);
+        
+        // Validate that parsedCart is an array
+        if (Array.isArray(parsedCart)) {
+          setCarrinho(parsedCart);
+        } else {
+          console.warn("Carrinho não é um array, inicializando vazio");
+          setCarrinho([]);
+          localStorage.removeItem("carrinho");
+        }
+      }
+    } catch (error) {
+      console.error("Erro ao carregar carrinho:", error);
+      setCarrinho([]);
+      localStorage.removeItem("carrinho");
+    } finally {
+      setLoading(false);
+    }
+        console.log("Carrinho :" + carrinho)
+
+  }, []);
 
   useEffect(() => {
     // Pegar dados do usuário

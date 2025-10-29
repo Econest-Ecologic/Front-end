@@ -9,38 +9,24 @@ import Toast from "../Toast";
 import { useNavigate } from "react-router-dom";
 import { produtoService } from "../../services/produtoService";
 import * as bootstrap from "bootstrap";
+
 export default function HomeUsuario() {
   const navigate = useNavigate();
-  const [carrinho, setCarrinho] = useState([]);
   const [toastMessage, setToastMessage] = useState("");
   const [listaProd, setListaProd] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  // Carregar carrinho do localStorage
   useEffect(() => {
-    try {
-      const savedCart = localStorage.getItem("carrinho");
-      if (savedCart) {
-        const parsedCart = JSON.parse(savedCart);
-        setCarrinho(Array.isArray(parsedCart) ? parsedCart : []);
-      }
-    } catch (error) {
-      console.error("Error loading cart:", error);
-      setCarrinho([]);
-    }
-  }, []);
+    // LIMPAR TODO O LOCALSTORAGE ao acessar a home pública
+    console.log("🧹 HomeUsuario - Limpando dados de sessão...");
 
-  // Salvar carrinho no localStorage
-  useEffect(() => {
-    try {
-      localStorage.setItem("carrinho", JSON.stringify(carrinho));
-    } catch (error) {
-      console.error("Error saving cart:", error);
-    }
-  }, [carrinho]);
+    localStorage.removeItem("usuario");
+    localStorage.removeItem("token");
+    localStorage.removeItem("carrinho");
+    localStorage.removeItem("redirectAfterLogin");
 
-  // Carregar produtos da API
-  useEffect(() => {
+    console.log("✅ Dados limpos! Página pública segura.");
+
     carregarProdutos();
   }, []);
 
@@ -92,7 +78,7 @@ export default function HomeUsuario() {
     return (
       <>
         <header>
-          <Navbar num={1} />
+          <Navbar />
         </header>
         <main className="container-fluid min-vh-100 d-flex justify-content-center align-items-center">
           <div className="spinner-border text-success" role="status">
@@ -106,7 +92,7 @@ export default function HomeUsuario() {
   return (
     <>
       <header>
-        <Navbar num={1} />
+        <Navbar />
       </header>
       <main className="container-fluid p-0 d-flex flex-column align-items-center justify-content-center overflow-x-hidden">
         <Banner link={"/Banner1.png"} />
@@ -137,6 +123,7 @@ export default function HomeUsuario() {
         )}
 
         <Banner link={"/ProdutosEcologicos.png"} />
+
         <div className="row row-gap-4 my-5 flex-wrap align-items-center justify-content-center">
           <CardPropaganda
             text={"Higiene & Cuidados Pessoais"}
@@ -156,14 +143,16 @@ export default function HomeUsuario() {
             onClick={() => paginaProd("Utensilios", "utensilios")}
           />
         </div>
+
         <div className="row justify-content-center">
           <button
             className="btn btn-eco p-4 w-25 row-gap-4 mb-5 w-100"
             onClick={() => navigate("/")}
           >
-            Comprar agora
+            Fazer Login para Comprar
           </button>
         </div>
+
         <Banner link={"/Banner3.png"} />
 
         <div className="d-flex flex-column bg-body gap-3 mt-4 ms-3">
@@ -174,11 +163,16 @@ export default function HomeUsuario() {
             diferença no dia a dia e ajudam a construir um futuro mais verde.
           </p>
         </div>
-        <div className="d-flex w-100 justify-content-center">
-          <button className="btn btn-eco w-25 py-3 fw-semibold fs-4">
-            Conheça todos os nossos Produtos
+
+        <div className="d-flex w-100 justify-content-center mb-4">
+          <button
+            className="btn btn-eco w-25 py-3 fw-semibold fs-4"
+            onClick={() => navigate("/")}
+          >
+            Fazer Login para Ver Produtos
           </button>
         </div>
+
         <div className="row flex-wrap gap-2 align-items-center justify-content-center my-5">
           <CardBadge text={"Gestos simples transformam grandes realidades."} />
           <CardBadge text={"Pequenas mudanças geram grandes impactos."} />

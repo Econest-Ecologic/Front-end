@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { NavbarLogado } from "../NavbarLogado";
-import { Navbar } from "../Navbar";
 import Footer from "../Footer";
 import { produtoService } from "../../services/produtoService";
 import Toast from "../Toast";
@@ -14,13 +13,30 @@ export default function DetalhesProduto() {
   const [loading, setLoading] = useState(true);
   const [quantidade, setQuantidade] = useState(1);
   const [toastMsg, setToastMsg] = useState("");
+  const [carrinho, setCarrinho] = useState([]);
   const [usuario, setUsuario] = useState(null);
 
   useEffect(() => {
-    // Verifica se tem usuário logado
+    // Carrega dados do usuário (já está logado por causa do ProtectedRoute)
     const usuarioData = localStorage.getItem("usuario");
     if (usuarioData) {
-      setUsuario(JSON.parse(usuarioData));
+      try {
+        const parsed = JSON.parse(usuarioData);
+        setUsuario(parsed);
+      } catch (error) {
+        console.error("Erro ao parsear usuário:", error);
+      }
+    }
+
+    // Carrega carrinho
+    const carrinhoSalvo = localStorage.getItem("carrinho");
+    if (carrinhoSalvo && carrinhoSalvo !== "null") {
+      try {
+        setCarrinho(JSON.parse(carrinhoSalvo));
+      } catch (error) {
+        console.error("Erro ao carregar carrinho:", error);
+        setCarrinho([]);
+      }
     }
 
     carregarProduto();
@@ -30,7 +46,6 @@ export default function DetalhesProduto() {
     try {
       const data = await produtoService.buscarPorId(id);
 
-      // Formatar produto
       const produtoFormatado = {
         cdProduto: data.cdProduto,
         nome: data.nmProduto,
@@ -47,7 +62,7 @@ export default function DetalhesProduto() {
     } catch (error) {
       console.error("Erro ao carregar produto:", error);
       mostrarToast("Erro ao carregar produto");
-      setTimeout(() => navigate(-1), 2000);
+      setTimeout(() => navigate("/homeLogado"), 2000);
     } finally {
       setLoading(false);
     }
@@ -61,65 +76,50 @@ export default function DetalhesProduto() {
   };
 
   const handleAdicionarCarrinho = () => {
-    if (!usuario) {
-      mostrarToast("Faça login para adicionar ao carrinho");
-      setTimeout(() => navigate("/"), 2000);
-      return;
-    }
+    try {
+      const carrinhoAtual = JSON.parse(localStorage.getItem("carrinho")) || [];
 
-    // Recuperar carrinho atual do localStorage
-    const carrinhoAtual = JSON.parse(localStorage.getItem("carrinho")) || [];
-      console.log("Carrinho inicio :"+ carrinhoAtual)
-      
-    // Verificar se o produto já existe no carrinho
-    const itemExistenteIndex = carrinhoAtual.findIndex(
-      (item) => item.cdProduto === produto.cdProduto
-    );
+      const itemExistenteIndex = carrinhoAtual.findIndex(
+        (item) => item.cdProduto === produto.cdProduto
+      );
 
-    if (itemExistenteIndex >= 0) {
-      // Atualizar quantidade do produto já existente
-      const itemExistente = carrinhoAtual[itemExistenteIndex];
-      const novaQuantidade = itemExistente.quantidade + quantidade;
+      if (itemExistenteIndex >= 0) {
+        const itemExistente = carrinhoAtual[itemExistenteIndex];
+        const novaQuantidade = itemExistente.quantidade + quantidade;
 
-      // Verifica estoque
-      if (novaQuantidade > produto.qtdEstoque) {
-        mostrarToast("Quantidade máxima em estoque atingida");
-        return;
+        if (novaQuantidade > produto.qtdEstoque) {
+          mostrarToast("Quantidade máxima em estoque atingida");
+          return;
+        }
+
+        carrinhoAtual[itemExistenteIndex].quantidade = novaQuantidade;
+      } else {
+        carrinhoAtual.push({
+          cdProduto: produto.cdProduto,
+          nome: produto.nome,
+          preco: produto.preco,
+          quantidade: quantidade,
+          img: produto.img,
+        });
       }
 
-      carrinhoAtual[itemExistenteIndex].quantidade = novaQuantidade;
-    } else {
-      // Adicionar novo produto ao carrinho
-      carrinhoAtual.push({
-        cdProduto: produto.cdProduto,
-        nome: produto.nome,
-        preco: produto.preco,
-        quantidade: quantidade,
-        img: produto.img,
-      });
+      localStorage.setItem("carrinho", JSON.stringify(carrinhoAtual));
+      setCarrinho(carrinhoAtual);
+
+      mostrarToast(
+        `${quantidade} ${
+          quantidade > 1 ? "unidades adicionadas" : "unidade adicionada"
+        } ao carrinho!`
+      );
+    } catch (error) {
+      console.error("Erro ao adicionar ao carrinho:", error);
+      mostrarToast("Erro ao adicionar ao carrinho");
     }
-
-    // Salvar carrinho atualizado
-    localStorage.setItem("carrinho", JSON.stringify(carrinhoAtual));
-
-      console.log(carrinhoAtual)
-
-    mostrarToast(
-      `${quantidade} ${
-        quantidade > 1 ? "unidades adicionadas" : "unidade adicionada"
-      } ao carrinho!`
-    );
   };
 
   const handleComprar = () => {
-    if (!usuario) {
-      mostrarToast("Faça login para realizar a compra");
-      setTimeout(() => navigate("/"), 2000);
-      return;
-    }
-
-    // Aqui você implementaria a lógica de compra
-    mostrarToast("Redirecionando para pagamento...");
+    handleAdicionarCarrinho();
+    setTimeout(() => navigate("/carrinho"), 1000);
   };
 
   const incrementarQuantidade = () => {
@@ -139,7 +139,7 @@ export default function DetalhesProduto() {
   if (loading) {
     return (
       <>
-        {usuario ? <NavbarLogado /> : <Navbar />}
+        <NavbarLogado carrinho={carrinho} />
         <div className="container min-vh-100 d-flex justify-content-center align-items-center">
           <div className="spinner-border text-success" role="status">
             <span className="visually-hidden">Carregando...</span>
@@ -152,7 +152,7 @@ export default function DetalhesProduto() {
   if (!produto) {
     return (
       <>
-        {usuario ? <NavbarLogado /> : <Navbar />}
+        <NavbarLogado carrinho={carrinho} />
         <div className="container min-vh-100 d-flex justify-content-center align-items-center">
           <h3>Produto não encontrado</h3>
         </div>
@@ -162,15 +162,23 @@ export default function DetalhesProduto() {
 
   return (
     <>
-      {usuario ? <NavbarLogado /> : <Navbar />}
+      <NavbarLogado carrinho={carrinho} />
 
       <main className="container my-5 min-vh-100">
         <button
           className="btn btn-voltar border-0 fs-4 mb-4"
-          onClick={() => navigate(-1)}
+          onClick={() => navigate("/homeLogado")}
         >
           <i className="bi bi-arrow-left-short"></i> Voltar
         </button>
+
+        {usuario && (
+          <div className="alert alert-success mb-4" role="alert">
+            <i className="bi bi-person-check me-2"></i>
+            Olá, <strong>{usuario.nome}</strong>! Você está visualizando os
+            detalhes do produto.
+          </div>
+        )}
 
         <div className="row">
           {/* Imagem do Produto */}
@@ -271,7 +279,7 @@ export default function DetalhesProduto() {
               </div>
 
               {produto.qtdEstoque === 0 && (
-                <div className="alert alert-warning mt-3" role="alert">
+                <div className="alert alert-danger mt-3" role="alert">
                   <i className="bi bi-exclamation-triangle me-2"></i>
                   Produto indisponível no momento
                 </div>

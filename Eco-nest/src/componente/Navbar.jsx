@@ -2,11 +2,26 @@ import { useState, useEffect } from "react";
 import { NavLink, Link, useNavigate } from "react-router-dom";
 import InputSearch from "./InputSearch";
 import Toast from "./Toast";
-
+import * as bootstrap from "bootstrap";
 
 export function Navbar() {
   const navigate = useNavigate();
-  //quando a pagina atualiza ele pega no local storag qual o ultimo tema salvo
+
+  useEffect(() => {
+    // GARANTIR que não há dados de sessão na navbar pública
+    const usuario = localStorage.getItem("usuario");
+    const token = localStorage.getItem("token");
+
+    if (usuario || token) {
+      console.log(
+        "⚠️ Dados de sessão encontrados na navbar pública - limpando..."
+      );
+      localStorage.removeItem("usuario");
+      localStorage.removeItem("token");
+      localStorage.removeItem("carrinho");
+    }
+  }, []);
+
   useEffect(() => {
     const temaSalvo = localStorage.getItem("tema") || "dark";
     setTema(temaSalvo);
@@ -14,13 +29,15 @@ export function Navbar() {
   }, []);
 
   const [tema, setTema] = useState("dark");
+
   function toggleTheme() {
     const newTheme = tema === "light" ? "dark" : "light";
     setTema(newTheme);
     document.documentElement.setAttribute("data-bs-theme", newTheme);
     localStorage.setItem("tema", newTheme);
   }
-   const mostrarToast = () => {
+
+  const mostrarToast = () => {
     const toast = document.getElementById("toast");
     const bsToast = new bootstrap.Toast(toast);
     bsToast.show();
@@ -29,7 +46,11 @@ export function Navbar() {
   return (
     <nav className="navbar navbar-expand-lg bg-navbar border-bottom eco-border py-2">
       <div className="container-fluid">
-        <a className="navbar-brand border-0" onClick={()=> navigate("/home") } id="logo">
+        <a
+          className="navbar-brand border-0"
+          onClick={() => navigate("/home")}
+          id="logo"
+        >
           <img
             src="\public\LogoMaior.png"
             alt="Bootstrap"
@@ -55,7 +76,6 @@ export function Navbar() {
           id="navbarSupportedContent"
         >
           <ul className="navbar-nav ms-auto mb-2 mb-lg-0 d-flex w-50 align-items-center gap-2 justify-content-start">
-
             <li className="nav-item">
               <NavLink className={"nav-link"} aria-current="page" to={"/home"}>
                 Home
@@ -71,12 +91,13 @@ export function Navbar() {
                 Contato
               </NavLink>
             </li>
-           
-            </ul>
+          </ul>
+
           <ul className="navbar-nav ms-auto mb-2 mb-lg-0 d-flex align-items-center gap-2 w-100 justify-content-end">
-               <li className="nav-item me-3 w-100">
-             <InputSearch/>
+            <li className="nav-item me-3 w-100">
+              <InputSearch />
             </li>
+
             <li className="nav-item">
               <button
                 className={
@@ -93,18 +114,21 @@ export function Navbar() {
                 )}
               </button>
             </li>
-            
+
             <li className="nav-item">
-              <button className="btn btn-outline-eco bg-transparent border-0 position-relative" onClick={mostrarToast}>
+              <button
+                className="btn btn-outline-eco bg-transparent border-0 position-relative"
+                onClick={mostrarToast}
+              >
                 <i className="bi bi-cart"></i>
                 <span
                   className={
                     tema == "dark"
-                      ? "badge  text-light position-absolute top-0 start-50"
-                      : "badge  text-dark position-absolute top-0 start-50"
+                      ? "badge text-light position-absolute top-0 start-50"
+                      : "badge text-dark position-absolute top-0 start-50"
                   }
                 >
-                  {0}
+                  0
                 </span>
               </button>
             </li>
@@ -118,9 +142,10 @@ export function Navbar() {
         </div>
       </div>
       <Toast
-          msg={"Para adicionar ao carrinho voce precisa criar um cadastro"}
-          icon={<i className="bi bi-check-lg"></i>}
-        />
+        msg={"Para adicionar ao carrinho você precisa fazer login"}
+        icon={<i className="bi bi-exclamation-triangle"></i>}
+        color="bg-warning"
+      />
     </nav>
   );
 }

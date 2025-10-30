@@ -8,10 +8,28 @@ export default function Contato() {
   const [nome, setNome] = useState();
   const [email, setEmail] = useState();
 
-  const mostrarToast = () => {
-    const toast = document.getElementById("toast-contato-sucesso");
-    const bsToast = new bootstrap.Toast(toast);
-    bsToast.show();
+
+  const handleSubmit = () => {
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+
+    if (!nome || !email || !emailRegex.test(email)) {
+
+      const toastErro = document.getElementById("toast-contato-erro");
+      const bsToastErro = new bootstrap.Toast(toastErro);
+      bsToastErro.show();
+
+      return;
+    }
+
+    const toastSucesso = document.getElementById("toast-contato-sucesso");
+    const bsToastSucesso = new bootstrap.Toast(toastSucesso);
+    bsToastSucesso.show();
+
+    setNome('');
+    setEmail('');
+
   };
   return (
     <>
@@ -51,7 +69,7 @@ export default function Contato() {
               </label>
             </div>
             <div className="container-fluid d-flex justify-content-end mt-3 ">
-              <button className="btn btn-eco btn-lg w-100" onClick={mostrarToast}>
+              <button className="btn btn-eco btn-lg w-100" onClick={handleSubmit}>
                 Enviar
               </button>
             </div>
@@ -60,7 +78,16 @@ export default function Contato() {
         <Toast
           msg={"Mensagem enviada com sucesso"}
           icon={<i className="bi bi-check-lg"></i>}
+          color="bg-success"
           idName="toast-contato-sucesso"
+        />
+
+
+        <Toast
+          msg={"Preencha todos os campos corretamente!"}
+          icon={<i className="bi bi-x-circle-fill"></i>}
+          color="bg-danger"
+          idName="toast-contato-erro"
         />
       </main>
 

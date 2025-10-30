@@ -7,8 +7,8 @@ export default function SobreNos() {
       <header>
         <Navbar />
       </header>
-      <main className="container-xxl gap-2 my-5">
-        <div className="d-flex gap-2 flex-column">
+      <main className="container-xxl my-5">
+        <div className="d-flex flex-column">
           <h3 className="text-success">Nossa equipe</h3>
           <p className="fs-5">
             A Eco Nest nasceu com o propósito de oferecer produtos sustentáveis
@@ -23,7 +23,7 @@ export default function SobreNos() {
         </div>
         <div className="container-md">
           <div className="row gap-2 justify-content-center ">
-            <div className="col-lg-4 ">
+            <div className="col-md-6 col-lg-4">
               <PerfilImg
                 img={"../public/Sinara.JPG"}
                 nome={"Sinara Santinoni"}
@@ -31,21 +31,21 @@ export default function SobreNos() {
               />
             </div>
 
-            <div className="col-lg-4 ">
+            <div className="col-lg-4 col-md-6 ">
               <PerfilImg
                 img={"../public/marcos.jpeg"}
                 nome={"Marcos Paulo Bittencourt de Medeiros"}
               />
             </div>
 
-            <div className="col-lg-4 ">
+            <div className="col-lg-4 col-md-6">
               <PerfilImg
                 img={"../public/elessandro.jpeg"}
                 nome={"Elessandro de Abreu"}
               />
             </div>
 
-            <div className="col-lg-4">
+            <div className="col-lg-4 col-md-6">
               <PerfilImg
                 img={"../public/Victor.jpeg"}
                 nome={"Victor Hugo de Pieri Justino"}

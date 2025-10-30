@@ -36,15 +36,15 @@ export default function HomeUsuario() {
       const produtos = await produtoService.listarTodos();
 
       const produtosFormatados = produtos.map((p) => ({
-        cdProduto: p.cdProduto,
-        nome: p.nmProduto,
-        preco: p.preco,
-        categoria: p.categoria,
-        img: p.imgProduto
-          ? `data:image/jpeg;base64,${p.imgProduto}`
-          : "/placeholder.png",
-        qtdEstoque: p.qtdEstoque,
-      }));
+  cdProduto: p.cdProduto,
+  nome: p.nmProduto,
+  preco: p.preco,
+  categoria: p.categoria,
+  img: p.imgProdutoBase64  // ✅ CORRETO - este é o campo certo!
+    ? `data:image/jpeg;base64,${p.imgProdutoBase64}`
+    : "/placeholder.png",
+  qtdEstoque: p.qtdEstoque,
+}));
 
       setListaProd(produtosFormatados);
     } catch (error) {

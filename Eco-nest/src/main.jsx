@@ -12,24 +12,101 @@ import PagProduto from "./componente/bodyPages/PagProduto";
 import TelaEditarPerfil from "./pages/TelaEditarPerfil";
 import { Feedback } from "./pages/Feedback";
 import HomeLogado from "./componente/HomeLogado";
-import "bootstrap/dist/css/bootstrap.min.css";
-import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import { GerenciarProduto } from "./pages/GerenciarProduto";
 import Carrinho from "./componente/bodyPages/Carrinho";
 import DetalhesProduto from "./componente/bodyPages/DetalhesProduto";
 import PagPagamento from "./componente/bodyPages/PagPagamento";
+import ProtectedRoute from "./componente/ProtectedRoute";
+import "bootstrap/dist/css/bootstrap.min.css";
+import "bootstrap/dist/js/bootstrap.bundle.min.js";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
     <BrowserRouter>
       <Routes>
+        {/* ROTAS PÚBLICAS (sem login) */}
         <Route path="/" element={<App />} />
         <Route path="/home" element={<HomeUsuario />} />
         <Route path="/sobre" element={<SobreNos />} />
         <Route path="/contato" element={<Contato />} />
-        <Route path="/adm" element={<TelaAdm />} />
-        <Route path="/cadastroProduto" element={<TelaCadastrarProduto />} />
-        <Route path="/criarCadastro" element={<CriarAdministrador />} />
+
+        {/* ROTAS PROTEGIDAS (requerem login) */}
+        <Route
+          path="/produto/:id"
+          element={
+            <ProtectedRoute>
+              <DetalhesProduto />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/homeLogado"
+          element={
+            <ProtectedRoute>
+              <HomeLogado />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/carrinho"
+          element={
+            <ProtectedRoute>
+              <Carrinho />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/editarperfil"
+          element={
+            <ProtectedRoute>
+              <TelaEditarPerfil />
+            </ProtectedRoute>
+          }
+        />
+
+        {/* ROTAS DE ADMINISTRADOR (protegidas) */}
+        <Route
+          path="/adm"
+          element={
+            <ProtectedRoute>
+              <TelaAdm />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/cadastroProduto"
+          element={
+            <ProtectedRoute>
+              <TelaCadastrarProduto />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/criarCadastro"
+          element={
+            <ProtectedRoute>
+              <CriarAdministrador />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/GerenciarProduto"
+          element={
+            <ProtectedRoute>
+              <GerenciarProduto />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/feedback"
+          element={
+            <ProtectedRoute>
+              <Feedback />
+            </ProtectedRoute>
+          }
+        />
+
+        {/* ROTAS MISTAS (podem ser ajustadas) */}
         <Route path="/pagProduto" element={<PagProduto />} />
         <Route path="/editarperfil" element={<TelaEditarPerfil />} />
         <Route path="/feedback" element={<Feedback />} />

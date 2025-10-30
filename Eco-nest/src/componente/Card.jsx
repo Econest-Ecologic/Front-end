@@ -1,4 +1,5 @@
 import { useNavigate } from "react-router-dom";
+
 export default function Card({
   img,
   title,
@@ -12,6 +13,19 @@ export default function Card({
   const navigate = useNavigate();
 
   const handleCardClick = () => {
+    if (cdProduto) {
+      // Sempre tenta navegar para o produto
+      // O ProtectedRoute vai verificar se está logado
+      navigate(`/produto/${cdProduto}`);
+    }
+  };
+
+  // Prevenir propagação do clique do botão para o card
+  const handleButtonClick = (e) => {
+    e.stopPropagation();
+
+    // Redireciona para detalhes do produto
+    // A rota protegida cuidará da autenticação
     if (cdProduto) {
       navigate(`/produto/${cdProduto}`);
     }
@@ -53,7 +67,11 @@ export default function Card({
           </p>
           <h5 className="card-text fw-bolder eco-card-text">R$ {price}</h5>
 
-          <button className="btn btn-eco px-3">
+          <button
+            className="btn btn-eco px-3"
+            onClick={handleButtonClick}
+            title="Ver detalhes do produto"
+          >
             <i className="bi bi-cart-plus-fill"></i>
           </button>
         </div>

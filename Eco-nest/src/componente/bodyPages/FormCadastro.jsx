@@ -71,7 +71,6 @@ export function FormCadastro({ trocaLogin }) {
           estado: response.estado,
         })
       );
-
       navigate("/homeLogado");
     } catch (error) {
       console.error("Erro no cadastro:", error);
@@ -83,82 +82,85 @@ export function FormCadastro({ trocaLogin }) {
 
   return (
     <>
-      <div className="container-fluid d-flex flex-lg-row flex-column flex-wrap justify-content-center align-items-center border border-1 border-secundary p-5">
-        <div className="container-fluid d-flex justify-content-center align-items-center flex-column w-50">
-          <h1 className="text-center text-success">Realizar Cadastro</h1>
-          <img
-            src="../public/logoSemFundo.png"
-            className="img-thumbnail border-0 w-50"
-            alt="Logo"
-          />
+      <main className="container-fluid d-flex flex-row flex-wrap justify-content-center align-items-center border border-1 border-secundary p-5">
+        <div className="row">
+
+          <div className="col-md-6 d-flex justify-content-center align-items-center flex-column ">
+            <h1 className="text-center text-success">Realizar Cadastro</h1>
+            <img
+              src="../public/logoSemFundo.png"
+              className="img-thumbnail border-0 w-50"
+              alt="Logo"
+            />
+          </div>
+
+          <div className=" col-md-6 justify-content-center">
+            <form onSubmit={handleCadastro}>
+              <InputOutline
+                placeholder="Nome"
+                icon={<i className="bi bi-person"></i>}
+                inputValue={nome}
+                inputFunction={setNome}
+              />
+              <InputOutline
+                type="email"
+                placeholder="Email"
+                icon={<i className="bi bi-envelope-at"></i>}
+                inputValue={email}
+                inputFunction={setEmail}
+              />
+              <InputOutline
+                type="password"
+                placeholder="Senha"
+                icon={<i className="bi bi-lock"></i>}
+                inputValue={senha}
+                inputFunction={setSenha}
+              />
+              <InputOutline
+                placeholder="Endereço"
+                icon={<i className="bi bi-globe-americas"></i>}
+                inputValue={endereco}
+                inputFunction={setEndereco}
+              />
+              <InputOutline
+                placeholder="CPF (apenas números)"
+                icon={<i className="bi bi-file-earmark-lock-fill"></i>}
+                inputValue={cpf}
+                inputFunction={setCpf}
+              />
+              <InputOutline
+                placeholder="Telefone (apenas números)"
+                icon={<i className="bi bi-telephone"></i>}
+                inputValue={telefone}
+                inputFunction={setTelefone}
+              />
+
+              <div className="mb-3">
+                <select
+                  className="form-select eco-border"
+                  value={estado}
+                  onChange={(e) => setEstado(e.target.value)}
+                >
+                  {estadosBrasil.map((est) => (
+                    <option value={est.sigla}>{est.nome}</option>
+                  ))}
+                </select>
+              </div>
+
+              <div className="d-flex gap-2 justify-content-center flex-column gap-3">
+                <button
+                  className="btn btn-eco w-100"
+                  type="submit"
+                  disabled={loading}
+                >
+                  {loading ? "CADASTRANDO..." : "CADASTRAR"}
+                </button>
+                <BotaoTrocaLogin trocaLogin={trocaLogin} text="Login" />
+              </div>
+            </form>
+          </div>
         </div>
-
-        <div className="container-fluid w-50 justify-content-center">
-          <form onSubmit={handleCadastro}>
-            <InputOutline
-              placeholder="Nome"
-              icon={<i className="bi bi-person"></i>}
-              inputValue={nome}
-              inputFunction={setNome}
-            />
-            <InputOutline
-              type="email"
-              placeholder="Email"
-              icon={<i className="bi bi-envelope-at"></i>}
-              inputValue={email}
-              inputFunction={setEmail}
-            />
-            <InputOutline
-              type="password"
-              placeholder="Senha"
-              icon={<i className="bi bi-lock"></i>}
-              inputValue={senha}
-              inputFunction={setSenha}
-            />
-            <InputOutline
-              placeholder="Endereço"
-              icon={<i className="bi bi-globe-americas"></i>}
-              inputValue={endereco}
-              inputFunction={setEndereco}
-            />
-            <InputOutline
-              placeholder="CPF (apenas números)"
-              icon={<i className="bi bi-file-earmark-lock-fill"></i>}
-              inputValue={cpf}
-              inputFunction={setCpf}
-            />
-            <InputOutline
-              placeholder="Telefone (apenas números)"
-              icon={<i className="bi bi-telephone"></i>}
-              inputValue={telefone}
-              inputFunction={setTelefone}
-            />
-
-            <div className="mb-3">
-              <select
-                className="form-select eco-border"
-                value={estado}
-                onChange={(e) => setEstado(e.target.value)}
-              >
-                {estadosBrasil.map((est) => (
-                  <option value={est.sigla}>{est.nome}</option>
-                ))}
-              </select>
-            </div>
-
-            <div className="d-flex gap-2 justify-content-center flex-column gap-3">
-              <button
-                className="btn btn-eco w-100"
-                type="submit"
-                disabled={loading}
-              >
-                {loading ? "CADASTRANDO..." : "CADASTRAR"}
-              </button>
-              <BotaoTrocaLogin trocaLogin={trocaLogin} text="Login" />
-            </div>
-          </form>
-        </div>
-      </div>
+      </main>
     </>
   );
 }

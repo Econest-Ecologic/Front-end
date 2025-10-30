@@ -10,20 +10,17 @@ export default function HomeLogado() {
   const [loading, setLoading] = useState(true);
   const [usuario, setUsuario] = useState(null);
 
-  // 1. Cart state initialization
   const [carrinho, setCarrinho] = useState([]);
 
 
-  // Load cart from localStorage on mount
   useEffect(() => {
     try {
       const savedCart = localStorage.getItem("carrinho");
       console.log("Carrinho recebido:", savedCart);
-      
+
       if (savedCart && savedCart !== "undefined" && savedCart !== "null") {
         const parsedCart = JSON.parse(savedCart);
-        
-        // Validate that parsedCart is an array
+
         if (Array.isArray(parsedCart)) {
           setCarrinho(parsedCart);
         } else {
@@ -39,16 +36,15 @@ export default function HomeLogado() {
     } finally {
       setLoading(false);
     }
-        console.log("Carrinho :" + carrinho)
+    console.log("Carrinho :" + carrinho)
 
   }, []);
 
   useEffect(() => {
-    // Pegar dados do usuário
     const usuarioData = JSON.parse(localStorage.getItem("usuario"));
     setUsuario(usuarioData);
 
-    // Buscar produtos
+    console.log(usuarioData);
     carregarProdutos();
   }, []);
 

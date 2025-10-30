@@ -19,6 +19,7 @@ import PagPagamento from "./componente/bodyPages/PagPagamento";
 import ProtectedRoute from "./componente/ProtectedRoute";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
+import EditarUsuario from "./componente/bodyPages/EditarUsuario";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
@@ -116,6 +117,7 @@ createRoot(document.getElementById("root")).render(
         <Route path="/GerenciarProduto" element={<GerenciarProduto />} />
         <Route path="/produto/:id" element={<DetalhesProduto />} />
         <Route path="/pagamento" element={<PagPagamento />} />
+        <Route path="/editarUsuario" element={<EditarUsuario />} />
       </Routes>
     </BrowserRouter>
   </StrictMode>

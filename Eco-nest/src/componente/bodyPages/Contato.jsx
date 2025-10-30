@@ -29,6 +29,7 @@ export default function Contato() {
 
     setNome('');
     setEmail('');
+    document.getElementById("floatingTextarea").value = "";
 
   };
   return (

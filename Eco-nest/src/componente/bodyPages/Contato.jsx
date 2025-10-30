@@ -20,8 +20,8 @@ export default function Contato() {
       </header>
       <main className="container-fluid d-flex justify-content-center align-items-center h-75 overflow-hidden min-vh-100">
         <div className="container d-flex justify-content-center align-items-center flex-column border eco-border py-5 px-0 ">
-          <h1 className="text-wrap">Entre em Contato</h1>
-          <p className="fs-4">
+          <h1 className="text-wrap text-success">Entre em Contato</h1>
+          <p className="fs-4 text-wrap fs-sm-5">
             Queremos ouvir você, preencha o formulário abaixo :
           </p>
           <div className="w-50">
@@ -50,8 +50,8 @@ export default function Contato() {
                 Mensagem
               </label>
             </div>
-            <div className="container-fluid d-flex justify-content-end mt-3">
-              <button className="btn btn-eco" onClick={mostrarToast}>
+            <div className="container-fluid d-flex justify-content-end mt-3 ">
+              <button className="btn btn-eco btn-lg w-100" onClick={mostrarToast}>
                 Enviar
               </button>
             </div>

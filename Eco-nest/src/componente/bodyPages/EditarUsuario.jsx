@@ -45,33 +45,25 @@ export default function EditarUsuario() {
     ];
 
     useEffect(() => {
-        const usuarioCadastrado = JSON.parse(localStorage.getItem('usuario'));
-        // const usuarioData = [];
-        console.log(JSON.parse(localStorage.getItem('usuario')));
-
-        try {
-            // usuarioData = usuarioService.buscarPorId(usuarioCadastrado.id);
-            console.log("Buscando usuario")
-        } catch (e) {
-            console.error("Erro : " + e)
-        }
-
-        if (usuarioCadastrado) {
-            setUsuario(usuarioCadastrado);
-        } else {
-            alert("usuario não encontrado")
-        }
-
+        carregarUsuario()
     }, [])
+    async function carregarUsuario() {
+        try {
+            const usuarioCadastrado = JSON.parse(localStorage.getItem('usuario'));
+            const usuarioBuscado = await usuarioService.buscarPorId(usuarioCadastrado.id);
+            setUsuario(usuarioBuscado);
+        } catch (err) {
+            console.error("Erro ao buscar usuário:", err);
+        }
+    }
 
     useEffect(() => {
         console.log(usuario)
-        setNome(usuario.nome);
-        setEmail(usuario.email);
-        setSenha(usuario.senha);
-        setEndereco(usuario.endereco);
-        setCpf(usuario.cpf);
-        setTelefone(usuario.telefone);
+        setNome(usuario.nmUsuario);
+        setEmail(usuario.nmEmail);
+        setEndereco(usuario.dsEndereco);
+        setCpf(usuario.nuCpf);
+        setTelefone(usuario.nuTelefone);
         setEstado(usuario.estado)
     }, [usuario])
 

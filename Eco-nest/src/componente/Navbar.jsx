@@ -44,7 +44,7 @@ export function Navbar() {
   };
 
   return (
-    <nav className="navbar navbar-expand-lg bg-navbar border-bottom eco-border py-2">
+    <nav className="navbar navbar-expand-lg justify-content-center bg-navbar border-bottom eco-border py-2">
       <div className="container-fluid">
         <a
           className="navbar-brand border-0"
@@ -72,10 +72,10 @@ export function Navbar() {
         </button>
 
         <div
-          className="collapse navbar-collapse w-100"
+          className="collapse navbar-collapse"
           id="navbarSupportedContent"
         >
-          <ul className="navbar-nav ms-auto mb-2 mb-lg-0 d-flex w-50 align-items-center gap-2 justify-content-start">
+          <ul className="navbar-nav ms-auto mb-2 mb-lg-0 d-flex w-100 align-items-center gap-2 justify-content-start">
             <li className="nav-item">
               <NavLink className={"nav-link"} aria-current="page" to={"/home"}>
                 Home

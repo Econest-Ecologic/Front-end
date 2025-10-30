@@ -89,7 +89,9 @@ export function NavbarLogado({carrinho=[]}) {
                 <button className="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                     <i class="bi bi-person-fill fs-3"></i>
                 </button>
-                <ul class="dropdown-menu dropdown-menu-end">
+                <ul class="dropdown-menu dropdown-menu-end p-0">
+                  <li><button className="btn btn-outline-success w-100 rounded-0">Editar Perfil</button></li>
+                  <li><button className="btn btn-outline-success w-100 rounded-0">Minhas compras</button></li>
                   <li><button onClick={() => navigate("/")} className="btn btn-outline-danger rounded-0 m-0 w-100"><i class="bi bi-box-arrow-in-left"></i></button></li>
                 </ul>
               </div>

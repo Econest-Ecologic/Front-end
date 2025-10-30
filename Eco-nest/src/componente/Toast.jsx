@@ -1,4 +1,4 @@
-export default function Toast({ msg, icon, color = "bg-success" }) {
+export default function Toast({ msg, icon, color = "bg-success", idName }) {
   return (
     <>
       <div
@@ -6,7 +6,7 @@ export default function Toast({ msg, icon, color = "bg-success" }) {
         role="alert"
         aria-live="assertive"
         aria-atomic="true"
-        id="toast"
+        id={idName}
       >
         <div className="d-flex">
           <div className="toast-body">

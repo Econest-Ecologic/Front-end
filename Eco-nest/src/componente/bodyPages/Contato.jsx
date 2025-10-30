@@ -9,7 +9,7 @@ export default function Contato() {
   const [email, setEmail] = useState();
 
   const mostrarToast = () => {
-    const toast = document.getElementById("toast");
+    const toast = document.getElementById("toast-contato-sucesso");
     const bsToast = new bootstrap.Toast(toast);
     bsToast.show();
   };
@@ -60,6 +60,7 @@ export default function Contato() {
         <Toast
           msg={"Mensagem enviada com sucesso"}
           icon={<i className="bi bi-check-lg"></i>}
+          idName="toast-contato-sucesso"
         />
       </main>
 

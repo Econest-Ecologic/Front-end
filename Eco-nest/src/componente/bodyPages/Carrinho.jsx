@@ -1,9 +1,13 @@
+import { useNavigate } from "react-router-dom";
 import { NavbarLogado } from "../NavbarLogado"
 import { useState, useEffect } from "react";
 
 export default function Carrinho() {
   const [carrinho, setCarrinho] = useState([]);
   const [loading, setLoading] = useState(true);
+
+
+  const navigate = useNavigate();
 
   // Load cart from localStorage on mount
   useEffect(() => {
@@ -124,7 +128,9 @@ export default function Carrinho() {
                 <h4>R$ {calcularTotal().toFixed(2)}</h4>
               </div>
 
-              <button className="w-full mt-4 py-3 btn btn-eco bg-green-500 text-white rounded-lg hover:bg-green-600 font-semibold">
+              <button 
+              onClick={()=> navigate("/pagamento")}
+              className="w-full mt-4 py-3 btn btn-eco bg-green-500 text-white rounded-lg hover:bg-green-600 font-semibold">
                 Finalizar Compra
               </button>
             </div>

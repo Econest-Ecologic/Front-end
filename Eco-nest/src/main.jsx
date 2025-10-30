@@ -15,6 +15,7 @@ import HomeLogado from "./componente/HomeLogado";
 import { GerenciarProduto } from "./pages/GerenciarProduto";
 import Carrinho from "./componente/bodyPages/Carrinho";
 import DetalhesProduto from "./componente/bodyPages/DetalhesProduto";
+import PagPagamento from "./componente/bodyPages/PagPagamento";
 import ProtectedRoute from "./componente/ProtectedRoute";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
@@ -107,6 +108,14 @@ createRoot(document.getElementById("root")).render(
 
         {/* ROTAS MISTAS (podem ser ajustadas) */}
         <Route path="/pagProduto" element={<PagProduto />} />
+        <Route path="/editarperfil" element={<TelaEditarPerfil />} />
+        <Route path="/feedback" element={<Feedback />} />
+        <Route path="/homeLogado" element={<HomeLogado />} />
+        <Route path="/GerenciarProduto" element={<GerenciarProduto />} />
+        <Route path="/carrinho" element={<Carrinho />} />
+        <Route path="/GerenciarProduto" element={<GerenciarProduto />} />
+        <Route path="/produto/:id" element={<DetalhesProduto />} />
+        <Route path="/pagamento" element={<PagPagamento />} />
       </Routes>
     </BrowserRouter>
   </StrictMode>

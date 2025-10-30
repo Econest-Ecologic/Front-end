@@ -1,11 +1,21 @@
 import { useState, useEffect } from "react";
 import { NavbarLogado } from "../NavbarLogado";
+import Toast from "../Toast";
+import { useNavigate } from "react-router-dom";
 
 export default function PagPagamento() {
 
     const [carrinho, setCarrinho] = useState([]);
-    const [loading, setLoading] = useState(true);
+    const navigate = useNavigate();
 
+    const mostrarToast = () => {
+        const toast = document.getElementById("toast");
+        const bsToast = new bootstrap.Toast(toast);
+        bsToast.show();
+        localStorage.removeItem('carrinho')
+        setTimeout(() => navigate("/homelogado"), 2000)
+
+    };
 
     useEffect(() => {
         try {
@@ -28,8 +38,6 @@ export default function PagPagamento() {
             console.error("Erro ao carregar carrinho:", error);
             setCarrinho([]);
             localStorage.removeItem("carrinho");
-        } finally {
-            setLoading(false);
         }
         console.log("Carrinho :" + carrinho)
 
@@ -47,7 +55,7 @@ export default function PagPagamento() {
     }, [carrinho]);
 
 
-const[pag,setPag] = useState();
+    const [pag, setPag] = useState();
 
     return <>
         <NavbarLogado carrinho={carrinho} />
@@ -68,19 +76,19 @@ const[pag,setPag] = useState();
                 <div className="col w-25 border border-success p-3" >
                     <h3>Escolha a forma de pagamento :</h3>
                     <div className="form-check">
-                        <input className="form-check-input" type="radio" name="radioDefault" id="radioDefault1" onClick={()=>setPag("cartao")} />
+                        <input className="form-check-input" type="radio" name="radioDefault" id="radioDefault1" onClick={() => setPag("cartao")} />
                         <label className="form-check-label" htmlFor="radioDefault1">
                             Cartão
                         </label>
                     </div>
                     <div className="form-check">
-                        <input className="form-check-input" type="radio" name="radioDefault" id="radioDefault2" onClick={()=>setPag("pix")} />
+                        <input className="form-check-input" type="radio" name="radioDefault" id="radioDefault2" onClick={() => setPag("pix")} />
                         <label className="form-check-label" htmlFor="radioDefault2" >
                             Pix
                         </label>
                     </div>
                     <div className="form-check">
-                        <input className="form-check-input" type="radio" name="radioDefault" id="radioDefault2"onClick={()=>setPag("boleto")} />
+                        <input className="form-check-input" type="radio" name="radioDefault" id="radioDefault2" onClick={() => setPag("boleto")} />
                         <label className="form-check-label" htmlFor="radioDefault2">
                             Boleto
                         </label>
@@ -88,8 +96,9 @@ const[pag,setPag] = useState();
                 </div>
             </div>
             <div className="w-100 text-end">
-                    <button className="btn btn-eco mt-3 me-5" disabled={!pag}>Finalizar Compra</button>
+                <button className="btn btn-eco mt-3 me-5" disabled={!pag} onClick={() => mostrarToast()}>Finalizar Compra</button>
             </div>
         </main>
+        <Toast msg={"Compra finalizada"} />
     </>
 }

@@ -58,7 +58,7 @@ export default function HomeLogado() {
         nome: p.nmProduto,
         preco: p.preco,
         categoria: p.categoria,
-        img: p.imgProduto
+        img: p.imgProdutoBase64
           ? `data:image/jpeg;base64,${p.imgProduto}`
           : "/placeholder.png",
         qtdEstoque: p.qtdEstoque,

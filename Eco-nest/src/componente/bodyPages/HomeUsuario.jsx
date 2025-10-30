@@ -40,7 +40,7 @@ export default function HomeUsuario() {
   nome: p.nmProduto,
   preco: p.preco,
   categoria: p.categoria,
-  img: p.imgProdutoBase64  // ✅ CORRETO - este é o campo certo!
+  img: p.imgProdutoBase64  
     ? `data:image/jpeg;base64,${p.imgProdutoBase64}`
     : "/placeholder.png",
   qtdEstoque: p.qtdEstoque,

@@ -3,7 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { NavbarLogado } from "../NavbarLogado";
 import Footer from "../Footer";
 import { produtoService } from "../../services/produtoService";
-import Toast from "../Toast";
+import { estoqueService } from "../../services/estoqueService";
 import * as bootstrap from "bootstrap";
 
 export default function DetalhesProduto() {
@@ -13,11 +13,12 @@ export default function DetalhesProduto() {
   const [loading, setLoading] = useState(true);
   const [quantidade, setQuantidade] = useState(1);
   const [toastMsg, setToastMsg] = useState("");
+  const [toastColor, setToastColor] = useState("bg-success");
   const [carrinho, setCarrinho] = useState([]);
   const [usuario, setUsuario] = useState(null);
 
   useEffect(() => {
-    // Carrega dados do usuário (já está logado por causa do ProtectedRoute)
+    // Carrega dados do usuário
     const usuarioData = localStorage.getItem("usuario");
     if (usuarioData) {
       try {
@@ -52,31 +53,68 @@ export default function DetalhesProduto() {
         preco: data.preco,
         categoria: data.categoria,
         descricao: data.dsProduto || "Produto ecológico de alta qualidade",
-        img: data.imgProduto
-          ? `data:image/jpeg;base64,${data.imgProduto}`
+        img: data.imgProdutoBase64
+          ? `data:image/jpeg;base64,${data.imgProdutoBase64}`
           : "/placeholder.png",
         qtdEstoque: data.qtdEstoque,
       };
 
+      console.log("✅ Produto carregado:", produtoFormatado);
       setProduto(produtoFormatado);
     } catch (error) {
       console.error("Erro ao carregar produto:", error);
-      mostrarToast("Erro ao carregar produto");
+      mostrarToast("Erro ao carregar produto", "bg-danger");
       setTimeout(() => navigate("/homeLogado"), 2000);
     } finally {
       setLoading(false);
     }
   };
 
-  const mostrarToast = (msg) => {
-    setToastMsg(msg);
-    const toast = document.getElementById("toast");
-    const bsToast = new bootstrap.Toast(toast);
-    bsToast.show();
+  // ✅ FUNÇÃO PARA RECARREGAR ESTOQUE DO BANCO
+  const recarregarEstoque = async () => {
+    try {
+      const estoqueAtualizado = await estoqueService.buscarPorProduto(id);
+      setProduto((prev) => ({
+        ...prev,
+        qtdEstoque: estoqueAtualizado.qtdEstoque,
+      }));
+      console.log(
+        "✅ Estoque recarregado do banco:",
+        estoqueAtualizado.qtdEstoque
+      );
+    } catch (error) {
+      console.error("❌ Erro ao recarregar estoque:", error);
+    }
   };
 
-  const handleAdicionarCarrinho = () => {
+  const mostrarToast = (msg, color = "bg-success") => {
+    setToastMsg(msg);
+    setToastColor(color);
+    const toast = document.getElementById("toast");
+    if (toast) {
+      const bsToast = new bootstrap.Toast(toast);
+      bsToast.show();
+    }
+  };
+
+  const handleAdicionarCarrinho = async () => {
     try {
+      // ✅ 1. VERIFICAR DISPONIBILIDADE NO BANCO
+      const disponivel = await estoqueService.verificarDisponibilidade(
+        produto.cdProduto,
+        quantidade
+      );
+
+      if (!disponivel) {
+        mostrarToast("Estoque insuficiente", "bg-danger");
+        await recarregarEstoque(); // Atualiza estoque da tela
+        return;
+      }
+
+      // ✅ 2. RESERVAR ESTOQUE NO BANCO
+      await estoqueService.reservarEstoque(produto.cdProduto, quantidade);
+
+      // ✅ 3. ADICIONAR AO CARRINHO LOCAL
       const carrinhoAtual = JSON.parse(localStorage.getItem("carrinho")) || [];
 
       const itemExistenteIndex = carrinhoAtual.findIndex(
@@ -84,15 +122,7 @@ export default function DetalhesProduto() {
       );
 
       if (itemExistenteIndex >= 0) {
-        const itemExistente = carrinhoAtual[itemExistenteIndex];
-        const novaQuantidade = itemExistente.quantidade + quantidade;
-
-        if (novaQuantidade > produto.qtdEstoque) {
-          mostrarToast("Quantidade máxima em estoque atingida");
-          return;
-        }
-
-        carrinhoAtual[itemExistenteIndex].quantidade = novaQuantidade;
+        carrinhoAtual[itemExistenteIndex].quantidade += quantidade;
       } else {
         carrinhoAtual.push({
           cdProduto: produto.cdProduto,
@@ -106,19 +136,31 @@ export default function DetalhesProduto() {
       localStorage.setItem("carrinho", JSON.stringify(carrinhoAtual));
       setCarrinho(carrinhoAtual);
 
+      // ✅ 4. RECARREGAR ESTOQUE ATUALIZADO DO BANCO
+      await recarregarEstoque();
+
       mostrarToast(
         `${quantidade} ${
           quantidade > 1 ? "unidades adicionadas" : "unidade adicionada"
-        } ao carrinho!`
+        } ao carrinho!`,
+        "bg-success"
       );
+
+      // Resetar quantidade para 1
+      setQuantidade(1);
     } catch (error) {
       console.error("Erro ao adicionar ao carrinho:", error);
-      mostrarToast("Erro ao adicionar ao carrinho");
+      mostrarToast(
+        error.response?.data || "Erro ao adicionar ao carrinho",
+        "bg-danger"
+      );
+      // Recarregar estoque em caso de erro
+      await recarregarEstoque();
     }
   };
 
-  const handleComprar = () => {
-    handleAdicionarCarrinho();
+  const handleComprar = async () => {
+    await handleAdicionarCarrinho();
     setTimeout(() => navigate("/carrinho"), 1000);
   };
 
@@ -126,7 +168,7 @@ export default function DetalhesProduto() {
     if (quantidade < produto.qtdEstoque) {
       setQuantidade(quantidade + 1);
     } else {
-      mostrarToast("Quantidade máxima em estoque atingida");
+      mostrarToast("Quantidade máxima em estoque atingida", "bg-warning");
     }
   };
 
@@ -188,10 +230,15 @@ export default function DetalhesProduto() {
                 src={produto.img}
                 className="card-img-top p-4"
                 alt={produto.nome}
+                onError={(e) => {
+                  console.error("❌ Erro ao carregar imagem");
+                  e.target.src = "/placeholder.png";
+                }}
                 style={{
                   height: "500px",
-                  objectFit: "cover",
+                  objectFit: "contain",
                   borderRadius: "20px",
+                  backgroundColor: "#f8f9fa",
                 }}
               />
             </div>
@@ -217,7 +264,16 @@ export default function DetalhesProduto() {
                 <p className="eco-card-text mb-2">
                   <i className="bi bi-box-seam me-2"></i>
                   Estoque disponível:{" "}
-                  <strong>{produto.qtdEstoque} unidades</strong>
+                  <strong
+                    className={produto.qtdEstoque <= 5 ? "text-danger" : ""}
+                  >
+                    {produto.qtdEstoque} unidades
+                  </strong>
+                  {produto.qtdEstoque <= 5 && produto.qtdEstoque > 0 && (
+                    <span className="badge bg-warning text-dark ms-2">
+                      Últimas unidades!
+                    </span>
+                  )}
                 </p>
                 <p className="eco-card-text mb-2">
                   <i className="bi bi-truck me-2"></i>
@@ -239,6 +295,7 @@ export default function DetalhesProduto() {
                     className="btn btn-outline-success"
                     type="button"
                     onClick={decrementarQuantidade}
+                    disabled={quantidade <= 1}
                   >
                     <i className="bi bi-dash"></i>
                   </button>
@@ -252,6 +309,7 @@ export default function DetalhesProduto() {
                     className="btn btn-outline-success"
                     type="button"
                     onClick={incrementarQuantidade}
+                    disabled={quantidade >= produto.qtdEstoque}
                   >
                     <i className="bi bi-plus"></i>
                   </button>
@@ -284,6 +342,15 @@ export default function DetalhesProduto() {
                   Produto indisponível no momento
                 </div>
               )}
+
+              {/* Botão para recarregar estoque (debug) */}
+              <button
+                className="btn btn-sm btn-outline-secondary mt-3"
+                onClick={recarregarEstoque}
+              >
+                <i className="bi bi-arrow-clockwise me-1"></i>
+                Atualizar Estoque
+              </button>
             </div>
           </div>
         </div>
@@ -332,7 +399,23 @@ export default function DetalhesProduto() {
         </div>
       </main>
 
-      <Toast msg={toastMsg} />
+      {/* Toast */}
+      <div
+        className={`toast align-items-center ${toastColor} text-white position-fixed bottom-0 end-0 mb-3 me-3`}
+        role="alert"
+        id="toast"
+        style={{ zIndex: 9999 }}
+      >
+        <div className="d-flex">
+          <div className="toast-body">{toastMsg}</div>
+          <button
+            type="button"
+            className="btn-close btn-close-white me-2 m-auto"
+            data-bs-dismiss="toast"
+          ></button>
+        </div>
+      </div>
+
       <Footer />
     </>
   );

@@ -50,19 +50,20 @@ export default function HomeLogado() {
     try {
       const produtos = await produtoService.listarTodos();
 
-      // Converter para formato usado no front
+      // ✅ CORREÇÃO: Usar campo correto da API
       const produtosFormatados = produtos.map((p) => ({
         cdProduto: p.cdProduto,
         nome: p.nmProduto,
         preco: p.preco,
         categoria: p.categoria,
-        img: p.imgProdutoBase64 // ✅ CAMPO CORRETO
-          ? `data:image/jpeg;base64,${p.imgProdutoBase64}` // ✅ CAMPO CORRETO
+        // ✅ CAMPO CORRETO: imgProdutoBase64
+        img: p.imgProdutoBase64
+          ? `data:image/jpeg;base64,${p.imgProdutoBase64}`
           : "/placeholder.png",
         qtdEstoque: p.qtdEstoque,
       }));
 
-      console.log("✅ Produtos carregados (HomeLogado):", produtosFormatados); // Debug
+      console.log("✅ Produtos carregados (HomeLogado):", produtosFormatados);
       setListaProd(produtosFormatados);
       setFiltrado(produtosFormatados);
     } catch (error) {

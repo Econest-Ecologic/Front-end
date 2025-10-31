@@ -14,69 +14,68 @@ export default function Card({
 
   const handleCardClick = () => {
     if (cdProduto) {
-      // Sempre tenta navegar para o produto
-      // O ProtectedRoute vai verificar se está logado
       navigate(`/produto/${cdProduto}`);
     }
   };
 
-  // Prevenir propagação do clique do botão para o card
   const handleButtonClick = (e) => {
     e.stopPropagation();
-
-    // Redireciona para detalhes do produto
-    // A rota protegida cuidará da autenticação
     if (cdProduto) {
       navigate(`/produto/${cdProduto}`);
     }
   };
 
   return (
-    <>
+    <div
+      className={`card border ${border} bg-eco position-relative mx-auto`}
+      style={{
+        width: "100%",
+        maxWidth: "18rem",
+        minHeight: "26rem",
+        maxHeight: "30rem",
+        cursor: "pointer",
+      }}
+      onClick={handleCardClick}
+    >
       <div
-        className={`card border ${border} bg-eco position-relative mx-auto`}
-        style={{
-          width: "100%",
-          maxWidth: "18rem",
-          minHeight: "26rem",
-          maxHeight: "30rem",
-          cursor: "pointer",
-        }}
-        onClick={handleCardClick}
+        className={badge ? `badge ${color} position-absolute p-2` : "d-none"}
+        style={{ top: "-3%", right: "-10%" }}
       >
-        <div
-          className={badge ? `badge ${color} position-absolute p-2` : "d-none"}
-          style={{ top: "-3%", right: "-10%" }}
-        >
-          {badge}
-        </div>
-
-        <img
-          src={img}
-          className="card-img-top object-fit-cover p-4"
-          alt={title}
-          style={{
-            borderRadius: "30px",
-            maxHeight: "200px",
-          }}
-        />
-
-        <div className="card-body px-4 d-flex flex-column">
-          <h5 className="card-title eco-card-text text-center">{title}</h5>
-          <p className="card-text eco-card-text text-center flex-grow-1">
-            {desc}
-          </p>
-          <h5 className="card-text fw-bolder eco-card-text">R$ {price}</h5>
-
-          <button
-            className="btn btn-eco px-3"
-            onClick={handleButtonClick}
-            title="Ver detalhes do produto"
-          >
-            <i className="bi bi-cart-plus-fill"></i>
-          </button>
-        </div>
+        {badge}
       </div>
-    </>
+
+      {/* ✅ CORREÇÃO: Tratamento de erro de imagem */}
+      <img
+        src={img}
+        className="card-img-top object-fit-cover p-4"
+        alt={title}
+        onError={(e) => {
+          console.error("❌ Erro ao carregar imagem do card:", title);
+          e.target.src = "/placeholder.png";
+        }}
+        style={{
+          borderRadius: "30px",
+          maxHeight: "200px",
+          objectFit: "contain",
+          backgroundColor: "#f8f9fa",
+        }}
+      />
+
+      <div className="card-body px-4 d-flex flex-column">
+        <h5 className="card-title eco-card-text text-center">{title}</h5>
+        <p className="card-text eco-card-text text-center flex-grow-1">
+          {desc}
+        </p>
+        <h5 className="card-text fw-bolder eco-card-text">R$ {price}</h5>
+
+        <button
+          className="btn btn-eco px-3"
+          onClick={handleButtonClick}
+          title="Ver detalhes do produto"
+        >
+          <i className="bi bi-cart-plus-fill"></i>
+        </button>
+      </div>
+    </div>
   );
 }

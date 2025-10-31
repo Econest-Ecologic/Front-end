@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { produtoService } from "../services/produtoService";
-import Toast from "../componente/Toast";
 import * as bootstrap from "bootstrap";
 
 export function GerenciarProduto() {
@@ -28,11 +27,13 @@ export function GerenciarProduto() {
       setLoading(true);
       const data = await produtoService.listarTodos();
 
-      // Filtrar apenas produtos ativos
+      console.log("✅ Produtos recebidos:", data);
+
+      // ✅ Filtrar apenas produtos ativos
       const produtosAtivos = data.filter((produto) => produto.flAtivo === true);
       setProdutos(produtosAtivos);
 
-      console.log("✅ Produtos carregados:", produtosAtivos);
+      console.log("✅ Produtos ativos:", produtosAtivos);
     } catch (error) {
       console.error("❌ Erro ao carregar produtos:", error);
       mostrarToast("Erro ao carregar produtos", "bg-danger");
@@ -45,14 +46,18 @@ export function GerenciarProduto() {
     setToastMsg(msg);
     setToastColor(color);
     const toast = document.getElementById("toast");
-    const bsToast = new bootstrap.Toast(toast);
-    bsToast.show();
+    if (toast) {
+      const bsToast = new bootstrap.Toast(toast);
+      bsToast.show();
+    }
   };
 
   const handleExcluir = async (id, nomeProduto) => {
     if (
       window.confirm(
-        `⚠️ TEM CERTEZA que deseja INATIVAR o produto:\n\n"${nomeProduto}"\n\nEsta ação não pode ser desfeita!`
+        `⚠️ TEM CERTEZA que deseja INATIVAR o produto:\n\n"${nomeProduto}"\n\n` +
+          `O produto será removido da loja e não aparecerá mais para os clientes!\n\n` +
+          `Esta ação não pode ser desfeita!`
       )
     ) {
       try {
@@ -63,11 +68,16 @@ export function GerenciarProduto() {
 
         console.log("✅ Produto inativado com sucesso!");
         mostrarToast(
-          `Produto "${nomeProduto}" inativado com sucesso!`,
+          `Produto "${nomeProduto}" foi inativado e removido da loja!`,
           "bg-success"
         );
 
-        // Recarregar lista após 1 segundo
+        // ✅ Remover imediatamente da lista (sem esperar recarregar)
+        setProdutos((prevProdutos) =>
+          prevProdutos.filter((produto) => produto.cdProduto !== id)
+        );
+
+        // Recarregar lista após 1 segundo para garantir sincronização
         setTimeout(() => {
           carregarProdutos();
         }, 1000);
@@ -221,7 +231,7 @@ export function GerenciarProduto() {
                           handleExcluir(produto.cdProduto, produto.nmProduto)
                         }
                         disabled={excluindo === produto.cdProduto}
-                        title="Inativar Produto"
+                        title="Inativar Produto (Remove da loja)"
                       >
                         {excluindo === produto.cdProduto ? (
                           <span
@@ -405,7 +415,23 @@ export function GerenciarProduto() {
         </div>
       )}
 
-      <Toast msg={toastMsg} color={toastColor} />
+      {/* Toast de Notificação */}
+      <div
+        className={`toast align-items-center ${toastColor} text-white position-fixed bottom-0 end-0 mb-3 me-3`}
+        role="alert"
+        id="toast"
+      >
+        <div className="d-flex">
+          <div className="toast-body">{toastMsg}</div>
+          <button
+            type="button"
+            className="btn-close btn-close-white me-2 m-auto"
+            data-bs-dismiss="toast"
+          ></button>
+        </div>
+      </div>
     </>
   );
 }
+
+export default GerenciarProduto;

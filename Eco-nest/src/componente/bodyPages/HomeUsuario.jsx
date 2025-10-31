@@ -98,27 +98,31 @@ export default function HomeUsuario() {
         <Banner link={"/Banner1.png"} />
 
         {destaque.length > 0 ? (
-          <div className="row d-flex flex-wrap justify-content-center row-gap-4 my-5 mx-3">
-            {destaque.map((prod) => (
-              <div
-                className="col-12 col-sm-12 col-md-6 col-lg-3 d-flex justify-content-center"
-                key={prod.cdProduto}
-              >
-                <Card
-                  cdProduto={prod.cdProduto}
-                  img={prod.img}
-                  title={prod.nome}
-                  badge={"PROMOÇÃO"}
-                  desc={prod.categoria}
-                  price={prod.preco}
-                  border={"border-0"}
-                />
-              </div>
-            ))}
+          <div className="container-fluid px-3 px-md-5 my-5">
+            <div className="row g-4 justify-content-center">
+              {destaque.map((prod) => (
+                <div
+                  className="col-12 col-sm-6 col-md-4 col-lg-3 d-flex justify-content-center"
+                  key={prod.cdProduto}
+                >
+                  <Card
+                    cdProduto={prod.cdProduto}
+                    img={prod.img}
+                    title={prod.nome}
+                    badge={"PROMOÇÃO"}
+                    desc={prod.categoria}
+                    price={prod.preco}
+                    border={"border-0"}
+                  />
+                </div>
+              ))}
+            </div>
           </div>
         ) : (
-          <div className="my-5">
-            <p className="text-muted">Nenhum produto disponível no momento</p>
+          <div className="my-5 text-center">
+            <p className="text-muted fs-5">
+              Nenhum produto disponível no momento
+            </p>
           </div>
         )}
 

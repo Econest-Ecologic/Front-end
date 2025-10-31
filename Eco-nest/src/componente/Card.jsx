@@ -34,9 +34,10 @@ export default function Card({
   return (
     <>
       <div
-        className={`card border ${border} bg-eco position-relative`}
+        className={`card border ${border} bg-eco position-relative mx-auto`}
         style={{
-          width: "18rem",
+          width: "100%",
+          maxWidth: "18rem",
           minHeight: "26rem",
           maxHeight: "30rem",
           cursor: "pointer",

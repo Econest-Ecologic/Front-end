@@ -170,7 +170,7 @@ export default function HomeUsuario() {
 
         <div className="d-flex w-100 justify-content-center mb-4">
           <button
-            className="btn btn-eco w-25 py-3 fw-semibold fs-4"
+            className="btn btn-eco py-3 fw-semibold fs-4"
             onClick={() => navigate("/")}
           >
             Fazer Login para Ver Produtos

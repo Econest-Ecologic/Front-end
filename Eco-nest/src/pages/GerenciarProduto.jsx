@@ -16,6 +16,9 @@ export function GerenciarProduto() {
   const [produtoEditando, setProdutoEditando] = useState(null);
   const [showModal, setShowModal] = useState(false);
 
+  // Estado para controlar exclusão
+  const [excluindo, setExcluindo] = useState(null);
+
   useEffect(() => {
     carregarProdutos();
   }, []);
@@ -24,9 +27,14 @@ export function GerenciarProduto() {
     try {
       setLoading(true);
       const data = await produtoService.listarTodos();
-      setProdutos(data);
+
+      // Filtrar apenas produtos ativos
+      const produtosAtivos = data.filter((produto) => produto.flAtivo === true);
+      setProdutos(produtosAtivos);
+
+      console.log("✅ Produtos carregados:", produtosAtivos);
     } catch (error) {
-      console.error("Erro ao carregar produtos:", error);
+      console.error("❌ Erro ao carregar produtos:", error);
       mostrarToast("Erro ao carregar produtos", "bg-danger");
     } finally {
       setLoading(false);
@@ -44,16 +52,33 @@ export function GerenciarProduto() {
   const handleExcluir = async (id, nomeProduto) => {
     if (
       window.confirm(
-        `Tem certeza que deseja inativar o produto: ${nomeProduto}? Esta ação não pode ser desfeita.`
+        `⚠️ TEM CERTEZA que deseja INATIVAR o produto:\n\n"${nomeProduto}"\n\nEsta ação não pode ser desfeita!`
       )
     ) {
       try {
+        setExcluindo(id);
+        console.log(`🗑️ Inativando produto ID: ${id}`);
+
         await produtoService.inativar(id);
-        mostrarToast("Produto inativado com sucesso");
-        carregarProdutos();
+
+        console.log("✅ Produto inativado com sucesso!");
+        mostrarToast(
+          `Produto "${nomeProduto}" inativado com sucesso!`,
+          "bg-success"
+        );
+
+        // Recarregar lista após 1 segundo
+        setTimeout(() => {
+          carregarProdutos();
+        }, 1000);
       } catch (error) {
-        console.error("Erro ao inativar produto:", error);
-        mostrarToast("Erro ao inativar produto", "bg-danger");
+        console.error("❌ Erro ao inativar produto:", error);
+        mostrarToast(
+          error.response?.data || "Erro ao inativar produto. Tente novamente.",
+          "bg-danger"
+        );
+      } finally {
+        setExcluindo(null);
       }
     }
   };
@@ -89,7 +114,7 @@ export function GerenciarProduto() {
 
       await produtoService.atualizar(produtoEditando.cdProduto, formData);
 
-      mostrarToast("Produto atualizado com sucesso");
+      mostrarToast("Produto atualizado com sucesso!");
       setShowModal(false);
       setProdutoEditando(null);
       carregarProdutos();
@@ -120,7 +145,7 @@ export function GerenciarProduto() {
       <main className="container-fluid bg-eco d-flex justify-content-center align-items-center vh-100">
         <div
           className="container bg-body rounded rounded-5 flex-column d-flex py-5 shadow"
-          style={{ maxWidth: "850px" }}
+          style={{ maxWidth: "900px" }}
         >
           <div className="d-flex justify-content-between align-items-center w-100 mb-4 px-3">
             <div className="d-flex align-items-center">
@@ -141,7 +166,7 @@ export function GerenciarProduto() {
             <input
               type="text"
               className="form-control eco-border"
-              placeholder="Buscar por Nome ou Categoria..."
+              placeholder="🔍 Buscar por Nome ou Categoria..."
               value={busca}
               onChange={(e) => setBusca(e.target.value)}
             />
@@ -155,17 +180,33 @@ export function GerenciarProduto() {
                   <th>CATEGORIA</th>
                   <th>VALOR</th>
                   <th>ESTOQUE</th>
-                  <th>AÇÕES</th>
+                  <th className="text-center">AÇÕES</th>
                 </tr>
               </thead>
               <tbody>
                 {produtosFiltrados.map((produto) => (
                   <tr key={produto.cdProduto}>
                     <td>{produto.nmProduto}</td>
-                    <td>{produto.categoria}</td>
-                    <td>R$ {produto.preco.toFixed(2)}</td>
-                    <td>{produto.qtdEstoque}</td>
                     <td>
+                      <span className="badge bg-success">
+                        {produto.categoria}
+                      </span>
+                    </td>
+                    <td className="fw-bold">R$ {produto.preco.toFixed(2)}</td>
+                    <td>
+                      <span
+                        className={`badge ${
+                          produto.qtdEstoque > 10
+                            ? "bg-success"
+                            : produto.qtdEstoque > 0
+                            ? "bg-warning"
+                            : "bg-danger"
+                        }`}
+                      >
+                        {produto.qtdEstoque} un
+                      </span>
+                    </td>
+                    <td className="text-center">
                       <button
                         onClick={() => abrirModalEdicao(produto)}
                         className="btn btn-sm btn-outline-success me-2"
@@ -179,20 +220,41 @@ export function GerenciarProduto() {
                         onClick={() =>
                           handleExcluir(produto.cdProduto, produto.nmProduto)
                         }
-                        title="Excluir Produto"
+                        disabled={excluindo === produto.cdProduto}
+                        title="Inativar Produto"
                       >
-                        <i className="bi bi-trash"></i>
+                        {excluindo === produto.cdProduto ? (
+                          <span
+                            className="spinner-border spinner-border-sm"
+                            role="status"
+                          />
+                        ) : (
+                          <i className="bi bi-trash"></i>
+                        )}
                       </button>
                     </td>
                   </tr>
                 ))}
               </tbody>
             </table>
+
             {produtosFiltrados.length === 0 && (
-              <p className="text-center text-muted mt-4">
-                Nenhum produto encontrado.
-              </p>
+              <div className="text-center py-5">
+                <i className="bi bi-inbox fs-1 text-muted"></i>
+                <p className="text-muted mt-3">
+                  {busca
+                    ? "Nenhum produto encontrado com esse termo."
+                    : "Nenhum produto cadastrado."}
+                </p>
+              </div>
             )}
+          </div>
+
+          <div className="px-3 mt-3">
+            <small className="text-muted">
+              <i className="bi bi-info-circle me-1"></i>
+              Total de produtos ativos: <strong>{produtos.length}</strong>
+            </small>
           </div>
         </div>
       </main>
@@ -207,7 +269,7 @@ export function GerenciarProduto() {
           <div className="modal-dialog modal-lg">
             <div className="modal-content">
               <div className="modal-header">
-                <h5 className="modal-title">Editar Produto</h5>
+                <h5 className="modal-title">✏️ Editar Produto</h5>
                 <button
                   type="button"
                   className="btn-close"
@@ -334,7 +396,7 @@ export function GerenciarProduto() {
                     Cancelar
                   </button>
                   <button type="submit" className="btn btn-eco">
-                    Salvar Alterações
+                    💾 Salvar Alterações
                   </button>
                 </div>
               </form>

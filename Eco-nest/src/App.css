@@ -171,3 +171,33 @@
     --bs-gutter-y: 1rem;
   }
 }
+.table-hover tbody tr:hover {
+  background-color: rgba(47, 85, 49, 0.05) !important;
+}
+
+.table thead tr {
+  background-color: #f8f9fa;
+  font-weight: 600;
+}
+
+.table td,
+.table th {
+  vertical-align: middle;
+}
+
+/* Badge de estoque */
+.badge {
+  font-size: 0.85rem;
+  padding: 0.4rem 0.8rem;
+}
+
+/* Botões de ação */
+.btn-sm {
+  padding: 0.375rem 0.75rem;
+}
+
+/* Spinner no botão */
+.spinner-border-sm {
+  width: 1rem;
+  height: 1rem;
+}

@@ -98,10 +98,10 @@ export default function HomeUsuario() {
         <Banner link={"/Banner1.png"} />
 
         {destaque.length > 0 ? (
-          <div className="row d-flex flex-wrap row-gap-4 my-5 mx-3">
+          <div className="row d-flex flex-wrap justify-content-center row-gap-4 my-5 mx-3">
             {destaque.map((prod) => (
               <div
-                className="col-12 col-sm-12 col-md-6 col-lg-3"
+                className="col-12 col-sm-12 col-md-6 col-lg-3 d-flex justify-content-center"
                 key={prod.cdProduto}
               >
                 <Card

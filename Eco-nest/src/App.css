@@ -1,48 +1,52 @@
 .active {
-  color: var(--nav-item-active) !important;
+    color: var(--nav-item-active) !important;
 }
 
 .active:hover {
-  color: #14b66a !important;
+    color: #14b66a !important;
 }
 
 #container-home {
-  min-height: 90vh !important;
+    min-height: 90vh !important;
 }
 
 
-.card:hover{
-cursor: pointer!important;
-transform: translatey(-10px);
-box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.658) ;
+.card:hover {
+    cursor: pointer !important;
+    transform: translatey(-10px);
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.658);
 }
+
 #titulo-admin {
- 
-    margin-bottom: 0 !important; 
-    margin-top: -20px; 
+
+    margin-bottom: 0 !important;
+    margin-top: -20px;
 }
 
-#logo:hover{
-cursor: pointer;
+#logo:hover {
+    cursor: pointer;
 }
+
 .bg-eco-admin {
-    background-color: #e0f2e0; /* Fundo suave */
+    background-color: #e0f2e0;
+    /* Fundo suave */
 }
 
-.w-75 { /* Garante que o card ocupe 75% da largura da tela */
+.w-75 {
+    /* Garante que o card ocupe 75% da largura da tela */
     width: 75% !important;
     max-width: 1200px;
 }
 
 .logo-pequena-feedback {
-    width: 50px; 
+    width: 50px;
     height: auto;
 }
 
 .titulo-feedback-tela {
     font-size: 2rem;
     font-weight: bold;
-    color: #388e3c; 
+    color: #388e3c;
 }
 
 .btn-voltar-feedback {
@@ -61,7 +65,7 @@ cursor: pointer;
 
 .produto-nome-feedback {
     font-size: 1.4rem;
-    color: #004d40; 
+    color: #004d40;
     font-weight: 600;
 }
 
@@ -74,7 +78,7 @@ cursor: pointer;
 .feedback-item-detalhe {
     margin-bottom: 15px;
     padding-left: 10px;
-    border-left: 4px solid #b2dfdb; 
+    border-left: 4px solid #b2dfdb;
 }
 
 .feedback-cliente-header {

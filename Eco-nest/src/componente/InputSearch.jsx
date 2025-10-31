@@ -1,63 +1,22 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { produtoService } from "../services/produtoService";
 
 export default function InputSearch() {
-  const listaInicial = [
-    {
-      nome: "Bucha Vegetal Natural",
-      preco: 8.9,
-      categoria: "higiene",
-      img: "https://www.gosupps.com/custom/related/childImage/2219021",
-    },
-    {
-      nome: "Sabonete Orgânico de Lavanda",
-      preco: 14.5,
-      categoria: "higiene",
-      img: "https://images.pexels.com/photos/322207/pexels-photo-322207.jpeg",
-    },
-    {
-      nome: "Escova de Dente de Bambu",
-      preco: 9.99,
-      categoria: "higiene",
-      img: "https://images.pexels.com/photos/601365/pexels-photo-601365.jpeg",
-    },
-    {
-      nome: "Pano de Limpeza Reutilizável",
-      preco: 6.75,
-      categoria: "casa",
-      img: "https://images.pexels.com/photos/416520/pexels-photo-416520.jpeg",
-    },
-    {
-      nome: "Sabão Ecológico Multiuso",
-      preco: 12.8,
-      categoria: "casa",
-      img: "https://images.pexels.com/photos/342648/pexels-photo-342648.jpeg",
-    },
-    {
-      nome: "Composteira Doméstica Pequena",
-      preco: 189.9,
-      categoria: "casa",
-      img: "https://images.pexels.com/photos/1181675/pexels-photo-1181675.jpeg",
-    },
-    {
-      nome: "Garrafa Reutilizável de Inox",
-      preco: 59.9,
-      categoria: "utensilios",
-      img: "https://images.pexels.com/photos/416528/pexels-photo-416528.jpeg",
-    },
-    {
-      nome: "Canudo de Aço Inoxidável",
-      preco: 4.99,
-      categoria: "utensilios",
-      img: "https://images.pexels.com/photos/406154/pexels-photo-406154.jpeg",
-    },
-    {
-      nome: "Copo Retrátil de Silicone",
-      preco: 19.9,
-      categoria: "utensilios",
-      img: "https://images.pexels.com/photos/405771/pexels-photo-405771.jpeg",
-    },
-  ];
+  const [listaInicial, setListaInicial] = useState([]);
   const [filtro, setFiltro] = useState([]);
+
+  useEffect(() => {
+    const loadProdutos = async () => {
+      try {
+        const produtos = await produtoService.listarTodos();
+        setListaInicial(produtos);
+      } catch (error) {
+        console.log("Erro ao carregar produtos na navbar : " + error);
+        setListaInicial([]);
+      }
+    };
+    loadProdutos();
+  }, []);
   return (
     <>
       <form className="d-flex input-group position-relative" role="search">
@@ -76,10 +35,10 @@ export default function InputSearch() {
             setFiltro(
               listaInicial
                 .filter((prod) =>
-                  prod.nome.toLowerCase().includes(valor.toLowerCase())
+                  prod.nmProduto.toLowerCase().includes(valor.toLowerCase())
                 )
                 .sort()
-                .splice(0, 4)
+                .slice(0, 4)
             );
           }}
         />
@@ -99,7 +58,7 @@ export default function InputSearch() {
               key={key}
               className="bg-body border-bottom rounded-2 p-2 resp-result text-start"
             >
-              {prod.nome}
+              {prod.nmProduto}
             </button>
           ))}
         </ul>

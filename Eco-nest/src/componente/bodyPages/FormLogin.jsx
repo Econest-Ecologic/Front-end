@@ -60,7 +60,7 @@ export function FormLogin({ trocaLogin }) {
         <div className="col-md-4 border border-1 border-secundary p-5">
           <h3 className="text-center mb-4 eco-text">Faça o seu Login</h3>
 
-          <div>
+          <form onSubmit={handleLogin}>
             <InputOutline
               type="email"
               placeholder="Email"
@@ -80,12 +80,11 @@ export function FormLogin({ trocaLogin }) {
               className="btn btn-eco w-100"
               type="submit"
               disabled={loading}
-              onClick={handleLogin}
             >
               {loading ? "ENTRANDO..." : "ENTRAR"}
             </button>
             <BotaoTrocaLogin trocaLogin={trocaLogin} text="Cadastro" />
-          </div>
+          </form>
         </div>
       </div>
       <Toast msg={toastMsg} color="bg-danger" />

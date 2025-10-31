@@ -7,30 +7,31 @@ import Toast from "../Toast";
 export default function Contato() {
   const [nome, setNome] = useState();
   const [email, setEmail] = useState();
-
-
+  const [msg, setMsg] = useState();
+  const [color, setColor] = useState();
   const handleSubmit = () => {
-
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-
     if (!nome || !email || !emailRegex.test(email)) {
-
-      const toastErro = document.getElementById("toast-contato-erro");
-      const bsToastErro = new bootstrap.Toast(toastErro);
-      bsToastErro.show();
+      const toast = document.getElementById("liveToast");
+      const toastFinal = new bootstrap.Toast(toast);
+      setMsg("Preencha todos os campos");
+      setColor("bg-danger");
+      setTimeout(() => toastFinal.show(), 50); // espera o React atualizar
 
       return;
     }
 
-    const toastSucesso = document.getElementById("toast-contato-sucesso");
-    const bsToastSucesso = new bootstrap.Toast(toastSucesso);
-    bsToastSucesso.show();
+    const toast = document.getElementById("liveToast");
+    const toastFinal = new bootstrap.Toast(toast);
+    setMsg("Enviado com sucesso");
+    setColor("bg-success");
 
-    setNome('');
-    setEmail('');
+    setTimeout(() => toastFinal.show(), 50); // espera o React atualizar
+
+    setNome("");
+    setEmail("");
     document.getElementById("floatingTextarea").value = "";
-
   };
   return (
     <>
@@ -70,26 +71,38 @@ export default function Contato() {
               </label>
             </div>
             <div className="container-fluid d-flex justify-content-end mt-3 ">
-              <button className="btn btn-eco btn-lg w-100" onClick={handleSubmit}>
+              <button
+                className="btn btn-eco btn-lg w-100"
+                onClick={() => {
+                  handleSubmit();
+                }}
+              >
                 Enviar
               </button>
             </div>
           </div>
         </div>
-        <Toast
-          msg={"Mensagem enviada com sucesso"}
-          icon={<i className="bi bi-check-lg"></i>}
-          color="bg-success"
-          idName="toast-contato-sucesso"
-        />
 
-
-        <Toast
-          msg={"Preencha todos os campos corretamente!"}
-          icon={<i className="bi bi-x-circle-fill"></i>}
-          color="bg-danger"
-          idName="toast-contato-erro"
-        />
+        <div class="toast-container{} position-fixed bottom-0 end-0 p-3">
+          <div
+            id="liveToast"
+            class={`toast ${color}`}
+            role="alert"
+            aria-live="assertive"
+            aria-atomic="true"
+          >
+            <div class="toast-header">
+              <strong class="me-auto">Alert</strong>
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="toast"
+                aria-label="Close"
+              ></button>
+            </div>
+            <div class="toast-body">{msg} </div>
+          </div>
+        </div>
       </main>
 
       <Footer />

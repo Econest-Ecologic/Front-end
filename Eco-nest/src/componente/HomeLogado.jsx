@@ -12,7 +12,6 @@ export default function HomeLogado() {
 
   const [carrinho, setCarrinho] = useState([]);
 
-
   useEffect(() => {
     try {
       const savedCart = localStorage.getItem("carrinho");
@@ -36,8 +35,7 @@ export default function HomeLogado() {
     } finally {
       setLoading(false);
     }
-    console.log("Carrinho :" + carrinho)
-
+    console.log("Carrinho :" + carrinho);
   }, []);
 
   useEffect(() => {
@@ -49,31 +47,31 @@ export default function HomeLogado() {
   }, []);
 
   const carregarProdutos = async () => {
-  try {
-    const produtos = await produtoService.listarTodos();
+    try {
+      const produtos = await produtoService.listarTodos();
 
-    // Converter para formato usado no front
-    const produtosFormatados = produtos.map((p) => ({
-      cdProduto: p.cdProduto,
-      nome: p.nmProduto,
-      preco: p.preco,
-      categoria: p.categoria,
-      img: p.imgProdutoBase64  // ✅ CAMPO CORRETO
-        ? `data:image/jpeg;base64,${p.imgProdutoBase64}`  // ✅ CAMPO CORRETO
-        : "/placeholder.png",
-      qtdEstoque: p.qtdEstoque,
-    }));
+      // Converter para formato usado no front
+      const produtosFormatados = produtos.map((p) => ({
+        cdProduto: p.cdProduto,
+        nome: p.nmProduto,
+        preco: p.preco,
+        categoria: p.categoria,
+        img: p.imgProdutoBase64 // ✅ CAMPO CORRETO
+          ? `data:image/jpeg;base64,${p.imgProdutoBase64}` // ✅ CAMPO CORRETO
+          : "/placeholder.png",
+        qtdEstoque: p.qtdEstoque,
+      }));
 
-    console.log("✅ Produtos carregados (HomeLogado):", produtosFormatados); // Debug
-    setListaProd(produtosFormatados);
-    setFiltrado(produtosFormatados);
-  } catch (error) {
-    console.error("Erro ao carregar produtos:", error);
-    alert("Erro ao carregar produtos");
-  } finally {
-    setLoading(false);
-  }
-};
+      console.log("✅ Produtos carregados (HomeLogado):", produtosFormatados); // Debug
+      setListaProd(produtosFormatados);
+      setFiltrado(produtosFormatados);
+    } catch (error) {
+      console.error("Erro ao carregar produtos:", error);
+      alert("Erro ao carregar produtos");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
     setFiltrado(listaProd);
@@ -95,11 +93,10 @@ export default function HomeLogado() {
   return (
     <>
       <NavbarLogado carrinho={carrinho} />
+      <h5 className="text-end w-100 mt-2 pe-5">
+        Bem vindo, {usuario?.nome || "Usuário"}
+      </h5>
       <main className="container-xxl d-flex flex-column align-items-center w-100 min-vh-100">
-        <h5 className="text-end w-100 mt-2">
-          Bem vindo, {usuario?.nome || "Usuário"}
-        </h5>
-
         <nav className="mt-3 d-flex gap-3 h-100 justify-content-center flex-wrap">
           <div onClick={() => setFiltrado(listaProd)}>
             <RadioBtn

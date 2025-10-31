@@ -57,7 +57,7 @@ export default function PagPagamento() {
   return (
     <>
       <NavbarLogado carrinho={carrinho} />
-      <main className="container-xxl d-flex flex-column align-items-center w-100 min-vh-100">
+      <main className="container-xxl d-flex flex-column flex-wrap align-items-center w-100 min-vh-100">
         <div className="title w-100 mt-3">
           <h1 className="text-start">Carrinho</h1>
         </div>
@@ -73,43 +73,47 @@ export default function PagPagamento() {
             <hr className="border border-1 opacity-100 border-success" />
             <h3>Total : {precoTotal}</h3>
           </div>
-          <div className="col w-25 border border-success p-3">
-            <h3>Escolha a forma de pagamento :</h3>
-            <div className="form-check">
-              <input
-                className="form-check-input"
-                type="radio"
-                name="radioDefault"
-                id="radioDefault1"
-                onClick={() => setPag("cartao")}
-              />
-              <label className="form-check-label" htmlFor="radioDefault1">
-                Cartão
-              </label>
-            </div>
-            <div className="form-check">
-              <input
-                className="form-check-input"
-                type="radio"
-                name="radioDefault"
-                id="radioDefault2"
-                onClick={() => setPag("pix")}
-              />
-              <label className="form-check-label" htmlFor="radioDefault2">
-                Pix
-              </label>
-            </div>
-            <div className="form-check">
-              <input
-                className="form-check-input"
-                type="radio"
-                name="radioDefault"
-                id="radioDefault2"
-                onClick={() => setPag("boleto")}
-              />
-              <label className="form-check-label" htmlFor="radioDefault2">
-                Boleto
-              </label>
+
+          <div className=" d-flex flex-wrap w-100">
+            <div className="col w-100 border border-success p-3">
+              <h3>Escolha a forma de pagamento :</h3>
+              <div className="form-check">
+                <input
+                  className="form-check-input"
+                  type="radio"
+                  name="radioDefault"
+                  id="radioDefault1"
+                  onClick={() => setPag("cartao")}
+                />
+                <label className="form-check-label" htmlFor="radioDefault1">
+                  Cartão
+                </label>
+              </div>
+
+              <div className="form-check w-100">
+                <input
+                  className="form-check-input"
+                  type="radio"
+                  name="radioDefault"
+                  id="radioDefault2"
+                  onClick={() => setPag("pix")}
+                />
+                <label className="form-check-label" htmlFor="radioDefault2">
+                  Pix
+                </label>
+              </div>
+              <div className="form-check">
+                <input
+                  className="form-check-input"
+                  type="radio"
+                  name="radioDefault"
+                  id="radioDefault2"
+                  onClick={() => setPag("boleto")}
+                />
+                <label className="form-check-label" htmlFor="radioDefault2">
+                  Boleto
+                </label>
+              </div>
             </div>
           </div>
         </div>

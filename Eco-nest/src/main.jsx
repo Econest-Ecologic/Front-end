@@ -20,6 +20,8 @@ import ProtectedRoute from "./componente/ProtectedRoute";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import EditarUsuario from "./componente/bodyPages/EditarUsuario";
+import { FormCadastro } from "./componente/bodyPages/FormCadastro";
+import { FormLogin } from "./componente/bodyPages/FormLogin";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
@@ -118,6 +120,8 @@ createRoot(document.getElementById("root")).render(
         <Route path="/produto/:id" element={<DetalhesProduto />} />
         <Route path="/pagamento" element={<PagPagamento />} />
         <Route path="/editarUsuario" element={<EditarUsuario />} />
+        <Route path="/cadastroUsuario" element={<FormCadastro />} />
+        <Route path="/login" element={<FormLogin />} />
       </Routes>
     </BrowserRouter>
   </StrictMode>

@@ -3,8 +3,9 @@ import { BotaoTrocaLogin } from "../BotaoTrocaLogin";
 import InputOutline from "../InputOutline";
 import { authService } from "../../services/authService";
 import { useNavigate } from "react-router-dom";
+import { Navbar } from "../Navbar";
 
-export function FormCadastro({ trocaLogin }) {
+export function FormCadastro() {
   const navigate = useNavigate();
   const [nome, setNome] = useState("");
   const [email, setEmail] = useState("");
@@ -81,10 +82,10 @@ export function FormCadastro({ trocaLogin }) {
   };
 
   return (
-    <>
-      <main className="container-fluid d-flex flex-row flex-wrap justify-content-center align-items-center border border-1 border-secundary p-5">
-        <div className="row">
-
+    <div className="vh-100 justify-content-center  overflow-hidden">
+      <Navbar />
+      <main className="container-fluid d-flex flex-row h-100 flex-wrap justify-content-center align-items-center ">
+        <div className="row border border-1 border-secundary p-5">
           <div className="col-md-6 d-flex justify-content-center align-items-center flex-column ">
             <h1 className="text-center text-success">Realizar Cadastro</h1>
             <img
@@ -155,12 +156,20 @@ export function FormCadastro({ trocaLogin }) {
                 >
                   {loading ? "CADASTRANDO..." : "CADASTRAR"}
                 </button>
-                <BotaoTrocaLogin trocaLogin={trocaLogin} text="Login" />
+                <div className="w-100 text-center">
+                  <button
+                    className="btn btn-link"
+                    onClick={() => navigate("/login")}
+                    type="button"
+                  >
+                    Cadastro
+                  </button>
+                </div>
               </div>
             </form>
           </div>
         </div>
       </main>
-    </>
+    </div>
   );
 }

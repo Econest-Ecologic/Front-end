@@ -5,8 +5,9 @@ import { useNavigate } from "react-router-dom";
 import Toast from "../Toast";
 import { authService } from "../../services/authService";
 import * as bootstrap from "bootstrap";
+import { Navbar } from "../Navbar";
 
-export function FormLogin({ trocaLogin }) {
+export function FormLogin() {
   const navigate = useNavigate();
   const [senha, setSenha] = useState("");
   const [email, setEmail] = useState("");
@@ -55,8 +56,9 @@ export function FormLogin({ trocaLogin }) {
   };
 
   return (
-    <>
-      <div className="container-fluid d-flex flex-lg-row flex-column flex-wrap justify-content-center align-items-center">
+    <div className="vh-100 justify-content-center overflow-hidden">
+      <Navbar />
+      <div className="container-fluid d-flex flex-lg-row flex-column flex-wrap justify-content-center align-items-center h-100">
         <div className="col-md-4 border border-1 border-secundary p-5">
           <h3 className="text-center mb-4 eco-text">Faça o seu Login</h3>
 
@@ -83,11 +85,18 @@ export function FormLogin({ trocaLogin }) {
             >
               {loading ? "ENTRANDO..." : "ENTRAR"}
             </button>
-            <BotaoTrocaLogin trocaLogin={trocaLogin} text="Cadastro" />
+            <div className="w-100 text-center">
+              <button
+                className="btn btn-link"
+                onClick={() => navigate("/cadastroUsuario")}
+              >
+                Cadastro
+              </button>
+            </div>
           </form>
         </div>
       </div>
       <Toast msg={toastMsg} color="bg-danger" />
-    </>
+    </div>
   );
 }

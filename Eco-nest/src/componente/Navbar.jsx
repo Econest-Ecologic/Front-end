@@ -71,10 +71,7 @@ export function Navbar() {
           <span className="navbar-toggler-icon"></span>
         </button>
 
-        <div
-          className="collapse navbar-collapse"
-          id="navbarSupportedContent"
-        >
+        <div className="collapse navbar-collapse" id="navbarSupportedContent">
           <ul className="navbar-nav ms-auto mb-2 mb-lg-0 d-flex w-100 align-items-center gap-2 justify-content-start">
             <li className="nav-item">
               <NavLink className={"nav-link"} aria-current="page" to={"/home"}>
@@ -134,7 +131,7 @@ export function Navbar() {
             </li>
 
             <li className="nav-item">
-              <Link to={"/"} className="nav-link btn btn btn-eco">
+              <Link to={"/"} className="nav-link btn btn btn-eco p-2">
                 Entrar
               </Link>
             </li>

@@ -44,7 +44,6 @@ export default function Card({
         {badge}
       </div>
 
-      {/* ✅ CORREÇÃO: Tratamento de erro de imagem */}
       <img
         src={img}
         className="card-img-top object-fit-cover p-4"

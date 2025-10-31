@@ -1,4 +1,4 @@
-import { TelaForms } from "./pages/TelaForms";
+import { FormLogin } from "./componente/bodyPages/FormLogin";
 import { Navbar } from "./componente/Navbar";
 import { useEffect } from "react";
 import "./App.css";
@@ -16,12 +16,7 @@ function App() {
     console.log("✅ LocalStorage limpo!");
   }, []);
 
-  return (
-    <>
-      <Navbar />
-      <TelaForms />
-    </>
-  );
+  return <FormLogin />;
 }
 
 export default App;

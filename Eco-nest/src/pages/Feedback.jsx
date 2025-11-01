@@ -59,28 +59,35 @@ export function Feedback() {
 
   return (
     <>
-      <div className="d-flex justify-content-center align-items-center min-vh-100 bg-eco-admin">
-        <div className="p-5 custom-card-container bg-white rounded-5 shadow-lg w-75">
-          <div className="d-flex justify-content-between align-items-center mb-5">
-            <div className="d-flex align-items-center">
+      <div className="container-fluid d-flex justify-content-center align-items-center min-vh-100 bg-eco py-4">
+        <div className="container bg-body rounded-4 shadow-lg p-4 p-md-5">
+          {/* Cabeçalho */}
+          <div className="row align-items-center justify-content-between gy-3 mb-4">
+            <div className="col-12 col-md-8 d-flex align-items-center justify-content-center justify-content-md-start">
               <img
                 src="../public/logoSemFundo.png"
                 alt="EcoNest Logo"
-                className="logo-pequena-feedback"
+                className="img-fluid"
+                style={{ maxWidth: "90px" }}
               />
-              <h1 className="ms-3 titulo-feedback-tela">Feedbacks</h1>
+              <h1 className="ms-3 fw-bold eco-text text-center text-md-start mb-0">
+                Feedbacks
+              </h1>
             </div>
 
-            <button
-              className="btn btn-voltar-feedback"
-              onClick={() => navigate(-1)}
-            >
-              <i className="bi bi-arrow-left-short fs-1"></i>
-            </button>
+            <div className="col-12 col-md-4 d-flex justify-content-center justify-content-md-end">
+              <button
+                className="btn btn-eco"
+                title="Voltar"
+                onClick={() => navigate(-1)}
+              >
+                <i className="bi bi-arrow-left-short fs-3"></i>
+              </button>
+            </div>
           </div>
 
           {error && (
-            <div className="alert alert-danger" role="alert">
+            <div className="alert alert-danger text-center" role="alert">
               {error}
             </div>
           )}
@@ -90,39 +97,35 @@ export function Feedback() {
               Nenhum produto com feedback para ser exibido.
             </p>
           ) : (
-            <div className="lista-produtos-feedback">
+            <div className="row gy-4">
               {produtosComFeedback.map((produto) => (
-                <div key={produto.id} className="card-produto-item mb-4 p-4">
-                  <h2 className="produto-nome-feedback">
-                    {produto.nome}
-                    <span className="badge bg-success ms-3">
-                      {produto.feedbacks.length} avaliações
-                    </span>
-                  </h2>
+                <div key={produto.id} className="col-12">
+                  <div className=" border border-1 border-success shadow-sm p-4 rounded-4 h-100">
+                    <h2 className="fw-bold text-success text-break">
+                      {produto.nome}
+                      <span className="badge bg-success ms-3">
+                        {produto.feedbacks.length} avaliações
+                      </span>
+                    </h2>
 
-                  <hr />
+                    <hr />
 
-                  <div className="feedbacks-container">
                     {produto.feedbacks.length === 0 ? (
-                      <p className="text-info-feedback">
+                      <p className="text-info mb-0">
                         Ainda não há avaliações de clientes para este item.
                       </p>
                     ) : (
-                      <ul className="lista-feedbacks-aninhada">
+                      <ul className="list-unstyled mt-3">
                         {produto.feedbacks.map((feedback, index) => (
-                          <li
-                            key={feedback.id}
-                            className="feedback-item-detalhe"
-                          >
-                            <p>
-                              <span className="feedback-cliente-header">
-                                {index + 1}. **{feedback.cliente}** -{" "}
-                                {feedback.data}
-                              </span>
-                              <br />
-                              <span className="feedback-texto-citacao">
-                                "{feedback.texto}"
-                              </span>
+                          <li key={feedback.id} className="mb-3">
+                            <p className="mb-1 text-break">
+                              <strong>
+                                {index + 1}. {feedback.cliente}
+                              </strong>{" "}
+                              – {feedback.data}
+                            </p>
+                            <p className="fst-italic text-muted text-break">
+                              "{feedback.texto}"
                             </p>
                           </li>
                         ))}

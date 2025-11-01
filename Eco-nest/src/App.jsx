@@ -1,19 +1,25 @@
 import { FormLogin } from "./componente/bodyPages/FormLogin";
-import { Navbar } from "./componente/Navbar";
 import { useEffect } from "react";
 import "./App.css";
 
 function App() {
   useEffect(() => {
-    // LIMPAR TUDO quando entrar na página inicial (login/cadastro)
-    console.log("🧹 Limpando localStorage na página inicial...");
+    // ✅ APENAS limpar dados de AUTENTICAÇÃO na página de login
+    // ❌ NÃO limpar o carrinho aqui!
+    console.log("🔐 Verificando página de login...");
 
-    localStorage.removeItem("usuario");
-    localStorage.removeItem("token");
-    localStorage.removeItem("carrinho");
-    localStorage.removeItem("redirectAfterLogin");
+    const token = localStorage.getItem("token");
+    const usuario = localStorage.getItem("usuario");
 
-    console.log("✅ LocalStorage limpo!");
+    // Só limpar se houver dados inválidos
+    if (token === "null" || token === "undefined") {
+      localStorage.removeItem("token");
+    }
+    if (usuario === "null" || usuario === "undefined") {
+      localStorage.removeItem("usuario");
+    }
+
+    console.log("✅ Página de login carregada");
   }, []);
 
   return <FormLogin />;

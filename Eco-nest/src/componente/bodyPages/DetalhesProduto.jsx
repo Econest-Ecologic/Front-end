@@ -161,7 +161,7 @@ export default function DetalhesProduto() {
       try {
         await estoqueService.reservarEstoque(produto.cdProduto, quantidade);
         console.log("✅ Estoque reservado no banco");
-      } catch (error) {
+      } catch {
         console.warn(
           "⚠️ Não foi possível reservar no banco, mas continuando..."
         );

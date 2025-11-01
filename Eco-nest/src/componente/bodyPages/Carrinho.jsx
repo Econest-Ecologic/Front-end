@@ -19,102 +19,34 @@ export default function Carrinho() {
     try {
       const savedCart = localStorage.getItem("carrinho");
 
-      if (savedCart && savedCart !== "undefined" && savedCart !== "null") {
-        const parsedCart = JSON.parse(savedCart);
-
-        if (Array.isArray(parsedCart)) {
-          // ✅ VALIDAR CADA ITEM DO CARRINHO
-          const carrinhoValidado = await validarItensCarrinho(parsedCart);
-          setCarrinho(carrinhoValidado);
-        } else {
-          console.warn("Carrinho inválido");
-          setCarrinho([]);
-          localStorage.removeItem("carrinho");
-        }
+      if (!savedCart || savedCart === "undefined" || savedCart === "null") {
+        setCarrinho([]);
+        setLoading(false);
+        return;
       }
-    } catch (error) {
-      console.error("Erro ao carregar carrinho:", error);
+
+      const parsedCart = JSON.parse(savedCart);
+
+      if (Array.isArray(parsedCart) && parsedCart.length > 0) {
+        setCarrinho(parsedCart);
+      } else {
+        setCarrinho([]);
+      }
+    } catch {
       setCarrinho([]);
-      localStorage.removeItem("carrinho");
     } finally {
       setLoading(false);
     }
   };
 
-  // ✅ VALIDAR TODOS OS ITENS DO CARRINHO
-  const validarItensCarrinho = async (itens) => {
-    const itensValidados = [];
-
-    for (const item of itens) {
-      try {
-        // Verificar se produto ainda está ativo
-        const produto = await produtoService.buscarPorId(item.cdProduto);
-
-        if (!produto.flAtivo) {
-          mostrarToast(
-            `"${item.nome}" não está mais disponível e foi removido do carrinho`,
-            "bg-warning"
-          );
-          // Liberar estoque reservado
-          await estoqueService.liberarEstoque(item.cdProduto, item.quantidade);
-          continue; // Pular este item
-        }
-
-        // Verificar estoque disponível
-        const estoque = await estoqueService.buscarPorProduto(item.cdProduto);
-
-        if (estoque.qtdEstoque === 0) {
-          mostrarToast(
-            `"${item.nome}" está sem estoque e foi removido do carrinho`,
-            "bg-warning"
-          );
-          await estoqueService.liberarEstoque(item.cdProduto, item.quantidade);
-          continue;
-        }
-
-        // Ajustar quantidade se exceder estoque
-        if (item.quantidade > estoque.qtdEstoque) {
-          const diferencaLiberar = item.quantidade - estoque.qtdEstoque;
-          await estoqueService.liberarEstoque(item.cdProduto, diferencaLiberar);
-
-          mostrarToast(
-            `Quantidade de "${item.nome}" ajustada para ${estoque.qtdEstoque} (estoque disponível)`,
-            "bg-info"
-          );
-
-          item.quantidade = estoque.qtdEstoque;
-        }
-
-        itensValidados.push(item);
-      } catch (error) {
-        console.error(`Erro ao validar item ${item.cdProduto}:`, error);
-        // Em caso de erro, liberar estoque e remover item
-        try {
-          await estoqueService.liberarEstoque(item.cdProduto, item.quantidade);
-        } catch (e) {
-          console.error("Erro ao liberar estoque:", e);
-        }
-        mostrarToast(
-          `Erro ao validar "${item.nome}". Item removido do carrinho.`,
-          "bg-danger"
-        );
-      }
-    }
-
-    return itensValidados;
-  };
-
   useEffect(() => {
-    if (!loading && carrinho.length > 0) {
-      try {
+    if (!loading) {
+      if (carrinho.length > 0) {
         localStorage.setItem("carrinho", JSON.stringify(carrinho));
-      } catch (error) {
-        console.error("Erro ao salvar carrinho:", error);
       }
     }
   }, [carrinho, loading]);
 
-  // ✅ REMOVER ITEM E LIBERAR ESTOQUE
   const removerItem = async (index) => {
     const item = carrinho[index];
 
@@ -123,22 +55,23 @@ export default function Carrinho() {
     }
 
     try {
-      console.log("🗑️ Removendo item:", item);
-
-      // Liberar estoque
       await estoqueService.liberarEstoque(item.cdProduto, item.quantidade);
 
-      // Remover do carrinho
-      setCarrinho((prev) => prev.filter((_, i) => i !== index));
+      const novoCarrinho = carrinho.filter((_, i) => i !== index);
+      setCarrinho(novoCarrinho);
+
+      if (novoCarrinho.length === 0) {
+        localStorage.removeItem("carrinho");
+      } else {
+        localStorage.setItem("carrinho", JSON.stringify(novoCarrinho));
+      }
 
       mostrarToast("Item removido e estoque liberado", "bg-success");
-    } catch (error) {
-      console.error("❌ Erro ao remover item:", error);
+    } catch {
       mostrarToast("Erro ao remover item", "bg-danger");
     }
   };
 
-  // ✅ ATUALIZAR QUANTIDADE COM VALIDAÇÃO DE ESTOQUE
   const atualizarQuantidade = async (index, novaQuantidade) => {
     if (novaQuantidade < 1) return;
 
@@ -147,11 +80,9 @@ export default function Carrinho() {
     const diferenca = novaQuantidade - quantidadeAnterior;
 
     try {
-      // Verificar estoque disponível ANTES de tentar atualizar
       const estoque = await estoqueService.buscarPorProduto(item.cdProduto);
 
       if (diferenca > 0) {
-        // Tentando aumentar quantidade
         if (estoque.qtdEstoque < diferenca) {
           mostrarToast(
             `Estoque disponível: ${estoque.qtdEstoque} unidades`,
@@ -160,26 +91,21 @@ export default function Carrinho() {
           return;
         }
 
-        // Reservar estoque adicional
         await estoqueService.reservarEstoque(item.cdProduto, diferenca);
       } else if (diferenca < 0) {
-        // Diminuindo quantidade - liberar estoque
         const quantidadeLiberar = Math.abs(diferenca);
         await estoqueService.liberarEstoque(item.cdProduto, quantidadeLiberar);
       }
 
-      // Atualizar carrinho
-      setCarrinho((prev) =>
-        prev.map((item, i) =>
-          i === index ? { ...item, quantidade: novaQuantidade } : item
-        )
+      const novoCarrinho = carrinho.map((item, i) =>
+        i === index ? { ...item, quantidade: novaQuantidade } : item
       );
+      setCarrinho(novoCarrinho);
 
       mostrarToast("Quantidade atualizada", "bg-success");
     } catch (error) {
-      console.error("❌ Erro ao atualizar quantidade:", error);
       mostrarToast(
-        error.response?.data || "Erro ao atualizar. Tente novamente.",
+        error.message || "Erro ao atualizar. Tente novamente.",
         "bg-danger"
       );
     }
@@ -193,7 +119,6 @@ export default function Carrinho() {
     }, 0);
   };
 
-  // ✅ VALIDAR ANTES DE IR PARA PAGAMENTO
   const handleFinalizarCompra = async () => {
     if (carrinho.length === 0) {
       mostrarToast("Carrinho vazio", "bg-warning");
@@ -203,32 +128,42 @@ export default function Carrinho() {
     setValidandoEstoque(true);
 
     try {
-      // Revalidar todos os itens
-      const carrinhoValidado = await validarItensCarrinho(carrinho);
+      let todosDisponiveis = true;
 
-      if (carrinhoValidado.length === 0) {
-        mostrarToast(
-          "Todos os itens foram removidos. Carrinho vazio.",
-          "bg-warning"
-        );
-        setCarrinho([]);
-        localStorage.removeItem("carrinho");
+      for (const item of carrinho) {
+        try {
+          const produto = await produtoService.buscarPorId(item.cdProduto);
+
+          if (!produto.flAtivo) {
+            mostrarToast(
+              `"${item.nome}" não está mais disponível`,
+              "bg-warning"
+            );
+            todosDisponiveis = false;
+            break;
+          }
+
+          if (produto.qtdEstoque < item.quantidade) {
+            mostrarToast(
+              `Estoque insuficiente para "${item.nome}". Disponível: ${produto.qtdEstoque}`,
+              "bg-warning"
+            );
+            todosDisponiveis = false;
+            break;
+          }
+        } catch {
+          todosDisponiveis = false;
+          break;
+        }
+      }
+
+      if (!todosDisponiveis) {
+        mostrarToast("Verifique os itens do carrinho", "bg-warning");
         return;
       }
 
-      if (carrinhoValidado.length < carrinho.length) {
-        setCarrinho(carrinhoValidado);
-        mostrarToast(
-          "Alguns itens foram removidos. Verifique seu carrinho.",
-          "bg-warning"
-        );
-        return;
-      }
-
-      // Tudo OK, ir para pagamento
       navigate("/pagamento");
-    } catch (error) {
-      console.error("Erro na validação final:", error);
+    } catch {
       mostrarToast("Erro ao validar carrinho. Tente novamente.", "bg-danger");
     } finally {
       setValidandoEstoque(false);
@@ -264,7 +199,8 @@ export default function Carrinho() {
       <main className="container mx-auto p-4 min-vh-100">
         <h1 className="text-3xl font-bold mb-6">
           <i className="bi bi-cart3 me-2"></i>
-          Carrinho de Compras
+          Carrinho de Compras ({carrinho.length}{" "}
+          {carrinho.length === 1 ? "item" : "itens"})
         </h1>
 
         {carrinho.length === 0 ? (
@@ -284,7 +220,7 @@ export default function Carrinho() {
             <div className="space-y-4 mb-6">
               {carrinho.map((item, index) => (
                 <div
-                  key={index}
+                  key={`${item.cdProduto}-${index}`}
                   className="border border-2 border-success rounded-lg p-4 d-flex justify-content-between align-items-center mt-2 rounded-2"
                 >
                   <div className="d-flex align-items-center gap-3 flex-1">
@@ -406,7 +342,6 @@ export default function Carrinho() {
         )}
       </main>
 
-      {/* Toast */}
       <div
         className="toast align-items-center bg-success text-white position-fixed bottom-0 end-0 mb-3 me-3"
         role="alert"

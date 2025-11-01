@@ -239,7 +239,7 @@ export default function Carrinho() {
                         }}
                       />
                     )}
-                    <div className="flex-1">
+                    <div className="flex-1 flex-wrap">
                       <h3 className="font-semibold">
                         {item.nome || "Produto"}
                       </h3>
@@ -257,7 +257,7 @@ export default function Carrinho() {
                     </div>
                   </div>
 
-                  <div className="d-flex align-items-center gap-4">
+                  <div className="d-flex align-items-center gap-4 flex-wrap">
                     <div className="d-flex align-items-center gap-2">
                       <button
                         onClick={() =>

@@ -89,6 +89,7 @@ export function FormLogin() {
               <button
                 className="btn btn-link"
                 onClick={() => navigate("/cadastroUsuario")}
+                type="button"
               >
                 Cadastro
               </button>

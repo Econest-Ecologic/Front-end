@@ -162,7 +162,7 @@ export function FormCadastro() {
                     onClick={() => navigate("/login")}
                     type="button"
                   >
-                    Cadastro
+                    Login
                   </button>
                 </div>
               </div>

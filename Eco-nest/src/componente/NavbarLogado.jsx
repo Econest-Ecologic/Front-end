@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import InputSearch from "./InputSearch";
 
-export function NavbarLogado({carrinho=[]}) {
+export function NavbarLogado({ carrinho = [] }) {
   const navigate = useNavigate();
   //quando a pagina atualiza ele pega no local storag qual o ultimo tema salvo
   useEffect(() => {
@@ -49,9 +49,8 @@ export function NavbarLogado({carrinho=[]}) {
         >
           <ul className="navbar-nav ms-auto mb-2 mb-lg-0 d-flex align-items-center gap-2 w-100 justify-content-end">
             <li className="nav-item me-3 w-50">
-              <InputSearch/>
+              <InputSearch />
             </li>
-
 
             <li className="nav-item">
               <button
@@ -70,7 +69,10 @@ export function NavbarLogado({carrinho=[]}) {
               </button>
             </li>
             <li className="nav-item">
-              <button className="btn btn-outline-eco bg-transparent border-0 position-relative" onClick={()=> navigate("/carrinho")}>
+              <button
+                className="btn btn-outline-eco bg-transparent border-0 position-relative"
+                onClick={() => navigate("/carrinho")}
+              >
                 <i className="bi bi-cart"></i>
                 <span
                   className={
@@ -86,13 +88,31 @@ export function NavbarLogado({carrinho=[]}) {
 
             <li className="nav-item">
               <div className="dropdown">
-                <button className="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    <i class="bi bi-person-fill fs-3"></i>
+                <button
+                  className="btn dropdown-toggle"
+                  type="button"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false"
+                >
+                  <i class="bi bi-person-fill fs-3"></i>
                 </button>
                 <ul class="dropdown-menu dropdown-menu-end p-0">
-                  <li><button onClick={()=>navigate("/editarUsuario")} className="btn btn-outline-success w-100 rounded-0">Editar Perfil</button></li>
-                  <li><button  onClick={()=>navigate("/editarUsuario")} className="btn btn-outline-success w-100 rounded-0">Minhas compras</button></li>
-                  <li><button onClick={() => navigate("/")} className="btn btn-outline-danger rounded-0 m-0 w-100"><i class="bi bi-box-arrow-in-left"></i></button></li>
+                  <li>
+                    <button
+                      onClick={() => navigate("/editarUsuario")}
+                      className="btn btn-outline-success w-100 rounded-0"
+                    >
+                      Editar Perfil
+                    </button>
+                  </li>
+                  <li>
+                    <button
+                      onClick={() => navigate("/")}
+                      className="btn btn-outline-danger rounded-0 m-0 w-100"
+                    >
+                      <i class="bi bi-box-arrow-in-left"></i>
+                    </button>
+                  </li>
                 </ul>
               </div>
             </li>

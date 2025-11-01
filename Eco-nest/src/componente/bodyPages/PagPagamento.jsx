@@ -288,15 +288,15 @@ export default function PagPagamento() {
           </div>
 
           {/* FORMA DE PAGAMENTO */}
-          <div className="col-lg-8">
-            <div className="card border-success h-100">
+          <div className="col-lg-8 border border-success p-0">
+            <div className=" border-success w-100 h-100">
               <div className="card-header bg-success text-white">
                 <h4 className="mb-0">
                   <i className="bi bi-credit-card me-2"></i>
                   Escolha a Forma de Pagamento
                 </h4>
               </div>
-              <div className="card-body">
+              <div className="card-body mt-3 p-3">
                 <div className="row g-3">
                   <div className="col-md-4">
                     <input

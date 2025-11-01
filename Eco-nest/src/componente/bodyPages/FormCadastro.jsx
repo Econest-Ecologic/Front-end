@@ -82,7 +82,7 @@ export function FormCadastro() {
   };
 
   return (
-    <div className="vh-100 justify-content-center  overflow-hidden">
+    <div className="vh-100 justify-content-center ">
       <Navbar />
       <main className="container-fluid d-flex flex-row h-100 flex-wrap justify-content-center align-items-center ">
         <div className="row border border-1 border-secundary p-5">

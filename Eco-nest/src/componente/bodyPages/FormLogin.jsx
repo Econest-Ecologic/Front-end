@@ -56,7 +56,7 @@ export function FormLogin() {
   };
 
   return (
-    <div className="vh-100 justify-content-center overflow-hidden">
+    <div className="vh-100 justify-content-center">
       <Navbar />
       <div className="container-fluid d-flex flex-lg-row flex-column flex-wrap justify-content-center align-items-center h-100">
         <div className="col-md-4 border border-1 border-secundary p-5">

@@ -1,20 +1,36 @@
-// Eco-nest/src/services/estoqueService.js
-
 import api from "./api";
 
 export const estoqueService = {
-  // Buscar estoque por produto
+  // Buscar estoque por produto - COM FALLBACK
   buscarPorProduto: async (cdProduto) => {
     try {
+      console.log(`🔍 Tentando buscar estoque do produto ${cdProduto}`);
       const response = await api.get(`/estoque/produto/${cdProduto}`);
-      console.log(`✅ Estoque do produto ${cdProduto}:`, response.data);
+      console.log(`✅ Estoque encontrado:`, response.data);
       return response.data;
     } catch (error) {
+      // ⚠️ SE ERRO 404 (não encontrado), retornar estoque 0 ao invés de falhar
+      if (error.response?.status === 404) {
+        console.warn(
+          `⚠️ Estoque não encontrado para produto ${cdProduto}, usando estoque 0`
+        );
+        return {
+          cdEstoque: null,
+          qtdEstoque: 0,
+          cdProduto: cdProduto,
+        };
+      }
+
+      // Se for outro erro, logar e retornar 0 também
       console.error(
         `❌ Erro ao buscar estoque do produto ${cdProduto}:`,
-        error
+        error.message
       );
-      throw error;
+      return {
+        cdEstoque: null,
+        qtdEstoque: 0,
+        cdProduto: cdProduto,
+      };
     }
   },
 
@@ -34,7 +50,11 @@ export const estoqueService = {
       return response.data;
     } catch (error) {
       console.error("❌ Erro ao reservar estoque:", error);
-      throw error;
+
+      // Mensagem de erro mais amigável
+      const mensagem =
+        error.response?.data || "Estoque insuficiente ou produto indisponível";
+      throw new Error(mensagem);
     }
   },
 
@@ -54,33 +74,25 @@ export const estoqueService = {
       return response.data;
     } catch (error) {
       console.error("❌ Erro ao liberar estoque:", error);
-      throw error;
+      // Não lançar erro aqui para não bloquear remoção de item
+      return null;
     }
   },
 
-  // Verificar disponibilidade
+  // Verificar disponibilidade - SIMPLIFICADO
   verificarDisponibilidade: async (cdProduto, quantidade) => {
     try {
-      const response = await api.get(`/estoque/verificar/${cdProduto}`, {
-        params: { quantidade },
-      });
-      return true;
-    } catch (error) {
-      return false;
-    }
-  },
+      const estoque = await estoqueService.buscarPorProduto(cdProduto);
+      const disponivel = estoque.qtdEstoque >= quantidade;
 
-  // Atualizar estoque (admin)
-  atualizarEstoque: async (cdEstoque, qtdEstoque) => {
-    try {
-      const response = await api.put(`/estoque/${cdEstoque}`, {
-        qtdEstoque: qtdEstoque,
-      });
-      console.log("✅ Estoque atualizado:", response.data);
-      return response.data;
+      console.log(
+        `🔍 Disponibilidade - Produto: ${cdProduto}, Solicitado: ${quantidade}, Disponível: ${estoque.qtdEstoque} = ${disponivel}`
+      );
+
+      return disponivel;
     } catch (error) {
-      console.error("❌ Erro ao atualizar estoque:", error);
-      throw error;
+      console.error("❌ Erro ao verificar disponibilidade:", error);
+      return false;
     }
   },
 };

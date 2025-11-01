@@ -16,6 +16,7 @@ export default function DetalhesProduto() {
   const [toastColor, setToastColor] = useState("bg-success");
   const [carrinho, setCarrinho] = useState([]);
   const [usuario, setUsuario] = useState(null);
+  const [adicionandoCarrinho, setAdicionandoCarrinho] = useState(false);
 
   useEffect(() => {
     // Carrega dados do usuário
@@ -45,7 +46,22 @@ export default function DetalhesProduto() {
 
   const carregarProduto = async () => {
     try {
+      console.log(`🔍 Carregando produto ID: ${id}`);
       const data = await produtoService.buscarPorId(id);
+
+      console.log("📦 Dados do produto recebidos:", data);
+
+      // ✅ Verificar se produto está ativo
+      if (!data.flAtivo) {
+        mostrarToast("Este produto não está mais disponível", "bg-danger");
+        setTimeout(() => navigate("/homeLogado"), 2000);
+        return;
+      }
+
+      // ✅ USAR O ESTOQUE QUE JÁ VEM DO BACKEND
+      const estoqueAtual = data.qtdEstoque !== undefined ? data.qtdEstoque : 0;
+
+      console.log(`📊 Estoque disponível: ${estoqueAtual}`);
 
       const produtoFormatado = {
         cdProduto: data.cdProduto,
@@ -56,13 +72,14 @@ export default function DetalhesProduto() {
         img: data.imgProdutoBase64
           ? `data:image/jpeg;base64,${data.imgProdutoBase64}`
           : "/placeholder.png",
-        qtdEstoque: data.qtdEstoque,
+        qtdEstoque: estoqueAtual,
+        flAtivo: data.flAtivo,
       };
 
-      console.log("✅ Produto carregado:", produtoFormatado);
+      console.log("✅ Produto formatado:", produtoFormatado);
       setProduto(produtoFormatado);
     } catch (error) {
-      console.error("Erro ao carregar produto:", error);
+      console.error("❌ Erro ao carregar produto:", error);
       mostrarToast("Erro ao carregar produto", "bg-danger");
       setTimeout(() => navigate("/homeLogado"), 2000);
     } finally {
@@ -70,20 +87,23 @@ export default function DetalhesProduto() {
     }
   };
 
-  // ✅ FUNÇÃO PARA RECARREGAR ESTOQUE DO BANCO
+  // ✅ Recarregar apenas o produto (que já traz o estoque)
   const recarregarEstoque = async () => {
     try {
-      const estoqueAtualizado = await estoqueService.buscarPorProduto(id);
+      console.log("🔄 Recarregando estoque...");
+      const data = await produtoService.buscarPorId(id);
+      const estoqueAtual = data.qtdEstoque !== undefined ? data.qtdEstoque : 0;
+
       setProduto((prev) => ({
         ...prev,
-        qtdEstoque: estoqueAtualizado.qtdEstoque,
+        qtdEstoque: estoqueAtual,
       }));
-      console.log(
-        "✅ Estoque recarregado do banco:",
-        estoqueAtualizado.qtdEstoque
-      );
+
+      console.log(`✅ Estoque atualizado: ${estoqueAtual}`);
+      return estoqueAtual;
     } catch (error) {
       console.error("❌ Erro ao recarregar estoque:", error);
+      return produto?.qtdEstoque || 0;
     }
   };
 
@@ -98,31 +118,59 @@ export default function DetalhesProduto() {
   };
 
   const handleAdicionarCarrinho = async () => {
-    try {
-      // ✅ 1. VERIFICAR DISPONIBILIDADE NO BANCO
-      const disponivel = await estoqueService.verificarDisponibilidade(
-        produto.cdProduto,
-        quantidade
-      );
+    if (adicionandoCarrinho) return;
 
-      if (!disponivel) {
-        mostrarToast("Estoque insuficiente", "bg-danger");
-        await recarregarEstoque(); // Atualiza estoque da tela
+    try {
+      setAdicionandoCarrinho(true);
+
+      // ✅ 1. Verificar estoque atual do produto
+      if (!produto || produto.qtdEstoque === 0) {
+        mostrarToast("Produto sem estoque", "bg-danger");
         return;
       }
 
-      // ✅ 2. RESERVAR ESTOQUE NO BANCO
-      await estoqueService.reservarEstoque(produto.cdProduto, quantidade);
+      if (quantidade > produto.qtdEstoque) {
+        mostrarToast(
+          `Estoque disponível: ${produto.qtdEstoque} unidades`,
+          "bg-danger"
+        );
+        setQuantidade(Math.min(quantidade, produto.qtdEstoque));
+        return;
+      }
 
-      // ✅ 3. ADICIONAR AO CARRINHO LOCAL
+      // ✅ 2. Verificar quantidade já no carrinho
       const carrinhoAtual = JSON.parse(localStorage.getItem("carrinho")) || [];
-
-      const itemExistenteIndex = carrinhoAtual.findIndex(
+      const itemExistente = carrinhoAtual.find(
         (item) => item.cdProduto === produto.cdProduto
       );
 
-      if (itemExistenteIndex >= 0) {
-        carrinhoAtual[itemExistenteIndex].quantidade += quantidade;
+      const quantidadeJaNoCarrinho = itemExistente
+        ? itemExistente.quantidade
+        : 0;
+      const quantidadeTotal = quantidadeJaNoCarrinho + quantidade;
+
+      if (quantidadeTotal > produto.qtdEstoque) {
+        mostrarToast(
+          `Você já tem ${quantidadeJaNoCarrinho} no carrinho. Estoque disponível: ${produto.qtdEstoque}`,
+          "bg-danger"
+        );
+        return;
+      }
+
+      // ✅ 3. Tentar reservar estoque no banco
+      try {
+        await estoqueService.reservarEstoque(produto.cdProduto, quantidade);
+        console.log("✅ Estoque reservado no banco");
+      } catch (error) {
+        console.warn(
+          "⚠️ Não foi possível reservar no banco, mas continuando..."
+        );
+        // Continuar mesmo se falhar - estoque será validado no checkout
+      }
+
+      // ✅ 4. Adicionar ao carrinho local
+      if (itemExistente) {
+        itemExistente.quantidade += quantidade;
       } else {
         carrinhoAtual.push({
           cdProduto: produto.cdProduto,
@@ -136,8 +184,11 @@ export default function DetalhesProduto() {
       localStorage.setItem("carrinho", JSON.stringify(carrinhoAtual));
       setCarrinho(carrinhoAtual);
 
-      // ✅ 4. RECARREGAR ESTOQUE ATUALIZADO DO BANCO
-      await recarregarEstoque();
+      // ✅ 5. Atualizar estoque localmente (otimista)
+      setProduto((prev) => ({
+        ...prev,
+        qtdEstoque: prev.qtdEstoque - quantidade,
+      }));
 
       mostrarToast(
         `${quantidade} ${
@@ -146,22 +197,29 @@ export default function DetalhesProduto() {
         "bg-success"
       );
 
-      // Resetar quantidade para 1
       setQuantidade(1);
+
+      // Recarregar estoque do servidor em background
+      setTimeout(() => recarregarEstoque(), 1000);
     } catch (error) {
-      console.error("Erro ao adicionar ao carrinho:", error);
+      console.error("❌ Erro ao adicionar ao carrinho:", error);
       mostrarToast(
-        error.response?.data || "Erro ao adicionar ao carrinho",
+        "Erro ao adicionar ao carrinho. Tente novamente.",
         "bg-danger"
       );
+
       // Recarregar estoque em caso de erro
       await recarregarEstoque();
+    } finally {
+      setAdicionandoCarrinho(false);
     }
   };
 
   const handleComprar = async () => {
     await handleAdicionarCarrinho();
-    setTimeout(() => navigate("/carrinho"), 1000);
+    if (!adicionandoCarrinho) {
+      setTimeout(() => navigate("/carrinho"), 1000);
+    }
   };
 
   const incrementarQuantidade = () => {
@@ -191,12 +249,21 @@ export default function DetalhesProduto() {
     );
   }
 
-  if (!produto) {
+  if (!produto || !produto.flAtivo) {
     return (
       <>
         <NavbarLogado carrinho={carrinho} />
         <div className="container min-vh-100 d-flex justify-content-center align-items-center">
-          <h3>Produto não encontrado</h3>
+          <div className="text-center">
+            <i className="bi bi-exclamation-triangle fs-1 text-danger mb-3"></i>
+            <h3>Produto não disponível</h3>
+            <button
+              className="btn btn-eco mt-3"
+              onClick={() => navigate("/homeLogado")}
+            >
+              Voltar para Home
+            </button>
+          </div>
         </div>
       </>
     );
@@ -217,8 +284,7 @@ export default function DetalhesProduto() {
         {usuario && (
           <div className="alert alert-success mb-4" role="alert">
             <i className="bi bi-person-check me-2"></i>
-            Olá, <strong>{usuario.nome}</strong>! Você está visualizando os
-            detalhes do produto.
+            Olá, <strong>{usuario.nome}</strong>!
           </div>
         )}
 
@@ -231,7 +297,6 @@ export default function DetalhesProduto() {
                 className="card-img-top p-4"
                 alt={produto.nome}
                 onError={(e) => {
-                  console.error("❌ Erro ao carregar imagem");
                   e.target.src = "/placeholder.png";
                 }}
                 style={{
@@ -265,7 +330,13 @@ export default function DetalhesProduto() {
                   <i className="bi bi-box-seam me-2"></i>
                   Estoque disponível:{" "}
                   <strong
-                    className={produto.qtdEstoque <= 5 ? "text-danger" : ""}
+                    className={
+                      produto.qtdEstoque <= 5 && produto.qtdEstoque > 0
+                        ? "text-warning"
+                        : produto.qtdEstoque === 0
+                        ? "text-danger"
+                        : "text-success"
+                    }
                   >
                     {produto.qtdEstoque} unidades
                   </strong>
@@ -273,6 +344,9 @@ export default function DetalhesProduto() {
                     <span className="badge bg-warning text-dark ms-2">
                       Últimas unidades!
                     </span>
+                  )}
+                  {produto.qtdEstoque === 0 && (
+                    <span className="badge bg-danger ms-2">Esgotado</span>
                   )}
                 </p>
                 <p className="eco-card-text mb-2">
@@ -286,50 +360,63 @@ export default function DetalhesProduto() {
               </div>
 
               {/* Controle de Quantidade */}
-              <div className="mb-4">
-                <label className="form-label eco-card-text fw-bold">
-                  Quantidade:
-                </label>
-                <div className="input-group w-50">
-                  <button
-                    className="btn btn-outline-success"
-                    type="button"
-                    onClick={decrementarQuantidade}
-                    disabled={quantidade <= 1}
-                  >
-                    <i className="bi bi-dash"></i>
-                  </button>
-                  <input
-                    type="text"
-                    className="form-control text-center"
-                    value={quantidade}
-                    readOnly
-                  />
-                  <button
-                    className="btn btn-outline-success"
-                    type="button"
-                    onClick={incrementarQuantidade}
-                    disabled={quantidade >= produto.qtdEstoque}
-                  >
-                    <i className="bi bi-plus"></i>
-                  </button>
+              {produto.qtdEstoque > 0 && (
+                <div className="mb-4">
+                  <label className="form-label eco-card-text fw-bold">
+                    Quantidade:
+                  </label>
+                  <div className="input-group w-50">
+                    <button
+                      className="btn btn-outline-success"
+                      type="button"
+                      onClick={decrementarQuantidade}
+                      disabled={quantidade <= 1 || adicionandoCarrinho}
+                    >
+                      <i className="bi bi-dash"></i>
+                    </button>
+                    <input
+                      type="text"
+                      className="form-control text-center"
+                      value={quantidade}
+                      readOnly
+                    />
+                    <button
+                      className="btn btn-outline-success"
+                      type="button"
+                      onClick={incrementarQuantidade}
+                      disabled={
+                        quantidade >= produto.qtdEstoque || adicionandoCarrinho
+                      }
+                    >
+                      <i className="bi bi-plus"></i>
+                    </button>
+                  </div>
                 </div>
-              </div>
+              )}
 
               {/* Botões de Ação */}
               <div className="d-flex gap-3 flex-column flex-md-row">
                 <button
                   className="btn btn-eco flex-grow-1 py-3"
                   onClick={handleAdicionarCarrinho}
-                  disabled={produto.qtdEstoque === 0}
+                  disabled={produto.qtdEstoque === 0 || adicionandoCarrinho}
                 >
-                  <i className="bi bi-cart-plus me-2"></i>
-                  Adicionar ao Carrinho
+                  {adicionandoCarrinho ? (
+                    <>
+                      <span className="spinner-border spinner-border-sm me-2"></span>
+                      Adicionando...
+                    </>
+                  ) : (
+                    <>
+                      <i className="bi bi-cart-plus me-2"></i>
+                      Adicionar ao Carrinho
+                    </>
+                  )}
                 </button>
                 <button
                   className="btn btn-success flex-grow-1 py-3"
                   onClick={handleComprar}
-                  disabled={produto.qtdEstoque === 0}
+                  disabled={produto.qtdEstoque === 0 || adicionandoCarrinho}
                 >
                   <i className="bi bi-credit-card me-2"></i>
                   Comprar Agora
@@ -343,10 +430,11 @@ export default function DetalhesProduto() {
                 </div>
               )}
 
-              {/* Botão para recarregar estoque (debug) */}
+              {/* Botão para atualizar estoque */}
               <button
-                className="btn btn-sm btn-outline-secondary mt-3"
+                className="btn btn-sm btn-outline-secondary mt-3 w-100"
                 onClick={recarregarEstoque}
+                disabled={adicionandoCarrinho}
               >
                 <i className="bi bi-arrow-clockwise me-1"></i>
                 Atualizar Estoque

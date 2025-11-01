@@ -9,13 +9,11 @@ export default function HomeLogado() {
   const [listaFiltrado, setFiltrado] = useState([]);
   const [loading, setLoading] = useState(true);
   const [usuario, setUsuario] = useState(null);
-
   const [carrinho, setCarrinho] = useState([]);
 
   useEffect(() => {
     try {
       const savedCart = localStorage.getItem("carrinho");
-      console.log("Carrinho recebido:", savedCart);
 
       if (savedCart && savedCart !== "undefined" && savedCart !== "null") {
         const parsedCart = JSON.parse(savedCart);
@@ -32,42 +30,59 @@ export default function HomeLogado() {
       console.error("Erro ao carregar carrinho:", error);
       setCarrinho([]);
       localStorage.removeItem("carrinho");
-    } finally {
-      setLoading(false);
     }
-    console.log("Carrinho :" + carrinho);
   }, []);
 
   useEffect(() => {
     const usuarioData = JSON.parse(localStorage.getItem("usuario"));
     setUsuario(usuarioData);
-
-    console.log(usuarioData);
     carregarProdutos();
   }, []);
 
   const carregarProdutos = async () => {
     try {
+      console.log("🔄 Carregando produtos do HomeLogado...");
       const produtos = await produtoService.listarTodos();
 
-      // ✅ CORREÇÃO: Usar campo correto da API
-      const produtosFormatados = produtos.map((p) => ({
-        cdProduto: p.cdProduto,
-        nome: p.nmProduto,
-        preco: p.preco,
-        categoria: p.categoria,
-        // ✅ CAMPO CORRETO: imgProdutoBase64
-        img: p.imgProdutoBase64
-          ? `data:image/jpeg;base64,${p.imgProdutoBase64}`
-          : "/placeholder.png",
-        qtdEstoque: p.qtdEstoque,
-      }));
+      console.log("📦 Produtos recebidos da API:", produtos);
 
-      console.log("✅ Produtos carregados (HomeLogado):", produtosFormatados);
+      // Filtrar apenas produtos ativos
+      const produtosAtivos = produtos.filter((p) => p.flAtivo === true);
+
+      console.log(
+        `✅ Produtos ativos: ${produtosAtivos.length} de ${produtos.length}`
+      );
+
+      // Formatar produtos para exibição
+      const produtosFormatados = produtosAtivos.map((p) => {
+        // ✅ O backend JÁ RETORNA qtdEstoque
+        const estoque = p.qtdEstoque !== undefined ? p.qtdEstoque : 0;
+
+        console.log(`Produto ${p.cdProduto} - ${p.nmProduto}:`, {
+          estoque: estoque,
+          ativo: p.flAtivo,
+          preco: p.preco,
+        });
+
+        return {
+          cdProduto: p.cdProduto,
+          nome: p.nmProduto,
+          preco: p.preco,
+          categoria: p.categoria,
+          img: p.imgProdutoBase64
+            ? `data:image/jpeg;base64,${p.imgProdutoBase64}`
+            : "/placeholder.png",
+          qtdEstoque: estoque,
+          flAtivo: p.flAtivo,
+        };
+      });
+
+      console.log("✅ Produtos formatados:", produtosFormatados);
+
       setListaProd(produtosFormatados);
       setFiltrado(produtosFormatados);
     } catch (error) {
-      console.error("Erro ao carregar produtos:", error);
+      console.error("❌ Erro ao carregar produtos:", error);
       alert("Erro ao carregar produtos");
     } finally {
       setLoading(false);
@@ -78,10 +93,24 @@ export default function HomeLogado() {
     setFiltrado(listaProd);
   }, [listaProd]);
 
+  const filtrarPorCategoria = (categoria) => {
+    if (!categoria) {
+      setFiltrado(listaProd);
+      return;
+    }
+
+    const filtrados = listaProd.filter(
+      (p) => p.categoria.toLowerCase() === categoria.toLowerCase()
+    );
+
+    console.log(`🔍 Filtrando por ${categoria}: ${filtrados.length} produtos`);
+    setFiltrado(filtrados);
+  };
+
   if (loading) {
     return (
       <>
-        <NavbarLogado />
+        <NavbarLogado carrinho={carrinho} />
         <div className="container min-vh-100 d-flex justify-content-center align-items-center">
           <div className="spinner-border text-success" role="status">
             <span className="visually-hidden">Carregando...</span>
@@ -94,12 +123,17 @@ export default function HomeLogado() {
   return (
     <>
       <NavbarLogado carrinho={carrinho} />
-      <h5 className="text-end w-100 mt-2 pe-5">
-        Bem vindo, {usuario?.nome || "Usuário"}
-      </h5>
+
+      {usuario && (
+        <h5 className="text-end w-100 mt-2 pe-5">
+          Bem vindo, {usuario.nome || "Usuário"}
+        </h5>
+      )}
+
       <main className="container-xxl d-flex flex-column align-items-center w-100 min-vh-100">
+        {/* Filtros */}
         <nav className="mt-3 d-flex gap-3 h-100 justify-content-center flex-wrap">
-          <div onClick={() => setFiltrado(listaProd)}>
+          <div onClick={() => filtrarPorCategoria(null)}>
             <RadioBtn
               name="filtro"
               id="btn-check-todos"
@@ -107,46 +141,21 @@ export default function HomeLogado() {
               defaultChecked
             />
           </div>
-          <div
-            onClick={() =>
-              setFiltrado(
-                listaProd.filter(
-                  (p) =>
-                    p.categoria.toLowerCase() === "utensilios".toLowerCase()
-                )
-              )
-            }
-          >
+          <div onClick={() => filtrarPorCategoria("utensilios")}>
             <RadioBtn
               name="filtro"
               id="btn-check-utensilios"
               txt="Utensílios e Acessórios Reutilizáveis"
             />
           </div>
-          <div
-            onClick={() =>
-              setFiltrado(
-                listaProd.filter(
-                  (p) => p.categoria.toLowerCase() === "casa".toLowerCase()
-                )
-              )
-            }
-          >
+          <div onClick={() => filtrarPorCategoria("casa")}>
             <RadioBtn
               name="filtro"
               id="btn-check-casa"
               txt="Casa Sustentáveis"
             />
           </div>
-          <div
-            onClick={() =>
-              setFiltrado(
-                listaProd.filter(
-                  (p) => p.categoria.toLowerCase() === "higiene".toLowerCase()
-                )
-              )
-            }
-          >
+          <div onClick={() => filtrarPorCategoria("higiene")}>
             <RadioBtn
               name="filtro"
               id="btn-check-higiene"
@@ -155,10 +164,18 @@ export default function HomeLogado() {
           </div>
         </nav>
 
+        {/* Grid de Produtos */}
         <div className="row row-gap-3 justify-content-start w-75 mt-4">
           {listaFiltrado.length === 0 ? (
             <div className="col-12 text-center py-5">
-              <p className="fs-5 text-muted">Nenhum produto encontrado</p>
+              <i className="bi bi-inbox fs-1 text-muted"></i>
+              <p className="fs-5 text-muted mt-3">Nenhum produto encontrado</p>
+              <button
+                className="btn btn-eco mt-2"
+                onClick={() => filtrarPorCategoria(null)}
+              >
+                Ver Todos os Produtos
+              </button>
             </div>
           ) : (
             listaFiltrado.map((prod) => (
@@ -172,11 +189,26 @@ export default function HomeLogado() {
                   price={prod.preco}
                   desc={prod.categoria}
                   img={prod.img}
+                  qtdEstoque={prod.qtdEstoque}
+                  flAtivo={prod.flAtivo}
                 />
               </div>
             ))
           )}
         </div>
+
+        {/* Informações adicionais */}
+        {listaProd.length > 0 && (
+          <div className="mt-5 text-center">
+            <p className="text-muted">
+              <i className="bi bi-box-seam me-2"></i>
+              {listaProd.length}{" "}
+              {listaProd.length === 1
+                ? "produto disponível"
+                : "produtos disponíveis"}
+            </p>
+          </div>
+        )}
       </main>
     </>
   );

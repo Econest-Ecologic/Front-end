@@ -7,7 +7,6 @@ export function Feedback() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  // Mock temporário - substituir por chamada API quando o endpoint estiver pronto
   const mockProdutosComFeedback = [
     {
       id: 101,
@@ -30,12 +29,6 @@ export function Feedback() {
   const carregarFeedbacks = async () => {
     try {
       setLoading(true);
-
-      // TODO: Quando o endpoint de avaliações estiver pronto, substituir por:
-      // const response = await api.get('/avaliacao');
-      // const avaliacoes = response.data;
-
-      // Por enquanto, usar mock
       setTimeout(() => {
         setProdutosComFeedback(mockProdutosComFeedback);
         setLoading(false);

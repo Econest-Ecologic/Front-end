@@ -11,7 +11,6 @@ export function TelaCadastrarProduto() {
   const [toastMsg, setToastMsg] = useState("");
   const [toastColor, setToastColor] = useState("bg-success");
 
-  // Estados do formulário
   const [nmProduto, setNmProduto] = useState("");
   const [dsProduto, setDsProduto] = useState("");
   const [preco, setPreco] = useState("");
@@ -44,7 +43,6 @@ export function TelaCadastrarProduto() {
     setLoading(true);
 
     try {
-      // Validações
       if (!nmProduto || nmProduto.length < 3) {
         mostrarToast(
           "Nome do produto deve ter no mínimo 3 caracteres",
@@ -73,7 +71,6 @@ export function TelaCadastrarProduto() {
         return;
       }
 
-      // Criar FormData
       const formData = new FormData();
       formData.append("nmProduto", nmProduto);
       formData.append("dsProduto", dsProduto);
@@ -86,12 +83,10 @@ export function TelaCadastrarProduto() {
         formData.append("imgProduto", imgProduto);
       }
 
-      // Enviar para API
       await produtoService.criar(formData);
 
       mostrarToast("Produto cadastrado com sucesso!");
 
-      // Limpar formulário
       setTimeout(() => {
         setNmProduto("");
         setDsProduto("");

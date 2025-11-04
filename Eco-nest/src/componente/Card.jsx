@@ -27,7 +27,6 @@ export default function Card({
     }
   };
 
-  // ✅ Determinar status do estoque
   const getEstoqueStatus = () => {
     if (!flAtivo) {
       return {
@@ -65,7 +64,6 @@ export default function Card({
       }}
       onClick={handleCardClick}
     >
-      {/* Badge de Promoção (canto superior direito) */}
       <div
         className={badge ? `badge ${color} position-absolute p-2` : "d-none"}
         style={{ top: "-3%", right: "-10%", zIndex: 10 }}
@@ -73,7 +71,6 @@ export default function Card({
         {badge}
       </div>
 
-      {/* Badge de Estoque (canto superior esquerdo) */}
       <div
         className={`badge ${estoqueStatus.class} position-absolute p-2 d-flex align-items-center gap-1`}
         style={{ top: "10px", left: "10px", zIndex: 10, fontSize: "0.7rem" }}
@@ -82,7 +79,6 @@ export default function Card({
         {estoqueStatus.text}
       </div>
 
-      {/* Overlay se produto inativo/esgotado */}
       {(!flAtivo || qtdEstoque === 0) && (
         <div
           className="position-absolute w-100 h-100 d-flex align-items-center justify-content-center"
@@ -103,7 +99,7 @@ export default function Card({
         className="card-img-top object-fit-cover p-4"
         alt={title}
         onError={(e) => {
-          console.error("❌ Erro ao carregar imagem:", title);
+          console.error("Erro ao carregar imagem:", title);
           e.target.src = "/placeholder.png";
         }}
         style={{
@@ -123,7 +119,6 @@ export default function Card({
           R$ {parseFloat(price).toFixed(2)}
         </h5>
 
-        {/* Informação de estoque */}
         <small className="text-muted mb-2">
           {qtdEstoque > 0 ? (
             <>

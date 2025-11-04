@@ -8,13 +8,12 @@ export function Navbar() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    // GARANTIR que não há dados de sessão na navbar pública
     const usuario = localStorage.getItem("usuario");
     const token = localStorage.getItem("token");
 
     if (usuario || token) {
       console.log(
-        "⚠️ Dados de sessão encontrados na navbar pública - limpando..."
+        "Dados de sessão encontrados na navbar pública - limpando..."
       );
       localStorage.removeItem("usuario");
       localStorage.removeItem("token");

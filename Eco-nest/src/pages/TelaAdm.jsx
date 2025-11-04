@@ -33,7 +33,6 @@ export function TelaAdm() {
           </div>
         </div>
 
-        {/* Primeira linha de botões */}
         <div className="row gy-3">
           <div className="col-12 col-sm-6">
             <Link to="/cadastroProduto">

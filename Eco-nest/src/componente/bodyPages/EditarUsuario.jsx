@@ -116,7 +116,6 @@ export default function EditarUsuario() {
         flAtivo: usuario.flAtivo,
       };
 
-      // Apenas incluir senha se foi alterada
       if (senha && senha.trim() !== "") {
         dados.nmSenha = senha;
       } else {
@@ -125,7 +124,6 @@ export default function EditarUsuario() {
 
       await usuarioService.atualizar(usuario.cdUsuario, dados);
 
-      // Atualizar localStorage
       const usuarioAtualizado = JSON.parse(localStorage.getItem("usuario"));
       usuarioAtualizado.nome = nome;
       usuarioAtualizado.email = email;
@@ -133,7 +131,6 @@ export default function EditarUsuario() {
 
       mostrarToast("Perfil atualizado com sucesso!");
 
-      // Limpar campo de senha
       setSenha("");
     } catch (error) {
       console.error("Erro ao atualizar perfil:", error);

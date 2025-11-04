@@ -28,7 +28,6 @@ export function FormLogin() {
     try {
       const response = await authService.login(email, senha);
 
-      // Salvar dados no localStorage
       localStorage.setItem("token", response.token);
       localStorage.setItem(
         "usuario",
@@ -41,7 +40,6 @@ export function FormLogin() {
         })
       );
 
-      // Verificar se é admin
       if (response.roles.includes("ADMIN")) {
         navigate("/adm");
       } else {

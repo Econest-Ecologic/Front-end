@@ -17,15 +17,14 @@ export default function HomeUsuario() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // LIMPAR TODO O LOCALSTORAGE ao acessar a home pública
-    console.log("🧹 HomeUsuario - Limpando dados de sessão...");
+    console.log("HomeUsuario - Limpando dados de sessão...");
 
     localStorage.removeItem("usuario");
     localStorage.removeItem("token");
     localStorage.removeItem("carrinho");
     localStorage.removeItem("redirectAfterLogin");
 
-    console.log("✅ Dados limpos! Página pública segura.");
+    console.log("Dados limpos! Página pública segura.");
 
     carregarProdutos();
   }, []);

@@ -17,7 +17,7 @@ export default function Contato() {
       const toastFinal = new bootstrap.Toast(toast);
       setMsg("Preencha todos os campos");
       setColor("bg-danger");
-      setTimeout(() => toastFinal.show(), 50); // espera o React atualizar
+      setTimeout(() => toastFinal.show(), 50);
 
       return;
     }
@@ -27,7 +27,7 @@ export default function Contato() {
     setMsg("Enviado com sucesso");
     setColor("bg-success");
 
-    setTimeout(() => toastFinal.show(), 50); // espera o React atualizar
+    setTimeout(() => toastFinal.show(), 50);
 
     setNome("");
     setEmail("");

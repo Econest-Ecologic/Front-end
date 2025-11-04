@@ -19,7 +19,6 @@ export default function DetalhesProduto() {
   const [adicionandoCarrinho, setAdicionandoCarrinho] = useState(false);
 
   useEffect(() => {
-    // Carrega dados do usuário
     const usuarioData = localStorage.getItem("usuario");
     if (usuarioData) {
       try {
@@ -30,7 +29,6 @@ export default function DetalhesProduto() {
       }
     }
 
-    // Carrega carrinho
     const carrinhoSalvo = localStorage.getItem("carrinho");
     if (carrinhoSalvo && carrinhoSalvo !== "null") {
       try {
@@ -46,22 +44,20 @@ export default function DetalhesProduto() {
 
   const carregarProduto = async () => {
     try {
-      console.log(`🔍 Carregando produto ID: ${id}`);
+      console.log(`Carregando produto ID: ${id}`);
       const data = await produtoService.buscarPorId(id);
 
-      console.log("📦 Dados do produto recebidos:", data);
+      console.log("Dados do produto recebidos:", data);
 
-      // ✅ Verificar se produto está ativo
       if (!data.flAtivo) {
         mostrarToast("Este produto não está mais disponível", "bg-danger");
         setTimeout(() => navigate("/homeLogado"), 2000);
         return;
       }
 
-      // ✅ USAR O ESTOQUE QUE JÁ VEM DO BACKEND
       const estoqueAtual = data.qtdEstoque !== undefined ? data.qtdEstoque : 0;
 
-      console.log(`📊 Estoque disponível: ${estoqueAtual}`);
+      console.log(`Estoque disponível: ${estoqueAtual}`);
 
       const produtoFormatado = {
         cdProduto: data.cdProduto,
@@ -76,10 +72,10 @@ export default function DetalhesProduto() {
         flAtivo: data.flAtivo,
       };
 
-      console.log("✅ Produto formatado:", produtoFormatado);
+      console.log("Produto formatado:", produtoFormatado);
       setProduto(produtoFormatado);
     } catch (error) {
-      console.error("❌ Erro ao carregar produto:", error);
+      console.error("Erro ao carregar produto:", error);
       mostrarToast("Erro ao carregar produto", "bg-danger");
       setTimeout(() => navigate("/homeLogado"), 2000);
     } finally {
@@ -87,10 +83,9 @@ export default function DetalhesProduto() {
     }
   };
 
-  // ✅ Recarregar apenas o produto (que já traz o estoque)
   const recarregarEstoque = async () => {
     try {
-      console.log("🔄 Recarregando estoque...");
+      console.log("Recarregando estoque...");
       const data = await produtoService.buscarPorId(id);
       const estoqueAtual = data.qtdEstoque !== undefined ? data.qtdEstoque : 0;
 
@@ -99,10 +94,10 @@ export default function DetalhesProduto() {
         qtdEstoque: estoqueAtual,
       }));
 
-      console.log(`✅ Estoque atualizado: ${estoqueAtual}`);
+      console.log(`Estoque atualizado: ${estoqueAtual}`);
       return estoqueAtual;
     } catch (error) {
-      console.error("❌ Erro ao recarregar estoque:", error);
+      console.error("Erro ao recarregar estoque:", error);
       return produto?.qtdEstoque || 0;
     }
   };
@@ -123,7 +118,6 @@ export default function DetalhesProduto() {
     try {
       setAdicionandoCarrinho(true);
 
-      // ✅ 1. Verificar estoque atual do produto
       if (!produto || produto.qtdEstoque === 0) {
         mostrarToast("Produto sem estoque", "bg-danger");
         return;
@@ -138,7 +132,6 @@ export default function DetalhesProduto() {
         return;
       }
 
-      // ✅ 2. Verificar quantidade já no carrinho
       const carrinhoAtual = JSON.parse(localStorage.getItem("carrinho")) || [];
       const itemExistente = carrinhoAtual.find(
         (item) => item.cdProduto === produto.cdProduto
@@ -157,18 +150,13 @@ export default function DetalhesProduto() {
         return;
       }
 
-      // ✅ 3. Tentar reservar estoque no banco
       try {
         await estoqueService.reservarEstoque(produto.cdProduto, quantidade);
-        console.log("✅ Estoque reservado no banco");
+        console.log("Estoque reservado no banco");
       } catch {
-        console.warn(
-          "⚠️ Não foi possível reservar no banco, mas continuando..."
-        );
-        // Continuar mesmo se falhar - estoque será validado no checkout
+        console.warn("Não foi possível reservar no banco, mas continuando...");
       }
 
-      // ✅ 4. Adicionar ao carrinho local
       if (itemExistente) {
         itemExistente.quantidade += quantidade;
       } else {
@@ -184,7 +172,6 @@ export default function DetalhesProduto() {
       localStorage.setItem("carrinho", JSON.stringify(carrinhoAtual));
       setCarrinho(carrinhoAtual);
 
-      // ✅ 5. Atualizar estoque localmente (otimista)
       setProduto((prev) => ({
         ...prev,
         qtdEstoque: prev.qtdEstoque - quantidade,
@@ -199,16 +186,14 @@ export default function DetalhesProduto() {
 
       setQuantidade(1);
 
-      // Recarregar estoque do servidor em background
       setTimeout(() => recarregarEstoque(), 1000);
     } catch (error) {
-      console.error("❌ Erro ao adicionar ao carrinho:", error);
+      console.error(" Erro ao adicionar ao carrinho:", error);
       mostrarToast(
         "Erro ao adicionar ao carrinho. Tente novamente.",
         "bg-danger"
       );
 
-      // Recarregar estoque em caso de erro
       await recarregarEstoque();
     } finally {
       setAdicionandoCarrinho(false);
@@ -289,7 +274,6 @@ export default function DetalhesProduto() {
         )}
 
         <div className="row">
-          {/* Imagem do Produto */}
           <div className="col-lg-6 mb-4">
             <div className="card border-0 shadow-sm">
               <img
@@ -309,7 +293,6 @@ export default function DetalhesProduto() {
             </div>
           </div>
 
-          {/* Informações do Produto */}
           <div className="col-lg-6">
             <div className="bg-eco p-4 rounded-4 h-100">
               <span className="badge bg-success mb-3">{produto.categoria}</span>
@@ -359,7 +342,6 @@ export default function DetalhesProduto() {
                 </p>
               </div>
 
-              {/* Controle de Quantidade */}
               {produto.qtdEstoque > 0 && (
                 <div className="mb-4">
                   <label className="form-label eco-card-text fw-bold">
@@ -394,7 +376,6 @@ export default function DetalhesProduto() {
                 </div>
               )}
 
-              {/* Botões de Ação */}
               <div className="d-flex gap-3 flex-column flex-md-row">
                 <button
                   className="btn btn-eco flex-grow-1 py-3"
@@ -430,7 +411,6 @@ export default function DetalhesProduto() {
                 </div>
               )}
 
-              {/* Botão para atualizar estoque */}
               <button
                 className="btn btn-sm btn-outline-secondary mt-3 w-100"
                 onClick={recarregarEstoque}
@@ -443,7 +423,6 @@ export default function DetalhesProduto() {
           </div>
         </div>
 
-        {/* Seção de Benefícios */}
         <div className="row mt-5">
           <div className="col-12">
             <h3 className="eco-text mb-4">
@@ -487,7 +466,6 @@ export default function DetalhesProduto() {
         </div>
       </main>
 
-      {/* Toast */}
       <div
         className={`toast align-items-center ${toastColor} text-white position-fixed bottom-0 end-0 mb-3 me-3`}
         role="alert"

@@ -41,21 +41,18 @@ export default function HomeLogado() {
 
   const carregarProdutos = async () => {
     try {
-      console.log("🔄 Carregando produtos do HomeLogado...");
+      console.log("Carregando produtos do HomeLogado...");
       const produtos = await produtoService.listarTodos();
 
-      console.log("📦 Produtos recebidos da API:", produtos);
+      console.log("Produtos recebidos da API:", produtos);
 
-      // Filtrar apenas produtos ativos
       const produtosAtivos = produtos.filter((p) => p.flAtivo === true);
 
       console.log(
-        `✅ Produtos ativos: ${produtosAtivos.length} de ${produtos.length}`
+        `Produtos ativos: ${produtosAtivos.length} de ${produtos.length}`
       );
 
-      // Formatar produtos para exibição
       const produtosFormatados = produtosAtivos.map((p) => {
-        // ✅ O backend JÁ RETORNA qtdEstoque
         const estoque = p.qtdEstoque !== undefined ? p.qtdEstoque : 0;
 
         console.log(`Produto ${p.cdProduto} - ${p.nmProduto}:`, {
@@ -77,12 +74,12 @@ export default function HomeLogado() {
         };
       });
 
-      console.log("✅ Produtos formatados:", produtosFormatados);
+      console.log("Produtos formatados:", produtosFormatados);
 
       setListaProd(produtosFormatados);
       setFiltrado(produtosFormatados);
     } catch (error) {
-      console.error("❌ Erro ao carregar produtos:", error);
+      console.error("Erro ao carregar produtos:", error);
       alert("Erro ao carregar produtos");
     } finally {
       setLoading(false);
@@ -103,7 +100,7 @@ export default function HomeLogado() {
       (p) => p.categoria.toLowerCase() === categoria.toLowerCase()
     );
 
-    console.log(`🔍 Filtrando por ${categoria}: ${filtrados.length} produtos`);
+    console.log(`Filtrando por ${categoria}: ${filtrados.length} produtos`);
     setFiltrado(filtrados);
   };
 
@@ -131,7 +128,6 @@ export default function HomeLogado() {
       )}
 
       <main className="container-xxl d-flex flex-column align-items-center w-100 min-vh-100">
-        {/* Filtros */}
         <nav className="mt-3 d-flex gap-3 h-100 justify-content-center flex-wrap">
           <div onClick={() => filtrarPorCategoria(null)}>
             <RadioBtn
@@ -164,7 +160,6 @@ export default function HomeLogado() {
           </div>
         </nav>
 
-        {/* Grid de Produtos */}
         <div className="row row-gap-3 justify-content-start w-75 mt-4">
           {listaFiltrado.length === 0 ? (
             <div className="col-12 text-center py-5">
@@ -197,7 +192,6 @@ export default function HomeLogado() {
           )}
         </div>
 
-        {/* Informações adicionais */}
         {listaProd.length > 0 && (
           <div className="mt-5 text-center">
             <p className="text-muted">

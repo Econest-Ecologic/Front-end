@@ -1,10 +1,5 @@
 import { Navigate } from "react-router-dom";
 import { useState, useEffect } from "react";
-
-/**
- * Componente para proteger rotas que exigem autenticação
- * Redireciona para login se não houver usuário autenticado
- */
 export default function ProtectedRoute({ children }) {
   const [isAuthenticated, setIsAuthenticated] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -15,7 +10,7 @@ export default function ProtectedRoute({ children }) {
         const usuario = localStorage.getItem("usuario");
         const token = localStorage.getItem("token");
 
-        console.log("🔐 ProtectedRoute - Verificando autenticação:");
+        console.log("ProtectedRoute - Verificando autenticação:");
         console.log(
           "- Usuário no localStorage:",
           usuario ? "Existe" : "Não existe"
@@ -25,7 +20,6 @@ export default function ProtectedRoute({ children }) {
           token ? "Existe" : "Não existe"
         );
 
-        // VERIFICAÇÃO RIGOROSA: Verifica se AMBOS existem e são válidos
         if (
           !usuario ||
           !token ||
@@ -34,36 +28,35 @@ export default function ProtectedRoute({ children }) {
           token === "null" ||
           token === "undefined"
         ) {
-          console.log("❌ Dados de autenticação inválidos ou ausentes");
+          console.log("Dados de autenticação inválidos ou ausentes");
           limparDadosEBloquear();
           return;
         }
 
-        // Tenta fazer parse do usuário
         try {
           const parsedUser = JSON.parse(usuario);
 
           if (!parsedUser || !parsedUser.id || !parsedUser.nome) {
-            console.log("❌ Dados do usuário estão corrompidos");
+            console.log("Dados do usuário estão corrompidos");
             limparDadosEBloquear();
             return;
           }
 
-          console.log("✅ Usuário autenticado:", parsedUser.nome);
+          console.log("Usuário autenticado:", parsedUser.nome);
           setIsAuthenticated(true);
           setIsLoading(false);
         } catch (parseError) {
-          console.error("❌ Erro ao fazer parse do usuário:", parseError);
+          console.error("Erro ao fazer parse do usuário:", parseError);
           limparDadosEBloquear();
         }
       } catch (error) {
-        console.error("❌ Erro na verificação:", error);
+        console.error("Erro na verificação:", error);
         limparDadosEBloquear();
       }
     };
 
     const limparDadosEBloquear = () => {
-      console.log("🧹 Limpando dados inválidos...");
+      console.log("Limpando dados inválidos...");
       localStorage.removeItem("usuario");
       localStorage.removeItem("token");
       localStorage.removeItem("carrinho");
@@ -74,7 +67,6 @@ export default function ProtectedRoute({ children }) {
     verificarAutenticacao();
   }, []);
 
-  // Mostra loading enquanto verifica
   if (isLoading) {
     return (
       <div className="min-vh-100 d-flex justify-content-center align-items-center bg-eco">
@@ -92,13 +84,11 @@ export default function ProtectedRoute({ children }) {
     );
   }
 
-  // Se não autenticado, redireciona para login
   if (!isAuthenticated) {
-    console.log("🚫 Acesso negado - redirecionando para login");
+    console.log("Acesso negado - redirecionando para login");
     return <Navigate to="/" replace />;
   }
 
-  // Se autenticado, renderiza o componente filho
-  console.log("✅ Acesso permitido");
+  console.log("Acesso permitido");
   return children;
 }

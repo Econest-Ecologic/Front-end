@@ -63,7 +63,6 @@ export function CriarAdministrador() {
     setLoading(true);
 
     try {
-      // Validações
       if (nome.length < 3) {
         mostrarToast("Nome deve ter no mínimo 3 caracteres", "bg-danger");
         return;
@@ -103,7 +102,6 @@ export function CriarAdministrador() {
 
       mostrarToast("Administrador criado com sucesso!");
 
-      // Limpar formulário após 1.5s
       setTimeout(() => {
         setNome("");
         setEmail("");

@@ -27,13 +27,11 @@ createRoot(document.getElementById("root")).render(
   <StrictMode>
     <BrowserRouter>
       <Routes>
-        {/* ROTAS PÚBLICAS (sem login) */}
         <Route path="/" element={<App />} />
         <Route path="/home" element={<HomeUsuario />} />
         <Route path="/sobre" element={<SobreNos />} />
         <Route path="/contato" element={<Contato />} />
 
-        {/* ROTAS PROTEGIDAS (requerem login) */}
         <Route
           path="/produto/:id"
           element={
@@ -67,7 +65,6 @@ createRoot(document.getElementById("root")).render(
           }
         />
 
-        {/* ROTAS DE ADMINISTRADOR (protegidas) */}
         <Route
           path="/adm"
           element={
@@ -109,7 +106,6 @@ createRoot(document.getElementById("root")).render(
           }
         />
 
-        {/* ROTAS MISTAS (podem ser ajustadas) */}
         <Route path="/pagProduto" element={<PagProduto />} />
         <Route path="/editarperfil" element={<TelaEditarPerfil />} />
         <Route path="/feedback" element={<Feedback />} />

@@ -6,7 +6,7 @@ export default function PagProduto() {
   const title = searchParams.get("title");
   const listaProd = JSON.parse(
     decodeURIComponent(searchParams.get("listaProd"))
-  ); //decotifica a var
+  );
 
   return (
     <>

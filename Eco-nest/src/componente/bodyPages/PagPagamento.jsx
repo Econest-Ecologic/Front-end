@@ -36,7 +36,6 @@ export default function PagPagamento() {
         return;
       }
 
-      // ✅ VALIDAR ITENS ANTES DE MOSTRAR TELA DE PAGAMENTO
       const carrinhoValidado = await validarCarrinho(parsedCart);
 
       if (carrinhoValidado.length === 0) {
@@ -61,7 +60,6 @@ export default function PagPagamento() {
 
     for (const item of itens) {
       try {
-        // Verificar se produto está ativo
         const produto = await produtoService.buscarPorId(item.cdProduto);
 
         if (!produto.flAtivo) {
@@ -69,7 +67,6 @@ export default function PagPagamento() {
           continue;
         }
 
-        // Verificar estoque
         const estoque = await estoqueService.buscarPorProduto(item.cdProduto);
 
         if (estoque.qtdEstoque < item.quantidade) {
@@ -97,7 +94,7 @@ export default function PagPagamento() {
 
   const calcularFrete = () => {
     const subtotal = calcularSubtotal();
-    return subtotal >= 100 ? 0 : 15.0; // Frete grátis acima de R$ 100
+    return subtotal >= 100 ? 0 : 15.0;
   };
 
   const calcularTotal = () => {
@@ -128,8 +125,7 @@ export default function PagPagamento() {
     setProcessando(true);
 
     try {
-      // ✅ VALIDAÇÃO FINAL ANTES DE PROCESSAR
-      console.log("🔍 Validando carrinho antes de finalizar...");
+      console.log("Validando carrinho antes de finalizar...");
       const carrinhoValidado = await validarCarrinho(carrinho);
 
       if (carrinhoValidado.length === 0) {
@@ -149,28 +145,23 @@ export default function PagPagamento() {
         return;
       }
 
-      // ✅ PROCESSAR COMPRA
-      console.log("✅ Processando compra...");
+      console.log("Processando compra...");
 
-      // Simular processamento de pagamento (2 segundos)
       await new Promise((resolve) => setTimeout(resolve, 2000));
 
-      // ✅ ESTOQUE JÁ FOI RESERVADO - Agora apenas confirmar
-      console.log("✅ Pagamento confirmado!");
-      console.log("✅ Estoque já foi reservado anteriormente");
+      console.log("Pagamento confirmado!");
+      console.log("Estoque já foi reservado anteriormente");
 
-      // ✅ LIMPAR CARRINHO
       localStorage.removeItem("carrinho");
       setCarrinho([]);
 
       mostrarToast("Compra finalizada com sucesso!", "bg-success");
 
-      // Redirecionar após 2 segundos
       setTimeout(() => {
         navigate("/homelogado");
       }, 2000);
     } catch (error) {
-      console.error("❌ Erro ao finalizar compra:", error);
+      console.error("Erro ao finalizar compra:", error);
       mostrarToast("Erro ao finalizar compra. Tente novamente.", "bg-danger");
       setProcessando(false);
     }
@@ -222,7 +213,6 @@ export default function PagPagamento() {
         </div>
 
         <div className="row w-100 g-4">
-          {/* RESUMO DO PEDIDO */}
           <div className="col-lg-4">
             <div className="card border-success">
               <div className="card-header bg-success text-white">
@@ -287,7 +277,6 @@ export default function PagPagamento() {
             </div>
           </div>
 
-          {/* FORMA DE PAGAMENTO */}
           <div className="col-lg-8 border border-success p-0">
             <div className=" border-success w-100 h-100">
               <div className="card-header bg-success text-white">
@@ -403,7 +392,6 @@ export default function PagPagamento() {
         </div>
       </main>
 
-      {/* Toast */}
       <div className="toast-container position-fixed bottom-0 end-0 p-3">
         <div
           id="liveToast"

@@ -4,7 +4,6 @@ import InputSearch from "./InputSearch";
 
 export function NavbarLogado({ carrinho = [] }) {
   const navigate = useNavigate();
-  //quando a pagina atualiza ele pega no local storag qual o ultimo tema salvo
   useEffect(() => {
     const temaSalvo = localStorage.getItem("tema") || "dark";
     setTema(temaSalvo);

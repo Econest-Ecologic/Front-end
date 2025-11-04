@@ -11,11 +11,9 @@ export function GerenciarProduto() {
   const [toastMsg, setToastMsg] = useState("");
   const [toastColor, setToastColor] = useState("bg-success");
 
-  // Estados para modal de edição
   const [produtoEditando, setProdutoEditando] = useState(null);
   const [showModal, setShowModal] = useState(false);
 
-  // Estado para controlar exclusão
   const [excluindo, setExcluindo] = useState(null);
 
   useEffect(() => {
@@ -27,15 +25,14 @@ export function GerenciarProduto() {
       setLoading(true);
       const data = await produtoService.listarTodos();
 
-      console.log("✅ Produtos recebidos:", data);
+      console.log("Produtos recebidos:", data);
 
-      // ✅ Filtrar apenas produtos ativos
       const produtosAtivos = data.filter((produto) => produto.flAtivo === true);
       setProdutos(produtosAtivos);
 
-      console.log("✅ Produtos ativos:", produtosAtivos);
+      console.log("Produtos ativos:", produtosAtivos);
     } catch (error) {
-      console.error("❌ Erro ao carregar produtos:", error);
+      console.error("Erro ao carregar produtos:", error);
       mostrarToast("Erro ao carregar produtos", "bg-danger");
     } finally {
       setLoading(false);
@@ -55,34 +52,32 @@ export function GerenciarProduto() {
   const handleExcluir = async (id, nomeProduto) => {
     if (
       window.confirm(
-        `⚠️ TEM CERTEZA que deseja INATIVAR o produto:\n\n"${nomeProduto}"\n\n` +
+        `TEM CERTEZA que deseja INATIVAR o produto:\n\n"${nomeProduto}"\n\n` +
           `O produto será removido da loja e não aparecerá mais para os clientes!\n\n` +
           `Esta ação não pode ser desfeita!`
       )
     ) {
       try {
         setExcluindo(id);
-        console.log(`🗑️ Inativando produto ID: ${id}`);
+        console.log(`Inativando produto ID: ${id}`);
 
         await produtoService.inativar(id);
 
-        console.log("✅ Produto inativado com sucesso!");
+        console.log("Produto inativado com sucesso!");
         mostrarToast(
           `Produto "${nomeProduto}" foi inativado e removido da loja!`,
           "bg-success"
         );
 
-        // ✅ Remover imediatamente da lista (sem esperar recarregar)
         setProdutos((prevProdutos) =>
           prevProdutos.filter((produto) => produto.cdProduto !== id)
         );
 
-        // Recarregar lista após 1 segundo para garantir sincronização
         setTimeout(() => {
           carregarProdutos();
         }, 1000);
       } catch (error) {
-        console.error("❌ Erro ao inativar produto:", error);
+        console.error("Erro ao inativar produto:", error);
         mostrarToast(
           error.response?.data || "Erro ao inativar produto. Tente novamente.",
           "bg-danger"
@@ -176,7 +171,7 @@ export function GerenciarProduto() {
             <input
               type="text"
               className="form-control eco-border"
-              placeholder="🔍 Buscar por Nome ou Categoria..."
+              placeholder="Buscar por Nome ou Categoria..."
               value={busca}
               onChange={(e) => setBusca(e.target.value)}
             />
@@ -269,7 +264,6 @@ export function GerenciarProduto() {
         </div>
       </main>
 
-      {/* Modal de Edição */}
       {showModal && produtoEditando && (
         <div
           className="modal show d-block"
@@ -279,7 +273,7 @@ export function GerenciarProduto() {
           <div className="modal-dialog modal-lg">
             <div className="modal-content">
               <div className="modal-header">
-                <h5 className="modal-title">✏️ Editar Produto</h5>
+                <h5 className="modal-title">Editar Produto</h5>
                 <button
                   type="button"
                   className="btn-close"
@@ -406,7 +400,7 @@ export function GerenciarProduto() {
                     Cancelar
                   </button>
                   <button type="submit" className="btn btn-eco">
-                    💾 Salvar Alterações
+                    Salvar Alterações
                   </button>
                 </div>
               </form>
@@ -415,7 +409,6 @@ export function GerenciarProduto() {
         </div>
       )}
 
-      {/* Toast de Notificação */}
       <div
         className={`toast align-items-center ${toastColor} text-white position-fixed bottom-0 end-0 mb-3 me-3`}
         role="alert"

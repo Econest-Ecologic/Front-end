@@ -54,13 +54,12 @@ export function FormCadastro() {
         nome,
         email,
         senha,
-        cpf: cpf.replace(/\D/g, ""), // Remove formatação
+        cpf: cpf.replace(/\D/g, ""),
         endereco,
         telefone: telefone.replace(/\D/g, ""),
         estado,
       });
 
-      // Auto-login após cadastro
       localStorage.setItem("token", response.token);
       localStorage.setItem(
         "usuario",

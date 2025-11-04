@@ -23,7 +23,7 @@ export const produtoService = {
 
   buscarPorId: async (id) => {
     try {
-      console.log(`🔍 Buscando produto ID: ${id}`);
+      console.log(`Buscando produto ID: ${id}`);
       const response = await api.get(`/produto/${id}`);
 
       console.log(`Produto encontrado:`, {

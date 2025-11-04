@@ -3,7 +3,7 @@ import api from "./api";
 export const estoqueService = {
   buscarPorProduto: async (cdProduto) => {
     try {
-      console.log(`🔍 Buscando estoque do produto ${cdProduto}`);
+      console.log(`Buscando estoque do produto ${cdProduto}`);
       const response = await api.get(`/estoque/produto/${cdProduto}`);
       console.log(`Estoque encontrado:`, response.data);
       return response.data;
@@ -17,7 +17,6 @@ export const estoqueService = {
         };
       }
 
-      // Para outros erros, logar e lançar exceção
       console.error(`Erro ao buscar estoque do produto ${cdProduto}:`, error);
       throw error;
     }
@@ -34,7 +33,7 @@ export const estoqueService = {
         quantidade: quantidade,
       });
 
-      console.log("✅ Estoque reservado:", response.data);
+      console.log("Estoque reservado:", response.data);
       return response.data;
     } catch (error) {
       console.error("Erro ao reservar estoque:", error);
@@ -63,7 +62,7 @@ export const estoqueService = {
         quantidade: quantidade,
       });
 
-      console.log("✅ Estoque liberado:", response.data);
+      console.log("Estoque liberado:", response.data);
       return response.data;
     } catch (error) {
       console.error("Erro ao liberar estoque:", error);
